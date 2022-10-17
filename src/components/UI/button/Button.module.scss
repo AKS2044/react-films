@@ -1,0 +1,12 @@
+@import "/src/colors";
+
+.btn{
+    border-radius: 6px;
+    padding: 10px 15px;
+    background: $background__second;
+    border: 1px solid $br__grey;
+    &:hover{
+        background: $br__red;
+        transition: 0.1s linear;
+    }
+}

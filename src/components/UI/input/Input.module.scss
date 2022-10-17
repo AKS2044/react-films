@@ -1,0 +1,10 @@
+@import "/src/colors";
+
+.input{
+    padding-left: 10px;
+    width: 300px;
+    border: 1px solid $br__grey;
+    height: 35px;
+    background: $background__second;
+    border-radius: 6px;
+}

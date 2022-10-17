@@ -1,0 +1,15 @@
+@import "/src/colors";
+
+.footer{
+    width: 100%;
+    height: 90px;
+    background: linear-gradient(90deg, #D01313 0%, #B91111 26.56%, #A11111 52.08%, #890E0E 75.52%, #720D0D 100%);
+    &__logo{
+        padding-top: 20px;
+        width: 1100px;
+        margin: 0 auto;
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 23px;
+    }
+}
