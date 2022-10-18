@@ -1,0 +1,46 @@
+@import "/src/colors";
+
+.slider{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    width: 1162px;
+    height: 254px;
+    &__content{
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &__button{
+            cursor: pointer;
+        }
+        &__group{
+            width: 1100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            .post__block{
+                text-align: center;
+                padding: 5px;
+                max-width: 150px;
+                max-height: 242px;
+                background: $background__second;
+                border: 1px solid $br__red;
+                border-radius: 6px;
+                .poster__slider{
+                    height: 205px;
+                    width: 138px;
+                    border-radius: 6px;
+                }
+                .title__slider{
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 138px;
+                    font-size: 0.75em;
+                    line-height: 22px;
+                }
+            }
+        }
+    }
+}

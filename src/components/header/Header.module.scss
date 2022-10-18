@@ -1,0 +1,71 @@
+@import "/src/colors";
+
+
+.header{
+    width: 100%;
+    max-height: 50px;
+    background: linear-gradient(90deg, #D01313 0.39%, #B91111 26.85%, #A11111 52.27%, #890E0E 75.62%, #720D0D 100%);
+    &__container{
+        margin: 0 auto;
+        max-width: 1100px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .logo{
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 28px;
+        }
+        .header__menu{
+            height: 100%;
+            display: flex;
+            .menu__block{
+                height: 100%;
+                display: flex;
+                align-items: center;
+                &__link{
+                    padding: 0 5px;
+                    font-size: 18px;
+                    line-height: 50px;
+                    &:hover{
+                        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(217, 217, 217, 0.159059) 66.67%, rgba(217, 217, 217, 0.088) 89.06%, rgba(255, 255, 255, 0) 100%);
+                    }
+                }
+            }
+            .profile{
+                display: flex;
+                align-items: center;
+                margin-left: 40px;
+                .logout{
+                    font-size: 14px;
+                    line-height: 50px;
+                    margin: 0 5px;
+                    padding: 0 5px;
+                    cursor: pointer;
+                    &:hover{
+                        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(217, 217, 217, 0.159059) 66.67%, rgba(217, 217, 217, 0.088) 89.06%, rgba(255, 255, 255, 0) 100%);
+                    }
+                }
+            }
+            .block__search{
+                display: flex;
+                align-items: center;
+                .search__input{
+                    width: 210px;
+                    height: 25px;
+                    background: white;
+                    padding-left: 26px;
+                    border: 1px solid #6D6D6D;
+                    box-shadow: inset 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
+                    border-radius: 9px;
+                }
+                .search__button{
+                    margin-left: 5px;
+                    position: absolute;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
