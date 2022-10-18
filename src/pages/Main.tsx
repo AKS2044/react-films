@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import favourite from '../img/favourite.svg';
 import later from '../img/seeLater.svg';
 
-const Main = (props) => {
-    console.log(props)
+type MainProps = {
+    films: {
+        id: number,
+        pathPoster: string,
+        nameFilms: string,
+    }[]
+};
+
+const Main = (props: MainProps) => {
+    const [url, setUrl] = useState('')
+    const OnOpenFilm = (id: number) => {
+        const url: string = `film/${id}`;
+        setUrl(url)
+    }
+
     return (
         <div className=''>
             <div className='sort-block'>
@@ -40,13 +54,13 @@ const Main = (props) => {
                 </div>
             </div>
             <div className='content-main'>
-                {props.films.map((film, index) =>
-                <div key={index} className='post-block-main'>
+                {props.films.map((film) =>
+                <div key={film.id} className='post-block-main'>
                     <img className='post-button-favourite' src={favourite} alt="Избранное" title="Избранное" />
                     <img className='post-button-later' src={later} alt="Смотреть позже" title="Смотреть позже" />
-                    <a href='/'>
-                    <img className='poster-main' src={film.photo} alt="Название фильма(год)" title="Название фильма(год)" />
-                    </a>
+                    <Link onClick={() => OnOpenFilm(film.id)} to={url}>
+                    <img className='poster-main' src={`https://localhost:5001/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
+                    </Link>
                     <div className='rating-block-main'>
                     <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
@@ -79,7 +93,7 @@ const Main = (props) => {
                         <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
                     </svg>
                     </div>
-                    <div className='title-block-main'>{film.name}</div>
+                    <div className='title-block-main'>{film.nameFilms}</div>
                 </div>)}
             </div>
             <div className='pagination'>

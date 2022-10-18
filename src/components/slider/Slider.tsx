@@ -3,8 +3,9 @@ import cl from './Slider.module.scss';
 
 type SliderProps = {
     films: {
-        photo: string,
-        name: string,
+        id: number,
+        pathPoster: string,
+        nameFilms: string,
     }[]
 };
 
@@ -27,12 +28,12 @@ const Slider = (props: SliderProps) => {
                     </defs>
                 </svg>
                 <div className={cl.slider__content__group}>
-                {props.films.map((film, index) =>
-                    <div key={index} className={cl.post__block}>
+                {props.films.map((film) =>
+                    <div key={film.id} className={cl.post__block}>
                         <a href='/'>
-                        <img className={cl.poster__slider} src={film.photo} alt="Название фильма(год)" title="Название фильма(год)" />
+                        <img className={cl.poster__slider} src={`https://localhost:5001/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
                         </a>
-                        <div className={cl.title__slider}>{film.name}</div>
+                        <div className={cl.title__slider}>{film.nameFilms}</div>
                     </div>).slice(0, 7)}
                 </div>
                 <svg className={cl.slider__content__button} width="31" height="38" viewBox="0 0 31 38" fill="none" xmlns="http://www.w3.org/2000/svg">
