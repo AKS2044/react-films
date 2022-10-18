@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Sort from '../components/sort/Sort';
 import favourite from '../img/favourite.svg';
 import later from '../img/seeLater.svg';
 
@@ -20,39 +21,7 @@ const Main = (props: MainProps) => {
 
     return (
         <div className=''>
-            <div className='sort-block'>
-                <div className='sort-item'>Фильтрация по:</div>
-                <div className='sort-item'>
-                Рейтингу
-                <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 6L0.937822 -1.88258e-07L13.0622 8.71687e-07L7 6Z" fill="white"/>
-                </svg>
-                </div>
-                <div className='sort-item'>
-                Жанру
-                <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 6L0.937822 -1.88258e-07L13.0622 8.71687e-07L7 6Z" fill="white"/>
-                </svg>
-                </div>
-                <div className='sort-item'>
-                Году
-                <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 6L0.937822 -1.88258e-07L13.0622 8.71687e-07L7 6Z" fill="white"/>
-                </svg>
-                </div>
-                <div className='sort-item'>
-                Стране
-                <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 6L0.937822 -1.88258e-07L13.0622 8.71687e-07L7 6Z" fill="white"/>
-                </svg>
-                </div>
-                <div className='sort-item'>
-                Сортировка по
-                <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 6L0.937822 -1.88258e-07L13.0622 8.71687e-07L7 6Z" fill="white"/>
-                </svg>
-                </div>
-            </div>
+            <Sort />
             <div className='content-main'>
                 {props.films.map((film) =>
                 <div key={film.id} className='post-block-main'>
