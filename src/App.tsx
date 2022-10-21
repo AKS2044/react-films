@@ -12,6 +12,7 @@ import {Routes, Route} from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import PostService from './API/PostService';
 import axios from "axios";
+import AddFilm from './pages/addFilm/AddFilm';
 
 type postsProps = {
     photo: string,
@@ -66,6 +67,7 @@ function App() {
             <Route path="" element={<Main films = {post} />} />
             <Route path="/film/:id" element={<View /> } />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/addFilm" element={<AddFilm />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

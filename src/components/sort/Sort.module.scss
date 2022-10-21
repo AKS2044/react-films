@@ -13,14 +13,20 @@
         line-height: 16px;
         padding: 5px;
         border-right: 1px solid $br__grey;
+        &__active{
+            color: $br__red;
+            font-size: 15px;
+            margin: 0 5px;
+            text-decoration: underline;
+        }
     }
     ul{
         padding: 1px 1px 3px 1px;
         position: absolute;
         z-index: 1001;
         top: 34px;
-        left: 0;
-        width: 100%;
+        right: 0;
+        width: 125px;
         background-color: $br__grey;
         border-radius: 0 0 6px 6px;
         li{
@@ -34,7 +40,7 @@
         }
         .active{
             background-color: $br__grey;
-                color: $br__red;
+            color: $br__red;
         }
     }
 }
