@@ -1,1 +1,73 @@
 @import "/src/colors";
+
+.add{
+    &__title{
+        padding: 10px 0;
+        text-align: center;
+        font-size: 28px;
+        line-height: 33px;
+        border-bottom: 1px solid $br__grey;
+    }
+    &__block{
+        padding: 10px 50px;
+        .block__items{
+            bottom: 0;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 20px;
+            width: 280px;
+            .add__genre{
+                font-size: 14px;
+                margin: 3px;
+                padding: 0 25px 0 5px;
+                line-height: 25px;
+                background: $background__3;
+                border-radius: 6px;
+                border: 1px solid $br__grey;
+            }
+        }
+        &__item{
+            display: flex;
+            align-items: center;
+            height: 40px;
+            &__text{
+                width: 145px;
+                margin-right: 40px;
+            }
+            input{
+                padding: 0px 10px;
+                width: 250px;
+                height: 30px;
+                background: $background__3;
+                border: 1px solid $br__grey;
+                color: $text;
+                border-radius: 6px;
+            }
+            .add__genre{
+                float: left;
+            }
+            .popup__block{
+                position: relative;
+                ul{
+                    width: 100%;
+                    position: absolute;
+                    z-index: 1001;
+                    background: $br__grey;
+                    border-radius: 0 0 6px 6px;
+                    padding: 5px 1px;
+                    overflow: auto;
+                    li{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 5px;
+                        line-height: 25px;
+                        background: $background__second;
+                        border-bottom: 1px solid $br__grey
+                    }
+                }
+            }
+        }
+    }
+}

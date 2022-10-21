@@ -1,0 +1,11 @@
+@import "/src/colors";
+
+.input{
+    padding: 0px 10px;
+    width: 250px;
+    height: 30px;
+    background: #1C1C1C;
+    border: 1px solid $br__grey;
+    color: $text;
+    border-radius: 6px;
+}

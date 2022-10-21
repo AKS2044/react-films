@@ -54,8 +54,6 @@ function App() {
     });
   }, []);
 
-  console.log(post)
-
   return (
     <div>
       <Header />
