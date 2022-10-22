@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './AddFilm.module.scss';
 
 type AddFilmProps = {
@@ -58,6 +58,8 @@ const AddFilm = () => {
                         value={value} 
                         placeholder='Жанр'
                         onChange={onChangeInput} />
+                        
+                        {value && 
                         <ul>
                         {getGenres.map((genre) => <li key={genre.id}>
                         {genre.genres}
@@ -68,14 +70,15 @@ const AddFilm = () => {
                         </button>
                         </li>)}
                         </ul>
+                        }
                     </div>
                     <div className={cl.block__items}>
                         {genresPost.map((genre) => <div key={genre.id} className={cl.add__genre}>
                             {genre.genres}
-                            <button onClick={() => onClickDelete(genre.id)}>
-                                <svg width="14" height="14" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 8.5H16M8.5 1L8.5 16" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                                </svg>
+                            <button className={cl.block__items__minus} onClick={() => onClickDelete(genre.id)}>
+                            <svg  width="20" height="20" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.1967 7.19673L17.8033 17.8033M17.8033 7.19673L7.1967 17.8033" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
                             </button>
                             </div>)}
                     </div>

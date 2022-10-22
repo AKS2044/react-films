@@ -1,5 +1,9 @@
 @import "/src/colors";
 
+svg path:hover{
+    stroke: $br__red;
+}
+
 .add{
     &__title{
         padding: 10px 0;
@@ -17,11 +21,16 @@
             flex-wrap: wrap;
             margin-left: 20px;
             width: 280px;
+            &__minus{
+                margin-left: 10px;
+            }
             .add__genre{
+                display: flex;
+                align-items: center;
                 font-size: 14px;
                 margin: 3px;
-                padding: 0 25px 0 5px;
-                line-height: 25px;
+                padding: 0 5px;
+                line-height: 30px;
                 background: $background__3;
                 border-radius: 6px;
                 border: 1px solid $br__grey;
