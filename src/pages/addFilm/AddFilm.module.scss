@@ -15,7 +15,7 @@ svg path:hover{
     &__block{
         padding: 10px 50px;
         .block__items{
-            bottom: 0;
+            top: 0;
             position: relative;
             display: flex;
             flex-wrap: wrap;
@@ -24,13 +24,13 @@ svg path:hover{
             &__minus{
                 margin-left: 10px;
             }
-            .add__genre{
+            .add__item{
                 display: flex;
                 align-items: center;
                 font-size: 14px;
                 margin: 3px;
                 padding: 0 5px;
-                line-height: 30px;
+                line-height: 28px;
                 background: $background__3;
                 border-radius: 6px;
                 border: 1px solid $br__grey;
@@ -38,8 +38,8 @@ svg path:hover{
         }
         &__item{
             display: flex;
-            align-items: center;
-            height: 40px;
+            align-items: baseline;
+            min-height: 40px;
             &__text{
                 width: 145px;
                 margin-right: 40px;
@@ -52,9 +52,6 @@ svg path:hover{
                 border: 1px solid $br__grey;
                 color: $text;
                 border-radius: 6px;
-            }
-            .add__genre{
-                float: left;
             }
             .popup__block{
                 position: relative;
