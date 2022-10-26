@@ -6,7 +6,7 @@ type ButtonProps = {
 };
 const Button = ({children}: ButtonProps) => {
     return (
-        <button className={cl.btn}>
+        <button type="submit" className={cl.btn}>
             {children}
         </button>
     );

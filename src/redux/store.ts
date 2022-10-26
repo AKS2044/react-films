@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import filmReducer from './slices/filmSlice'
+import loginReducer from './slices/loginSlice'
 
 export const store = configureStore({
   reducer: {
     film: filmReducer,
+    login:loginReducer,
   },
 });
 
