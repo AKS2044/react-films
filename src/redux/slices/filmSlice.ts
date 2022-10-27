@@ -1,7 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { createAsyncThunk  } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios';
-export interface FilmState {
+export interface Films {
     id : number,
     idRating : number,
     nameFilms :  string ,
@@ -18,38 +17,55 @@ export interface FilmState {
     linkFilmtrailer : string
 }
 
-export const fetchPizzas = createAsyncThunk<FilmState[]>(
-    'pizza/fetchPizzasStatus',
-    async () => {
-        const { data } = await axios.get<FilmState[]>('https://626d16545267c14d5677d9c2.mockapi.io/items');
-        return data;
-    },
-);
-
-const initialState: FilmState = {
-    id : 0,
-    idRating : 0,
-    nameFilms :  '' ,
-    ageLimit : 0,
-    releaseDate : 0,
-    description : '',
-    time : 0,
-    pathPoster : '' ,
-    imageName : '',
-    ratingSite : 0,
-    ratingKinopoisk : '',
-    ratingImdb : '',
-    linkFilmPlayer : '',
-    linkFilmtrailer : ''
+export enum Status {
+    LOADING = 'loading',
+    SUCCESS = 'completed',
+    ERROR = 'error',
 }
+
+export interface FilmSliceState {
+    items: Films[];
+    status: Status;
+}
+
+const initialState: FilmSliceState = {
+    items: [],
+    status: Status.LOADING
+}
+
+export const fetchFilms = createAsyncThunk<Films[]>(
+    'pizza/fetchFilmsStatus',
+    async () => {
+        const { data } = await axios.get<Films[]>('https://localhost:44369/api/Film/allFilms');
+        return data;
+    });
 
 export const filmSlice = createSlice({
     name: 'film',
     initialState,
     reducers: {
+        setItems(state, action: PayloadAction<Films[]>) {
+            state.items = action.payload;
+        },
     },
-})
+    
+    extraReducers: (builder) => {
+        builder.addCase(fetchFilms.pending, (state) => {
+            console.log('dsd')
+            state.status = Status.LOADING
+            state.items = [];
+        });
+        builder.addCase(fetchFilms.fulfilled, (state, action) => {
+            state.status = Status.SUCCESS;
+            state.items = action.payload;
+        });
+        builder.addCase(fetchFilms.rejected, (state) => {
+            state.status = Status.ERROR;
+            state.items = [];
+        });
+        },
+});
 
-export const { } = filmSlice.actions
+export const { setItems } = filmSlice.actions
 
 export default filmSlice.reducer

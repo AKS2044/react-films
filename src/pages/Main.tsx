@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Sort from '../components/sort/Sort';
 import favourite from '../img/favourite.svg';
 import later from '../img/seeLater.svg';
+import { RootState } from '../redux/store';
 
 type MainProps = {
     films: {
@@ -12,7 +14,8 @@ type MainProps = {
     }[]
 };
 
-const Main = (props: MainProps) => {
+const Main = () => {
+    const { items, status } = useSelector((state: RootState) => state.film);
     const [url, setUrl] = useState('')
     const OnOpenFilm = (id: number) => {
         const url: string = `film/${id}`;
@@ -23,7 +26,7 @@ const Main = (props: MainProps) => {
         <div className=''>
             <Sort />
             <div className='content-main'>
-                {props.films.map((film) =>
+                {items.map((film) =>
                 <div key={film.id} className='post-block-main'>
                     <img className='post-button-favourite' src={favourite} alt="Избранное" title="Избранное" />
                     <img className='post-button-later' src={later} alt="Смотреть позже" title="Смотреть позже" />

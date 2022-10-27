@@ -20,22 +20,15 @@ type postsProps = {
 }[];
 
 function App() {
-  const [post, setPost] = useState([]);
-    useEffect(() => {
-    axios.get('https://localhost:44369/api/Film/allFilms').then((response) => {
-      setPost(response.data);
-    });
-  }, []);
-
   return (
     <div>
       <Header />
-      <Slider films = {post} />
+      <Slider />
       <div className='container'>
         <Menu />
         <main className='main-block'>
           <Routes>
-            <Route path="" element={<Main films = {post} />} />
+            <Route path="" element={<Main />} />
             <Route path="/film/:id" element={<View /> } />
             <Route path="/profile" element={<Profile />} />
             <Route path="/addFilm" element={<AddFilm />} />

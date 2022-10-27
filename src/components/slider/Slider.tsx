@@ -1,5 +1,9 @@
 import React from 'react';
 import cl from './Slider.module.scss';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../redux/store'
+import { RootState } from '../../redux/store';
+import { fetchFilms } from '../../redux/slices/filmSlice';
 
 type SliderProps = {
     films: {
@@ -9,7 +13,10 @@ type SliderProps = {
     }[]
 };
 
-const Slider = (props: SliderProps) => {
+const Slider = () => {
+    const dispatch = useAppDispatch();
+    dispatch(fetchFilms());
+    const { items, status } = useSelector((state: RootState) => state.film);
     return (
         <div className={cl.slider}>
             <div className={cl.slider__content}>
@@ -28,7 +35,7 @@ const Slider = (props: SliderProps) => {
                     </defs>
                 </svg>
                 <div className={cl.slider__content__group}>
-                {props.films.map((film) =>
+                {items.map((film) =>
                     <div key={film.id} className={cl.post__block}>
                         <a href='/'>
                         <img className={cl.poster__slider} src={`https://localhost:5001/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
@@ -56,3 +63,11 @@ const Slider = (props: SliderProps) => {
 };
 
 export default Slider;
+
+function dispatch(arg0: any) {
+    throw new Error('Function not implemented.');
+}
+function fetchPizzas(): any {
+    throw new Error('Function not implemented.');
+}
+
