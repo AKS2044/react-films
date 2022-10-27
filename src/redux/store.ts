@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import filmReducer from './slices/filmSlice'
+import filmReducer from './film/slice'
 import loginReducer from './slices/loginSlice'
 import { useDispatch } from 'react-redux';
 

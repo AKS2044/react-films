@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Sort from '../components/sort/Sort';
 import favourite from '../img/favourite.svg';
 import later from '../img/seeLater.svg';
-import { RootState } from '../redux/store';
-
-type MainProps = {
-    films: {
-        id: number,
-        pathPoster: string,
-        nameFilms: string,
-    }[]
-};
+import { fetchFilms, fetchFilmById } from '../redux/film/asyncActions';
+import { selectFilmData } from '../redux/film/selectors';
+import { useAppDispatch } from '../redux/store';
+import { FilmParams } from '../redux/film/types';
 
 const Main = () => {
-    const { items, status } = useSelector((state: RootState) => state.film);
+    const dispatch = useAppDispatch();
+    const { items, status } = useSelector(selectFilmData);
+
+    useEffect(() => {
+        dispatch(fetchFilms())
+        dispatch(fetchFilmById({id: 4}))
+        }, [])
     const [url, setUrl] = useState('')
     const OnOpenFilm = (id: number) => {
         const url: string = `film/${id}`;

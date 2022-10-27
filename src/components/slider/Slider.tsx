@@ -1,22 +1,18 @@
-import React from 'react';
+import { useEffect } from 'react';
 import cl from './Slider.module.scss';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../redux/store'
-import { RootState } from '../../redux/store';
-import { fetchFilms } from '../../redux/slices/filmSlice';
-
-type SliderProps = {
-    films: {
-        id: number,
-        pathPoster: string,
-        nameFilms: string,
-    }[]
-};
+import { fetchFilms } from '../../redux/film/asyncActions';
+import { selectFilmData } from '../../redux/film/selectors';
 
 const Slider = () => {
     const dispatch = useAppDispatch();
+    const { items, status } = useSelector(selectFilmData);
+
+    useEffect(() => {
     dispatch(fetchFilms());
-    const { items, status } = useSelector((state: RootState) => state.film);
+    }, [])
+
     return (
         <div className={cl.slider}>
             <div className={cl.slider__content}>
