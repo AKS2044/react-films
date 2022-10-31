@@ -1,21 +1,34 @@
-import React from 'react'
-import posterSlider from '../img/posterSlider.jpg';
+import { useEffect } from 'react'
 import player from '../img/player.jpg';
 import rec from '../img/recommended.jpg';
 import photoUser from '../img/Rick.png';
+import { useAppDispatch } from '../redux/store';
+import { fetchFilmById } from '../redux/film/asyncActions';
+import { useParams } from 'react-router-dom';
+import { selectFilmData } from '../redux/film/selectors';
+import { useSelector } from 'react-redux';
 
 const View = () => {
+    const params = useParams();
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(fetchFilmById({id: Number(params.id)}))
+        }, [params]);
+
+    
+    const { item, status } = useSelector(selectFilmData);
+    console.log(item)
     return (
         <div className='post'>
             <div className='post__flex'>
             <div className='post__left'>
-                <img className='post__left-poster' src={posterSlider} alt="Постер" title="Постер" />
+                <img className='post__left-poster' src={`https://localhost:44369/`+ item.pathPoster} alt="Постер" title="Постер" />
                 <div className='post__left-rating'>
-                    <div className='post__left-rating-kinopoisk'>KINOPOISK: <span className='post__rating-color'>8.0</span></div>
-                    <div className='post__left-rating-imdb'>IMDB.COM: <span className='post__rating-color'>8.0</span></div>
+                    <div className='post__left-rating-kinopoisk'>KP: <span className='post__rating-color'>{item.ratingKinopoisk ? item.ratingKinopoisk : '0'}</span></div>
+                    <div className='post__left-rating-imdb'>IMDB.COM: <span className='post__rating-color'>{item.ratingImdb ? item.ratingImdb : '0'}</span></div>
                 </div>
                 <div className='post__left-site'>
-                    <div className='post__left-site-rating'>Рейтинг сайта: <span className='post__rating-color'>8.0</span></div>
+                    <div className='post__left-site-rating'>Рейтинг сайта: <span className='post__rating-color'>{item.ratingSite ? item.ratingSite : '0'}</span></div>
                     <div className='border-menu'></div>
                     <div className='post__left-site-stars'>
                     <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,17 +62,17 @@ const View = () => {
                 </div>
             </div>
             <div className='post__right'>
-                <h2 className='post__right-text-one'>Название фильма</h2>
-                <div className='post__right-text-two'>Год: <span className='post__text'>2022</span></div>
-                <div className='post__right-text-one'>Жанр: <span className='post__text'>детектив, комедия, драма, криминал</span></div>
-                <div className='post__right-text-two'>Страна: <span className='post__text'>США</span></div>
-                <div className='post__right-text-one'>Режиссер: <span className='post__text'>Райан Джонсон</span></div>
-                <div className='post__right-text-two'>Возраст: <span className='post__text'>16+</span></div>
-                <div className='post__right-text-one'>Время: <span className='post__text'>130 мин. / 02:10</span></div>
+                <h2 className='post__right-text-one'>{item.nameFilms}</h2>
+                <div className='post__right-text-two'>Год: <span className='post__text'>{item.releaseDate}</span></div>
+                <div className='post__right-text-one'>Жанр: <span className='post__text'>{item.genre ? item.genre.map((g) => g + ' ') : 'Нет стран'}</span></div>
+                <div className='post__right-text-two'>Страна: <span className='post__text'>{item.country ? item.country.map((c) => c + ' ') : 'Нет стран'}</span></div>
+                <div className='post__right-text-one'>Режиссер: <span className='post__text'>{item.stageManagers ? item.stageManagers.map((m) => m) : 'Нет режиссеров'}</span></div>
+                <div className='post__right-text-two'>Возраст: <span className='post__text'>{item.ageLimit ? item.ageLimit : '0'} +</span></div>
+                <div className='post__right-text-one'>Время: <span className='post__text'>{item.time ? item.time : '0'} мин.</span></div>
                 <div className='post__right-text-two'>В главных ролях: <span className='post__text'>Дэниэл Крэйг, Ана де Армас, Крис Эванс, Джейми Ли Кёртис</span></div>
                 <div className='post__right-text-one'>Качество видео: <span className='post__text'>BDRip</span></div>
                 <div className='post__right-text-two'>Перевод: <span className='post__text'>Дублированный</span></div>
-                <div className='post__right-text-one'>Описание: <span className='post__text'>На следующее утро после празднования 85-летия известного автора криминальных романов Харлана Тромби виновника торжества находят мёртвым. Налицо — явное самоубийство, но полиция по протоколу опрашивает всех присутствующих в особняке членов семьи, хотя, в этом деле больше заинтересован частный детектив Бенуа Блан. Тем же утром он получил конверт с наличными от неизвестного и заказ на расследование смерти Харлана. Не нужно быть опытным следователем, чтобы понять, что все приукрашивают свои отношения с почившим главой семейства, но Блану достаётся настоящий подарок — медсестра покойного, которая физически не выносит ложь.</span></div>
+                <div className='post__right-text-one'>Описание: <span className='post__text'>{item.description ? item.description : 'Нет описания'}</span></div>
             </div>
             </div>
             <div className='post__players'>

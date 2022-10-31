@@ -1,18 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchFilms } from '../film/asyncActions';
-import { Films, FilmSliceState, Status } from '../film/types';
+import { fetchFilmById, fetchFilms } from '../film/asyncActions';
+import { Film, FilmSliceState, Status } from '../film/types';
 
 const initialState: FilmSliceState = {
-    items: [],
-    status: Status.LOADING
-}
+            item: {} as Film,
+            items: [],
+            status: Status.LOADING
+        }
 
 export const filmSlice = createSlice({
     name: 'film',
     initialState,
     reducers: {
-        setItems(state, action: PayloadAction<Films[]>) {
+        setItems(state, action: PayloadAction<Film[]>) {
             state.items = action.payload;
+        },
+        setItem(state, action: PayloadAction<Film>) {
+            state.item = action.payload;
         },
     },
     
@@ -29,9 +33,21 @@ export const filmSlice = createSlice({
             state.status = Status.ERROR;
             state.items = [];
         });
+        builder.addCase(fetchFilmById.pending, (state) => {
+            state.status = Status.LOADING
+            state.item = {} as Film;
+        });
+        builder.addCase(fetchFilmById.fulfilled, (state, action) => {
+            state.status = Status.SUCCESS;
+            state.item = action.payload;
+        });
+        builder.addCase(fetchFilmById.rejected, (state) => {
+            state.status = Status.ERROR;
+            state.item = {} as Film;
+        });
         },
 });
 
-export const { setItems } = filmSlice.actions
+export const { setItems, setItem } = filmSlice.actions
 
 export default filmSlice.reducer

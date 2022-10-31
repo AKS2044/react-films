@@ -29,7 +29,6 @@ const Login = () => {
                 navigate('/');
                 localStorage.setItem('auth', 'true')
             }
-            console.log(localStorage.getItem('auth'))
         }).catch((error) => {
             setError(error.response.data.message)
         })}

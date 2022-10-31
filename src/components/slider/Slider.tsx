@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../redux/store'
 import { fetchFilms } from '../../redux/film/asyncActions';
 import { selectFilmData } from '../../redux/film/selectors';
+import { Link } from 'react-router-dom';
 
 const Slider = () => {
     const dispatch = useAppDispatch();
@@ -33,9 +34,9 @@ const Slider = () => {
                 <div className={cl.slider__content__group}>
                 {items.map((film) =>
                     <div key={film.id} className={cl.post__block}>
-                        <a href='/'>
-                        <img className={cl.poster__slider} src={`https://localhost:5001/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
-                        </a>
+                        <Link to={`/film/${film.id}`}>
+                        <img className={cl.poster__slider} src={`https://localhost:44369/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
+                        </Link>
                         <div className={cl.title__slider}>{film.nameFilms}</div>
                     </div>).slice(0, 7)}
                 </div>
@@ -59,11 +60,4 @@ const Slider = () => {
 };
 
 export default Slider;
-
-function dispatch(arg0: any) {
-    throw new Error('Function not implemented.');
-}
-function fetchPizzas(): any {
-    throw new Error('Function not implemented.');
-}
 

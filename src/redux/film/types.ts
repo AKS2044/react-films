@@ -1,18 +1,21 @@
-export interface Films {
+export interface Film {
     id : number,
-    idRating : number,
     nameFilms :  string ,
     ageLimit : number,
+    ratingKinopoisk : string,
+    ratingSite : number,
+    ratingImdb : string,
     releaseDate : number,
+    linkFilmPlayer : string,
+    linkFilmtrailer : string,
+    country: [''],
+    genre: [''],
+    stageManagers: [''],
+    actors: [''],
     description : string,
     time : number,
     pathPoster : string ,
     imageName : string,
-    ratingSite : number,
-    ratingKinopoisk : string,
-    ratingImdb : string,
-    linkFilmPlayer : string,
-    linkFilmtrailer : string
 }
 
 export enum Status {
@@ -22,8 +25,9 @@ export enum Status {
 }
 
 export interface FilmSliceState {
-    items: Films[];
-    status: Status;
+        item: Film;
+        items: Film[];
+        status: Status;
 }
 
 export interface FilmParams {

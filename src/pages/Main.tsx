@@ -1,73 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import ItemFilm from '../components/itemFilm/ItemFilm';
+import Skeleton from '../components/skeleton/Skeleton';
 import Sort from '../components/sort/Sort';
-import favourite from '../img/favourite.svg';
-import later from '../img/seeLater.svg';
-import { fetchFilms, fetchFilmById } from '../redux/film/asyncActions';
+import { fetchFilms } from '../redux/film/asyncActions';
 import { selectFilmData } from '../redux/film/selectors';
 import { useAppDispatch } from '../redux/store';
-import { FilmParams } from '../redux/film/types';
 
 const Main = () => {
     const dispatch = useAppDispatch();
     const { items, status } = useSelector(selectFilmData);
-
+    
     useEffect(() => {
         dispatch(fetchFilms())
-        dispatch(fetchFilmById({id: 4}))
-        }, [])
-    const [url, setUrl] = useState('')
-    const OnOpenFilm = (id: number) => {
-        const url: string = `film/${id}`;
-        setUrl(url)
-    }
+        }, []);
+    
+    const films = items.map((film: any) => <ItemFilm key={film.id} {...film} />);
+    const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
     return (
         <div className=''>
             <Sort />
             <div className='content-main'>
-                {items.map((film) =>
-                <div key={film.id} className='post-block-main'>
-                    <img className='post-button-favourite' src={favourite} alt="Избранное" title="Избранное" />
-                    <img className='post-button-later' src={later} alt="Смотреть позже" title="Смотреть позже" />
-                    <Link onClick={() => OnOpenFilm(film.id)} to={url}>
-                    <img className='poster-main' src={`https://localhost:5001/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
-                    </Link>
-                    <div className='rating-block-main'>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    </div>
-                    <div className='title-block-main'>{film.nameFilms}</div>
-                </div>)}
+                {status === 'loading' ? skeletons : films}
             </div>
             <div className='pagination'>
                 <button className='pagination-button'>Начало</button>

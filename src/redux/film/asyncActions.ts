@@ -1,24 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {pickBy} from 'lodash';
 import axios from 'axios';
-import { Films, FilmParams } from './types';
+import { Film, FilmParams } from './types';
 
-export const fetchFilms = createAsyncThunk<Films[]>(
+export const fetchFilms = createAsyncThunk<Film[]>(
     'film/fetchFilmsStatus',
     async () => {
-        const { data } = await axios.get<Films[]>('https://localhost:44369/api/Film/allFilms');
+        const { data } = await axios.get<Film[]>('https://localhost:44369/api/Film/allFilms');
         return data;
     });
 
-    export const fetchFilmById = createAsyncThunk<Films, FilmParams>(
-        'film/fetchFilmsStatus',
+    export const fetchFilmById = createAsyncThunk<Film, FilmParams>(
+        'film/fetchFilmByIdStatus',
         async (params) => {
             const {id} = params;
-            const { data } = await axios.get<Films>(`https://localhost:44369/api/Film/`, {
+            const { data } = await axios.get<Film>(`https://localhost:44369/api/Film/`, {
                 params: pickBy({
                     id
                 })
             });
-            console.log(data)
             return data;
         });
