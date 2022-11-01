@@ -1,0 +1,29 @@
+@import "/src/colors";
+
+.root {
+    margin: 10px 5px;
+    li {
+        display: inline-block;
+        a{
+            text-align: center;
+            width: 35px;
+            line-height: 30px;
+            height: 30px;
+            border: 1px solid $br__grey;
+            border-radius: 6px;
+            margin-right: 10px;
+            cursor: pointer;
+            display: inline-block;
+        &:hover {
+            background-color: $br__red;
+        }
+        }
+    }
+    :global {
+        .selected {
+        a {
+            background-color: $br__red;
+        }
+        }
+    }
+}

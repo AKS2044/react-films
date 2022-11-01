@@ -10,8 +10,11 @@ import {Routes, Route} from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import AddFilm from './pages/addFilm/AddFilm';
 import Login from './pages/login/Login';
+import { useSelector } from 'react-redux';
+import { selectFilter } from './redux/filter/selectors';
 
 function App() {
+  const { currentPage } = useSelector(selectFilter);
   return (
     <div>
       <Header />
@@ -20,7 +23,7 @@ function App() {
         <Menu />
         <main className='main-block'>
           <Routes>
-            <Route path="" element={<Main />} />
+            <Route path="/" element={<Main />} />
             <Route path="/film/:id" element={<View /> } />
             <Route path="/profile" element={<Profile />} />
             <Route path="/addFilm" element={<AddFilm />} />

@@ -11,7 +11,11 @@ export interface Film {
     country: [''],
     genre: [''],
     stageManagers: [''],
-    actors: [''],
+    actors: {id: number,
+    filmActors: string | null,
+    firstName: string,
+    lastName: string,
+    secondName: string | null}[],
     description : string,
     time : number,
     pathPoster : string ,
@@ -31,5 +35,6 @@ export interface FilmSliceState {
 }
 
 export interface FilmParams {
-    id: number
+    id?: number,
+    currentPage?: number
 }

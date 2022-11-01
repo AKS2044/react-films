@@ -1,43 +1,80 @@
-import { useEffect} from 'react';
+import { useEffect, useRef } from 'react';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ItemFilm from '../components/itemFilm/ItemFilm';
+import { Pagination } from '../components/pagination/Pagination';
 import Skeleton from '../components/skeleton/Skeleton';
 import Sort from '../components/sort/Sort';
 import { fetchFilms } from '../redux/film/asyncActions';
 import { selectFilmData } from '../redux/film/selectors';
+import { selectFilter } from '../redux/filter/selectors';
+import { setCurrentPage, setFilters } from '../redux/filter/slice';
 import { useAppDispatch } from '../redux/store';
+import { FilmParams } from '../redux/film/types';
 
 const Main = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const isMounted = useRef(false);
     const { items, status } = useSelector(selectFilmData);
+    const { currentPage } = useSelector(selectFilter);
+
+    const getFilms = async () => {
+        dispatch(
+            fetchFilms({
+            currentPage: currentPage,
+        }),
+        );
+    
+        window.scrollTo(0, 0);
+    };
     
     useEffect(() => {
-        dispatch(fetchFilms())
+        if(isMounted.current){
+            const params = {
+                    page: currentPage
+                };
+            const queryString = qs.stringify(params, {skipNulls: true});
+            navigate(`?${queryString}`);
+            getFilms();
+        }
+        if(window.location.search){
+            const params = qs.parse(window.location.search.substring(1));
+            dispatch(setFilters({currentPage: Number(params.page)}));
+        }
+
+        isMounted.current = true;
+        }, [currentPage]);
+    
+    useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            dispatch(setFilters({currentPage: Number(params.page)}));
+        }
+        const params = qs.parse(window.location.search.substring(1)) ;
+        
+        if(!window.location.search || Number(params.page) === 1 ){
+            getFilms();
+        }
+            
+        isMounted.current = true;
         }, []);
+
+    const onChangePage = (page: number) => {
+        dispatch(setCurrentPage(page));
+    };
     
     const films = items.map((film: any) => <ItemFilm key={film.id} {...film} />);
     const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
     return (
-        <div className=''>
+        <div>
             <Sort />
             <div className='content-main'>
                 {status === 'loading' ? skeletons : films}
             </div>
-            <div className='pagination'>
-                <button className='pagination-button'>Начало</button>
-                <button className='pagination-button'>1</button>
-                <button className='pagination-button'>2</button>
-                <button className='pagination-button'>3</button>
-                <button className='pagination-button'>4</button>
-                <button className='pagination-button'>5</button>
-                <button className='pagination-button'>6</button>
-                <button className='pagination-button'>7</button>
-                <button className='pagination-button'>8</button>
-                <button className='pagination-button'>9</button>
-                <button className='pagination-button'>10</button>
-                <button className='pagination-button'>В конец</button>
-            </div>
+            <Pagination currentPage={currentPage} onChangePage={onChangePage} />
         </div>
     );
 };

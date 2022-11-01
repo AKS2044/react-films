@@ -1,5 +1,8 @@
-import { useEffect } from 'react'
-import player from '../img/player.jpg';
+import { useEffect, useState } from 'react'
+import player1 from '../img/player1.jpg';
+import player2 from '../img/player2.jpg';
+import player3 from '../img/player3.jpg';
+import tr from '../img/tr.jpg';
 import rec from '../img/recommended.jpg';
 import photoUser from '../img/Rick.png';
 import { useAppDispatch } from '../redux/store';
@@ -7,10 +10,19 @@ import { fetchFilmById } from '../redux/film/asyncActions';
 import { useParams } from 'react-router-dom';
 import { selectFilmData } from '../redux/film/selectors';
 import { useSelector } from 'react-redux';
+import Button from '../components/UI/button/Button';
 
 const View = () => {
+    const playerItem = [
+        {title: 'Плеер 1', linkPlayer: player1},
+        {title: 'Плеер 2', linkPlayer: player2},
+        {title: 'Плеер 3', linkPlayer: player3},
+        {title: 'Трейлер', linkPlayer: tr},]
+
+    const [playerId, setPlayerId] = useState(0);
     const params = useParams();
     const dispatch = useAppDispatch();
+
     useEffect(() => {
         dispatch(fetchFilmById({id: Number(params.id)}))
         }, [params]);
@@ -18,6 +30,8 @@ const View = () => {
     
     const { item, status } = useSelector(selectFilmData);
     console.log(item)
+
+    const player = playerItem.find((p, index) => index === playerId)
     return (
         <div className='post'>
             <div className='post__flex'>
@@ -69,7 +83,8 @@ const View = () => {
                 <div className='post__right-text-one'>Режиссер: <span className='post__text'>{item.stageManagers ? item.stageManagers.map((m) => m) : 'Нет режиссеров'}</span></div>
                 <div className='post__right-text-two'>Возраст: <span className='post__text'>{item.ageLimit ? item.ageLimit : '0'} +</span></div>
                 <div className='post__right-text-one'>Время: <span className='post__text'>{item.time ? item.time : '0'} мин.</span></div>
-                <div className='post__right-text-two'>В главных ролях: <span className='post__text'>Дэниэл Крэйг, Ана де Армас, Крис Эванс, Джейми Ли Кёртис</span></div>
+                <div className='post__right-text-two'>В главных ролях: <span className='post__text'>
+                    {item.actors ? item.actors.map((a) => a.firstName + ' ' + a.lastName + ' ') : 'Нет актеров'}</span></div>
                 <div className='post__right-text-one'>Качество видео: <span className='post__text'>BDRip</span></div>
                 <div className='post__right-text-two'>Перевод: <span className='post__text'>Дублированный</span></div>
                 <div className='post__right-text-one'>Описание: <span className='post__text'>{item.description ? item.description : 'Нет описания'}</span></div>
@@ -77,12 +92,18 @@ const View = () => {
             </div>
             <div className='post__players'>
                 <div className='post__players-panel'>
-                    <button className='post__players-panel-button active'>Плеер 1</button>
-                    <button className='post__players-panel-button'>Плеер 2</button>
-                    <button className='post__players-panel-button'>Плеер 3</button>
-                    <button className='post__players-panel-button'>Трейлер</button>
+                    {playerItem.map((p: any, index) => 
+                        <button 
+                        key={index} 
+                        onClick={() => setPlayerId(index)} 
+                        className={playerId === index ? 'post__players-panel-button active' : 'post__players-panel-button'}
+                        >
+                            {p.title}
+                        </button>)}
                 </div>
-                <img className='post__players-player' src={player} alt="Постер" title="Постер" />
+                <div>
+                    {player && <img className='post__players-player' src={player.linkPlayer} alt="Постер" title="Постер" />}
+                </div>
             </div>
             <div className='post__recommended'>
                 <div className='post__recommended-title'>Мы рекомендуем:</div>
@@ -115,7 +136,7 @@ const View = () => {
             </div>
             <div className='post__comments'>
                 <div className='post__comments-panel'>
-                    <button className='post__comments-panel-add'>Добавить комментарий</button>
+                <Button>Добавить комментарий</Button>
                     <div className='post__comments-panel-number'>3</div>
                 </div>
                 <div className='post__comments-block'>
@@ -123,7 +144,7 @@ const View = () => {
                         <input className='post__comments-block-flex-text' />
                         <div className='post__comments-block-flex-emodji'></div>
                     </div>
-                    <button className='post__comments-block-put'>Добавить</button>
+                    <Button>Добавить</Button>
                 </div>
                 <div className='post__comments-comment'>
                     <div className='post__comments-comment-main'>
@@ -181,7 +202,7 @@ const View = () => {
                         <button className='post__comments-comment-dop-answer'>Ответить</button>
                     </div>
                 </div>
-                <button className='post__comments-more'>Больше комментариев</button>
+                <Button>Больше комментариев</Button>
             </div>
         </div>
     );

@@ -5,14 +5,16 @@ import { useAppDispatch } from '../../redux/store'
 import { fetchFilms } from '../../redux/film/asyncActions';
 import { selectFilmData } from '../../redux/film/selectors';
 import { Link } from 'react-router-dom';
+import { selectFilter } from '../../redux/filter/selectors';
 
 const Slider = () => {
     const dispatch = useAppDispatch();
     const { items, status } = useSelector(selectFilmData);
+    const { currentPage } = useSelector(selectFilter);
 
-    useEffect(() => {
-    dispatch(fetchFilms());
-    }, [])
+    // useEffect(() => {
+    // dispatch(fetchFilms({currentPage}));
+    // }, [])
 
     return (
         <div className={cl.slider}>
