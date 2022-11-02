@@ -10,11 +10,11 @@ import {Routes, Route} from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import AddFilm from './pages/addFilm/AddFilm';
 import Login from './pages/login/Login';
-import { useSelector } from 'react-redux';
-import { selectFilter } from './redux/filter/selectors';
+import Register from './pages/register/Register';
 
 function App() {
-  const { currentPage } = useSelector(selectFilter);
+  
+  localStorage.setItem('auth', 'false')
   return (
     <div>
       <Header />
@@ -27,6 +27,7 @@ function App() {
             <Route path="/film/:id" element={<View /> } />
             <Route path="/profile" element={<Profile />} />
             <Route path="/addFilm" element={<AddFilm />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
