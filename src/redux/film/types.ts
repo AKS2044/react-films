@@ -1,3 +1,4 @@
+import { Status } from '../../enum/EnumStatus';
 export interface Film {
     id : number,
     nameFilms :  string ,
@@ -20,12 +21,6 @@ export interface Film {
     time : number,
     pathPoster : string ,
     imageName : string,
-}
-
-export enum Status {
-    LOADING = 'loading',
-    SUCCESS = 'completed',
-    ERROR = 'error',
 }
 
 export interface FilmSliceState {

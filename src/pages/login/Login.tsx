@@ -1,60 +1,71 @@
-import axios from 'axios';
-import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../redux/store';
 import Button from '../../components/UI/button/Button';
-import { Formik, Form, Field } from 'formik';
-import cl from './Login.module.scss'
-import { useNavigate } from 'react-router-dom';
+import cl from './Login.module.scss';
+import { useForm } from 'react-hook-form';
+import { LoginParams } from '../../redux/Auth/types';
+import { fetchLogin } from '../../redux/Auth/asyncActions';
+import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
+import { Navigate } from 'react-router-dom';
 
-type LoginProps = {
-    userName: string,
-    password: string,
-    rememberMe: false
+const defaultValues: LoginParams = {
+    userName: '',
+    password: '',
+    rememberMe: false,
 }
-
 const Login = () => {
-    const [error, setError] = useState('');
-    const initialValues: LoginProps = { userName: '', password: '', rememberMe: false};
-    const navigate = useNavigate();
+    const isAuth = useSelector(selectIsAuth);
+    const dispatch = useAppDispatch();
     
-    const handleSubmit = (props: LoginProps) => {
-        if(props.password && props.userName)
-        {
-        axios.post('https://localhost:44369/api/User/login',
-        {
-            userName: props.userName,
-            password: props.password,
-            rememberMe: props.rememberMe
-        }).then((response) => {
-            if(response.status === 200){
-                navigate('/');
-                localStorage.setItem('auth', 'true')
-            }
-        }).catch((error) => {
-            setError(error.response.data.message)
-        })}
+    const { data, status } = useSelector(selectLoginData);
+    const { 
+        register, 
+        handleSubmit, 
+        setError, 
+        formState: {errors, isValid}} = useForm({
+        defaultValues: defaultValues,
+        mode: 'onChange'
+    });
+
+    const onSubmit = async (values: LoginParams) => {
+        dispatch(fetchLogin(values));
+    }
+        
+    if(data.token){
+        window.localStorage.setItem('token', String(data.token))
+        
+    }
+
+    if(isAuth){
+        return <Navigate to='/' />;
     }
     return (
-        <Formik
-        initialValues = {initialValues}
-        onSubmit={(values, actions) => {
-            handleSubmit(values)
-            actions.setSubmitting(false);}}
-        >
-            <Form className={cl.login}>
+            <div className={cl.login}>
                 <div className={cl.login__title}>Авторизация</div>
-                <div className={cl.login__block}>
-                    {error && <div>{error}</div>}
-                    <Field className={cl.input} id="userName" name="userName" placeholder="userName" />
-                    <Field className={cl.input} id="password" name="password" placeholder="password" />
-                    <Field id="rememberMe" name="rememberMe" type='checkbox' />
-                <div className={cl.login__block__links}>
-                    <a className={cl.login__block__links__link} href='/'>Забыли пароль?</a>
-                    <a className={cl.login__block__links__link} href='/'>Регистрация</a>
-                </div>
-                </div>
-                <Button >Submit</Button>
-            </Form>
-        </Formik>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className={cl.login__block}>
+                        <input 
+                        className={cl.input} 
+                        id="userName" 
+                        placeholder="userName"
+                        {...register('userName', {required: 'Укажите почту'})} />
+                        <input 
+                        className={cl.input} 
+                        id="password" 
+                        placeholder="password" 
+                        {...register('password', {required: 'Укажите пароль'})} />
+                        <input 
+                        id="rememberMe" 
+                        type='checkbox' 
+                        {...register('rememberMe')} />
+                    <div className={cl.login__block__links}>
+                        <a className={cl.login__block__links__link} href='/'>Забыли пароль?</a>
+                        <a className={cl.login__block__links__link} href='/'>Регистрация</a>
+                    </div>
+                    </div>
+                    <Button>Войти</Button>
+                </form>
+            </div>
     );
 };
 

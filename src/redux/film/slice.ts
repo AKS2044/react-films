@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Status } from '../../enum/EnumStatus';
 import { fetchFilmById, fetchFilms } from '../film/asyncActions';
-import { Film, FilmSliceState, Status } from '../film/types';
+import { Film, FilmSliceState} from '../film/types';
 
 const initialState: FilmSliceState = {
             item: {} as Film,

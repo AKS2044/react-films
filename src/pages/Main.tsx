@@ -11,7 +11,6 @@ import { selectFilmData } from '../redux/film/selectors';
 import { selectFilter } from '../redux/filter/selectors';
 import { setCurrentPage, setFilters } from '../redux/filter/slice';
 import { useAppDispatch } from '../redux/store';
-import { FilmParams } from '../redux/film/types';
 
 const Main = () => {
     const navigate = useNavigate();
