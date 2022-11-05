@@ -14,7 +14,7 @@ import Register from './pages/register/Register';
 import { useEffect } from 'react';
 import { selectIsAuth } from './redux/Auth/selectors';
 import { useSelector } from 'react-redux';
-import { fetchLogin } from './redux/Auth/asyncActions';
+import { fetchAuth } from './redux/Auth/asyncActions';
 import { useAppDispatch } from './redux/store';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
   const isAuth = useSelector(selectIsAuth)
 
   useEffect(() => {
-    //dispatch(fetchLogin(values))
+    dispatch(fetchAuth())
   }, [] )
 
   return (

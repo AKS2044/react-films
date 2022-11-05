@@ -18,7 +18,6 @@ export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams>(
 export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams>(
     'login/fetchRegisterStatus',
     async (params) => {
-        console.log(params, 'params')
         const { userName, password, passwordConfirm, email } = params;
         const { data } = await axios.post('/User/registration', {
             userName,
@@ -26,6 +25,14 @@ export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams
             passwordConfirm,
             email
         });
+        
+        return data;
+    });
+
+export const fetchAuth = createAsyncThunk<LoginPayloadParams>(
+    'login/fetchAuthStatus',
+    async () => {
+        const { data } = await axios.get<LoginPayloadParams>('/User/auth');
         console.log(data, 'data')
         
         return data;
