@@ -2,7 +2,9 @@ import { Status } from '../../enum/EnumStatus';
 
 export interface LoginState {
     data: LoginPayloadParams,
-    status: Status,
+    statusLogin: Status,
+    statusAuth: Status,
+    statusRegister: Status,
 }
 
 export interface LoginParams {

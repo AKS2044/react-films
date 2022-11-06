@@ -1,12 +1,13 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { selectIsAuth } from '../../redux/Auth/selectors';
+import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 import { logout } from '../../redux/Auth/slice';
 import { useAppDispatch } from '../../redux/store';
 import cl from './Header.module.scss';
 
 const Header = () => {
     const isAuth = useSelector(selectIsAuth)
+    const { statusAuth } = useSelector(selectLoginData);
     const dispatch = useAppDispatch();
 
     const onClickLogout = () => {
@@ -27,8 +28,8 @@ const Header = () => {
                     <a href="/" className={cl.menu__block__link}>Премьеры</a>
                     <a href="/" className={cl.menu__block__link}>Новинки</a>
                 </div>
-                {isAuth
-                ? <div className={cl.profile}>
+                {statusAuth === 'completed' && <div className={cl.profile}>{isAuth
+                ?   <div className={cl.profile__items}>
                         <Link to='/profile'>
                             <svg className='photo' width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.35566 22.2505C5.65554 22.1228 6.27676 21.7514 7.54971 20.8129L10.3099 18.7778L10.3099 16.741C9.39175 16.0921 8.76071 15.0639 8.64493 13.8845C8.38156 13.7302 8.20468 13.4442 8.20468 13.117V11.2456C8.20468 10.9417 8.37517 10.6776 8.62573 10.5437V8.01754C8.62573 6.13138 10.1548 4.60234 12.0409 4.60234H14.0058C15.892 4.60234 17.4211 6.13138 17.4211 8.01754V10.5708C17.6458 10.7113 17.7953 10.961 17.7953 11.2456V13.117C17.7953 13.4232 17.6405 13.6932 17.4048 13.8531C17.2972 15.0457 16.6632 16.0864 15.7368 16.741V18.7977L18.0994 20.8129C19.5096 22.0157 20.2252 22.287 20.5747 22.3077C18.509 23.9908 15.8724 25 13 25C10.0953 25 7.43159 23.9679 5.35566 22.2505Z" fill="#FFFFFF"/>
@@ -36,11 +37,12 @@ const Header = () => {
                             </svg>
                         </Link>
                         <Link onClick={onClickLogout} className={cl.logout} to='/'>Выйти</Link> 
-                </div>
-                : <div className={cl.profile}>
-                    <Link className={cl.logout} to='/login'>Войти</Link>
-                    <Link className={cl.logout} to='/register'>Регистрация</Link>
-                </div> }
+                    </div>
+                :   <div className={cl.profile__items}>
+                        <Link className={cl.logout} to='/login'>Войти</Link>
+                        <Link className={cl.logout} to='/register'>Регистрация</Link>
+                    </div> }</div>}
+                
                 
                 <div className={cl.block__search}>
                 <input className={cl.search__input}/>

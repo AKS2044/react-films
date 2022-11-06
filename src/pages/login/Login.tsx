@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../redux/store';
 import Button from '../../components/UI/button/Button';
+import {TextField, Alert} from '@mui/material';
 import cl from './Login.module.scss';
 import { useForm } from 'react-hook-form';
 import { LoginParams } from '../../redux/Auth/types';
@@ -13,27 +14,26 @@ const defaultValues: LoginParams = {
     password: '',
     rememberMe: false,
 }
+
 const Login = () => {
     const isAuth = useSelector(selectIsAuth);
     const dispatch = useAppDispatch();
-    
-    const { data, status } = useSelector(selectLoginData);
+
+    const { data, statusLogin } = useSelector(selectLoginData);
     const { 
         register, 
         handleSubmit, 
-        setError, 
-        formState: {errors, isValid}} = useForm({
+        formState: {errors}} = useForm({
         defaultValues: defaultValues,
         mode: 'onChange'
     });
 
     const onSubmit = async (values: LoginParams) => {
-        dispatch(fetchLogin(values));
+            await dispatch(fetchLogin(values));
     }
         
     if(data.token){
         window.localStorage.setItem('token', String(data.token))
-        
     }
 
     if(isAuth){
@@ -42,22 +42,28 @@ const Login = () => {
     return (
             <div className={cl.login}>
                 <div className={cl.login__title}>Авторизация</div>
+                {statusLogin === 'error' && 
+                <Alert className={cl.alert} variant="filled" severity="error">
+                    Логин или пароль — <strong>не верны!</strong>
+                </Alert>}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={cl.login__block}>
-                        <input 
-                        className={cl.input} 
-                        id="userName" 
-                        placeholder="userName"
-                        {...register('userName', {required: 'Укажите почту'})} />
-                        <input 
-                        className={cl.input} 
-                        id="password" 
-                        placeholder="password" 
+                        <TextField  
+                        InputProps={{className: cl.input}} 
+                        InputLabelProps={{className: cl.input__label}} 
+                        label="Логин"
+                        error={Boolean(errors.userName?.message)}
+                        helperText={errors.userName?.message}
+                        {...register('userName', {required: 'Укажите почту'})}  />
+                        <TextField  
+                        InputProps={{className: cl.input}} 
+                        InputLabelProps={{className: cl.input__label}} 
+                        label="Пароль"
+                        type="password"
+                        error={Boolean(errors.password?.message)}
+                        helperText={errors.password?.message}
+                        autoComplete="on"
                         {...register('password', {required: 'Укажите пароль'})} />
-                        <input 
-                        id="rememberMe" 
-                        type='checkbox' 
-                        {...register('rememberMe')} />
                     <div className={cl.login__block__links}>
                         <a className={cl.login__block__links__link} href='/'>Забыли пароль?</a>
                         <a className={cl.login__block__links__link} href='/'>Регистрация</a>

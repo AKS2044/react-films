@@ -12,14 +12,11 @@ import AddFilm from './pages/addFilm/AddFilm';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import { useEffect } from 'react';
-import { selectIsAuth } from './redux/Auth/selectors';
-import { useSelector } from 'react-redux';
 import { fetchAuth } from './redux/Auth/asyncActions';
 import { useAppDispatch } from './redux/store';
 
 function App() {
   const dispatch = useAppDispatch();
-  const isAuth = useSelector(selectIsAuth)
 
   useEffect(() => {
     dispatch(fetchAuth())

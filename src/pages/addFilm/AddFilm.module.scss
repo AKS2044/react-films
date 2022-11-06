@@ -5,6 +5,19 @@ svg path:hover{
 }
 
 .add{
+    .input{
+        background: $background__3;
+        width: 300px;
+        color: $text;
+        border-radius: 6px;
+        margin-bottom: 20px !important;
+        &__label{
+            color: $text;
+        }
+    }
+    .alert{
+        margin: 20px;
+    }
     &__title{
         padding: 10px 0;
         text-align: center;
@@ -20,7 +33,7 @@ svg path:hover{
             display: flex;
             flex-wrap: wrap;
             margin-left: 20px;
-            width: 280px;
+            width: 500px;
             &__minus{
                 margin-left: 10px;
             }
@@ -39,23 +52,14 @@ svg path:hover{
         &__item{
             display: flex;
             align-items: baseline;
-            min-height: 40px;
             &__text{
                 width: 145px;
                 margin-right: 40px;
             }
-            input{
-                padding: 0px 10px;
-                width: 250px;
-                height: 30px;
-                background: $background__3;
-                border: 1px solid $br__grey;
-                color: $text;
-                border-radius: 6px;
-            }
             .popup__block{
                 position: relative;
                 ul{
+                    top: 40px;
                     width: 100%;
                     position: absolute;
                     z-index: 1001;

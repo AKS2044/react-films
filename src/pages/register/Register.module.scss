@@ -3,14 +3,17 @@
 .register{
     text-align: center;
     .input{
-        padding-left: 10px;
-        width: 300px;
-        border: 1px solid $br__grey;
-        height: 35px;
         background: $background__3;
-        border-radius: 6px;
+        width: 300px;
         color: $text;
-        margin: 10px;
+        border-radius: 6px;
+        margin-bottom: 20px !important;
+        &__label{
+            color: $text;
+        }
+    }
+    .alert{
+        margin: 20px;
     }
     &__title{
         font-size: 20px;

@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { RegisterParams } from '../../redux/Auth/types';
 import { fetchRegister } from '../../redux/Auth/asyncActions';
+import {TextField, Alert} from '@mui/material';
+import { Navigate } from 'react-router-dom';
+import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 
 const defaultValues: RegisterParams = {
     email: '',
@@ -14,46 +17,73 @@ const defaultValues: RegisterParams = {
 }
 
 const Register = () => {
+    const isAuth = useSelector(selectIsAuth);
     const dispatch = useAppDispatch();
+
+    const { data, statusRegister } = useSelector(selectLoginData);
+
+    console.log(data,'dsad')
     
     const { 
         register, 
         handleSubmit, 
-        setError, 
-        formState: {errors, isValid}} = useForm({
+        formState: {errors}} = useForm({
         defaultValues: defaultValues,
         mode: 'onChange'
     });
 
     const onSubmit = async (values: RegisterParams) => {
-        dispatch(fetchRegister(values));
+        await dispatch(fetchRegister(values));
     }
 
-    //const isAuth = useSelector();
+    if(data.token){
+        window.localStorage.setItem('token', String(data.token))
+    }
+
+    if(isAuth){
+        return <Navigate to='/' />;
+    }
+
     return (
         <div className={cl.register}>
                 <div className={cl.register__title}>Авторизация</div>
+                {statusRegister === 'error' && 
+                <Alert className={cl.alert} variant="filled" severity="error">
+                    Логин или E-mail — <strong>заняты!</strong>
+                </Alert>}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={cl.register__block}>
-                        <input 
-                        className={cl.input} 
-                        id="userName" 
-                        placeholder="Логин"
-                        {...register('userName', {required: 'Укажите почту'})} />
-                        <input 
-                        className={cl.input} 
-                        id="password" 
-                        placeholder="E-mail" 
-                        {...register('email', {required: 'Укажите email'})} />
-                        <input 
-                        className={cl.input} 
-                        id="password" 
-                        placeholder="Пароль" 
+                        <TextField  
+                        InputProps={{className: cl.input}} 
+                        InputLabelProps={{className: cl.input__label}} 
+                        label="Логин"
+                        error={Boolean(errors.userName?.message)}
+                        helperText={errors.userName?.message}
+                        {...register('userName', {required: 'Укажите логин'})}  />
+                        <TextField  
+                        InputProps={{className: cl.input}} 
+                        InputLabelProps={{className: cl.input__label}} 
+                        label="E-mail"
+                        error={Boolean(errors.email?.message)}
+                        helperText={errors.email?.message}
+                        {...register('email', {required: 'Укажите email'})}  />
+                        <TextField  
+                        InputProps={{className: cl.input}} 
+                        InputLabelProps={{className: cl.input__label}} 
+                        label="Пароль"
+                        type="password"
+                        error={Boolean(errors.password?.message)}
+                        helperText={errors.password?.message}
+                        autoComplete="off"
                         {...register('password', {required: 'Укажите пароль'})} />
-                        <input 
-                        className={cl.input} 
-                        id="passwordConfirm" 
-                        placeholder="Повтори пароль" 
+                        <TextField  
+                        InputProps={{className: cl.input}} 
+                        InputLabelProps={{className: cl.input__label}} 
+                        label="Повтори пароль"
+                        type="password"
+                        autoComplete="off"
+                        error={Boolean(errors.password?.message)}
+                        helperText={errors.password?.message}
                         {...register('passwordConfirm', {required: 'Повтори пароль'})} />
                     </div>
                     <Button>Войти</Button>
