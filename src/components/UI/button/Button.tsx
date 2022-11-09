@@ -2,7 +2,7 @@ import React from 'react';
 import cl from './Button.module.scss'
 
 type ButtonProps = {
-    children: string
+    children: string,
 };
 const Button = ({children}: ButtonProps) => {
     return (

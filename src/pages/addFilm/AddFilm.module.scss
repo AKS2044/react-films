@@ -4,6 +4,18 @@ svg path:hover{
     stroke: $br__red;
 }
 
+.btn{
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background: $background__second;
+    border: 1px solid $br__grey;
+    &:hover{
+        background: $br__red;
+        transition: 0.1s linear;
+    }
+}
+
 .add{
     .input{
         background: $background__3;
@@ -14,6 +26,11 @@ svg path:hover{
         &__label{
             color: $text;
         }
+    }
+    .cross{
+        margin: 8px;
+        position: absolute;
+        right: 0;
     }
     .alert{
         margin: 20px;
@@ -51,7 +68,7 @@ svg path:hover{
         }
         &__item{
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             &__text{
                 width: 145px;
                 margin-right: 40px;

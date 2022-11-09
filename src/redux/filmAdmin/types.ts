@@ -2,17 +2,18 @@ import { Status } from "../../enum/EnumStatus"
 
 export interface FilmAddState {
     statusFilmAdd: Status,
+    statusUpload: Status,
+    urlData: string,
     genreData: GenrePayloadParams[],
     countryData: CountryPayloadParams[],
     managerData: ManagerPayloadParams[],
+    actorData: ActorPayloadParams[],
 }
 
 export interface FilmAddParams {
-    id: number,
     nameFilms: string,
     ageLimit: number,
     idRating: number,
-    ratingSite: number,
     releaseDate: number,
     linkFilmPlayer: string,
     linkFilmtrailer: string,
@@ -46,5 +47,12 @@ export interface CountryPayloadParams {
 export interface ManagerPayloadParams {
     id: number,
     stageManagers: string
+}
+
+export interface ActorPayloadParams {
+    id: number,
+    firstName: string,
+    lastName: string,
+    secondName: string
 }
 

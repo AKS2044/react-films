@@ -1,0 +1,44 @@
+@import "/src/colors";
+
+.admin{
+    &__title{
+        padding: 10px 0;
+        text-align: center;
+        font-size: 28px;
+        line-height: 33px;
+        border-bottom: 1px solid $br__grey;
+    }
+    &__block{
+        display: flex;
+        justify-content: space-between;
+        &__links{
+            font-size: 22px;
+            width: 50%;
+            height: 45px;
+            border-bottom: 1px solid $br__grey;
+        }
+    }
+    &__menu{
+        display: flex;
+        justify-content: space-between;
+        &__links{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            font-size: 18px;
+            width: 50%;
+            height: 45px;
+        }
+        .active{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            font-size: 18px;
+            width: 49.9%;
+            height: 45px;
+            background: $br__red;
+            border-bottom: 1px solid $br__red;
+        }
+    }
+
+}

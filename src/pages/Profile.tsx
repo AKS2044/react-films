@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import photoUser from '../img/Rick.png';
 import rec from '../img/recommended.jpg';
+import { selectLoginData } from '../redux/Auth/selectors';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
+    
     return (
         <div className='profile'>
             <div className='profile__info'>

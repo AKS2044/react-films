@@ -24,7 +24,7 @@ export interface RegisterParams {
 
 export interface LoginPayloadParams {
     email: string,
-    roles: [],
+    roles: string[],
     token: boolean,
     userName: string
 }

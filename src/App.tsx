@@ -11,17 +11,31 @@ import NotFound from './pages/NotFound';
 import AddFilm from './pages/addFilm/AddFilm';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchAuth } from './redux/Auth/asyncActions';
 import { useAppDispatch } from './redux/store';
+import { useSelector } from 'react-redux';
+import { selectLoginData } from './redux/Auth/selectors';
+import Admin from './pages/admin/Admin';
 
 function App() {
   const dispatch = useAppDispatch();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const { data, statusAuth } = useSelector(selectLoginData);
+
+  console.log(isAdmin)
+  
+//   if(statusAuth === 'completed'){
+//     const result = Boolean(data.roles.find((r) => r === 'Admin'));
+//     if(result){
+//     console.log(result)
+//     setIsAdmin(true);
+//     }
+// }
 
   useEffect(() => {
     dispatch(fetchAuth())
   }, [] )
-
   return (
     <div>
       <Header />
@@ -33,6 +47,7 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/film/:id" element={<View /> } />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<Admin /> } />
             <Route path="/addFilm" element={<AddFilm />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

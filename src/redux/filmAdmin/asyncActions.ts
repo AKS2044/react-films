@@ -1,15 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
-import { CountryPayloadParams, FilmAddParams, FilmAddPayloadParams, GenrePayloadParams, ManagerPayloadParams } from "./types";
-
+import { 
+        ActorPayloadParams, 
+        CountryPayloadParams, 
+        FilmAddParams, 
+        FilmAddPayloadParams, 
+        GenrePayloadParams, 
+        ManagerPayloadParams } from "./types";
+        
 export const fetchAddFilm = createAsyncThunk<FilmAddPayloadParams, FilmAddParams>(
         'filmAdmin/fetchAddFilmStatus',
         async (params) => {
-                const { id, 
-                        idRating, 
+                const { idRating, 
                         nameFilms, 
                         ageLimit,
-                        ratingSite,
                         releaseDate,
                         linkFilmPlayer,
                         linkFilmtrailer,
@@ -21,12 +25,11 @@ export const fetchAddFilm = createAsyncThunk<FilmAddPayloadParams, FilmAddParams
                         time,
                         pathPoster,
                         imageName } = params;
+                        console.log(params)
                 const { data } = await axios.post<FilmAddPayloadParams>('/Film/addfilm', {
-                        id, 
                         idRating, 
                         nameFilms, 
                         ageLimit,
-                        ratingSite,
                         releaseDate,
                         linkFilmPlayer,
                         linkFilmtrailer,
@@ -40,29 +43,47 @@ export const fetchAddFilm = createAsyncThunk<FilmAddPayloadParams, FilmAddParams
                         imageName
                 });
                 
+                
                 return data;
         });
 
-export const fetchGetGenre = createAsyncThunk(
-        'filmAdmin/fetchGetGenreStatus',
+export const fetchUpload = createAsyncThunk<string, FormData>(
+        'filmAdmin/fetchUploadStatus',
+        async (formData) => {
+                const {data} = await axios.post('/Film/upload', formData);
+
+                return data;
+        });
+
+export const fetchGetGenres = createAsyncThunk(
+        'filmAdmin/fetchGetGenresStatus',
         async () => {
                 const { data } = await axios.get<GenrePayloadParams[]>('/Genre/allGenre');
 
                 return data;
         });
 
-export const fetchGetCountry = createAsyncThunk(
-        'filmAdmin/fetchGetCountryStatus',
+export const fetchGetCountries = createAsyncThunk(
+        'filmAdmin/fetchGetCountriesStatus',
         async () => {
                 const { data } = await axios.get<CountryPayloadParams[]>('/Country/allCountry');
 
                 return data;
         });
 
-export const fetchGetManager = createAsyncThunk(
-        'filmAdmin/fetchGetManagerStatus',
+export const fetchGetManagers = createAsyncThunk(
+        'filmAdmin/fetchGetManagersStatus',
         async () => {
                 const { data } = await axios.get<ManagerPayloadParams[]>('/StageManager/allStageManager');
                 
                 return data;
         });
+
+export const fetchGetActors = createAsyncThunk(
+        'filmAdmin/fetchGetActorsStatus',
+        async () => {
+                const { data } = await axios.get<ActorPayloadParams[]>('/Actor/allActor');
+                
+                return data;
+        });
+
