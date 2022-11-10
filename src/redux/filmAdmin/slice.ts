@@ -1,17 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Status } from '../../enum/EnumStatus';
-import { fetchAddFilm, fetchGetCountries, fetchGetGenres, fetchGetManagers, fetchGetActors, fetchUpload } from "./asyncActions";
+import { 
+    fetchAddFilm, 
+    fetchGetCountries, 
+    fetchGetGenres, 
+    fetchGetManagers, 
+    fetchGetActors, 
+    fetchUpload, 
+    fetchPostGenre, 
+    fetchDeleteGenre, 
+    fetchPostCountries, 
+    fetchDeleteCountries, 
+    fetchPostManagers, 
+    fetchDeleteManagers, 
+    fetchPostActors, 
+    fetchDeleteActors, 
+    fetchDeleteFilm} from "./asyncActions";
 import { FilmAddState} from "./types";
 
 
 const initialState: FilmAddState = {
-    statusFilmAdd: Status.LOADING,
+    filmAddStatus: Status.LOADING,
+    filmDeleteStatus: Status.LOADING,
     statusUpload: Status.LOADING,
     urlData: '',
     genreData:  [],
+    genrePostStatus: Status.LOADING,
+    genreDeleteStatus: Status.LOADING,
     countryData: [],
+    countryPostStatus: Status.LOADING,
+    countryDeleteStatus: Status.LOADING,
     managerData: [],
+    managerPostStatus: Status.LOADING,
+    managerDeleteStatus: Status.LOADING,
     actorData: [],
+    actorPostStatus: Status.LOADING,
+    actorDeleteStatus: Status.LOADING,
 }
 
 
@@ -24,13 +48,24 @@ export const filmAdminSlice = createSlice({
     extraReducers: (builder) => {
         // fetchAddFilm builder
         builder.addCase(fetchAddFilm.pending, (state) => {
-            state.statusFilmAdd = Status.LOADING;
+            state.filmAddStatus = Status.LOADING;
         });
         builder.addCase(fetchAddFilm.fulfilled, (state) => {
-            state.statusFilmAdd = Status.SUCCESS;
+            state.filmAddStatus = Status.SUCCESS;
         });
         builder.addCase(fetchAddFilm.rejected, (state) => {
-            state.statusFilmAdd = Status.ERROR;
+            state.filmAddStatus = Status.ERROR;
+        });
+
+        // fetchDeleteFilm builder
+        builder.addCase(fetchDeleteFilm.pending, (state) => {
+            state.filmDeleteStatus = Status.LOADING;
+        });
+        builder.addCase(fetchDeleteFilm.fulfilled, (state) => {
+            state.filmDeleteStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchDeleteFilm.rejected, (state) => {
+            state.filmDeleteStatus = Status.ERROR;
         });
 
         // fetchGetGenre builder
@@ -44,7 +79,29 @@ export const filmAdminSlice = createSlice({
             state.genreData = [];
         });
 
-        // fetchGetCountry builder
+         // fetchPostGenre builder
+        builder.addCase(fetchPostGenre.pending, (state) => {
+            state.genrePostStatus = Status.LOADING;
+        });
+        builder.addCase(fetchPostGenre.fulfilled, (state) => {
+            state.genrePostStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchPostGenre.rejected, (state) => {
+            state.genrePostStatus = Status.ERROR;
+        });
+
+         // fetchDeleteGenre builder
+        builder.addCase(fetchDeleteGenre.pending, (state) => {
+            state.genreDeleteStatus = Status.LOADING;
+        });
+        builder.addCase(fetchDeleteGenre.fulfilled, (state) => {
+            state.genreDeleteStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchDeleteGenre.rejected, (state) => {
+            state.genreDeleteStatus = Status.ERROR;
+        });
+
+        // fetchGetCountries builder
         builder.addCase(fetchGetCountries.pending, (state) => {
             state.countryData = [];
         });
@@ -55,7 +112,29 @@ export const filmAdminSlice = createSlice({
             state.countryData = [];
         });
 
-        // fetchGetManager builder
+         // fetchPostCountries builder
+        builder.addCase(fetchPostCountries.pending, (state) => {
+            state.countryPostStatus = Status.LOADING;
+        });
+        builder.addCase(fetchPostCountries.fulfilled, (state) => {
+            state.countryPostStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchPostCountries.rejected, (state) => {
+            state.countryPostStatus = Status.ERROR;
+        });
+
+         // fetchDeleteCountries builder
+        builder.addCase(fetchDeleteCountries.pending, (state) => {
+            state.countryDeleteStatus = Status.LOADING;
+        });
+        builder.addCase(fetchDeleteCountries.fulfilled, (state) => {
+            state.countryDeleteStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchDeleteCountries.rejected, (state) => {
+            state.countryDeleteStatus = Status.ERROR;
+        });
+
+        // fetchGetManagers builder
         builder.addCase(fetchGetManagers.pending, (state) => {
             state.managerData = [];
         });
@@ -66,7 +145,29 @@ export const filmAdminSlice = createSlice({
             state.managerData = [];
         });
 
-        // fetchGetManager builder
+         // fetchPostManagers builder
+        builder.addCase(fetchPostManagers.pending, (state) => {
+            state.managerPostStatus = Status.LOADING;
+        });
+        builder.addCase(fetchPostManagers.fulfilled, (state) => {
+            state.managerPostStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchPostManagers.rejected, (state) => {
+            state.managerPostStatus = Status.ERROR;
+        });
+
+         // fetchDeleteManagers builder
+        builder.addCase(fetchDeleteManagers.pending, (state) => {
+            state.managerDeleteStatus = Status.LOADING;
+        });
+        builder.addCase(fetchDeleteManagers.fulfilled, (state) => {
+            state.managerDeleteStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchDeleteManagers.rejected, (state) => {
+            state.managerDeleteStatus = Status.ERROR;
+        });
+
+        // fetchGetActors builder
         builder.addCase(fetchGetActors.pending, (state) => {
             state.actorData = [];
         });
@@ -75,6 +176,28 @@ export const filmAdminSlice = createSlice({
         });
         builder.addCase(fetchGetActors.rejected, (state) => {
             state.actorData = [];
+        });
+
+         // fetchPostActors builder
+        builder.addCase(fetchPostActors.pending, (state) => {
+            state.actorPostStatus = Status.LOADING;
+        });
+        builder.addCase(fetchPostActors.fulfilled, (state) => {
+            state.actorPostStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchPostActors.rejected, (state) => {
+            state.actorPostStatus = Status.ERROR;
+        });
+
+         // fetchDeleteActors builder
+        builder.addCase(fetchDeleteActors.pending, (state) => {
+            state.actorDeleteStatus = Status.LOADING;
+        });
+        builder.addCase(fetchDeleteActors.fulfilled, (state) => {
+            state.actorDeleteStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchDeleteActors.rejected, (state) => {
+            state.actorDeleteStatus = Status.ERROR;
         });
 
         // fetchUpload builder

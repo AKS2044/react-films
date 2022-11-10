@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import Button from '../components/UI/button/Button';
 
 const View = () => {
-    const playerItem = [
+    const playerfilm = [
         {title: 'Плеер 1', linkPlayer: player1},
         {title: 'Плеер 2', linkPlayer: player2},
         {title: 'Плеер 3', linkPlayer: player3},
@@ -28,21 +28,20 @@ const View = () => {
         }, [params]);
 
     
-    const { item, status } = useSelector(selectFilmData);
-    console.log(item)
+    const { film, filmStatus } = useSelector(selectFilmData);
 
-    const player = playerItem.find((p, index) => index === playerId)
+    const player = playerfilm.find((p, index) => index === playerId)
     return (
         <div className='post'>
             <div className='post__flex'>
             <div className='post__left'>
-                <img className='post__left-poster' src={`https://localhost:44369/`+ item.pathPoster} alt="Постер" title="Постер" />
+                <img className='post__left-poster' src={`https://localhost:44369/`+ film.pathPoster} alt="Постер" title="Постер" />
                 <div className='post__left-rating'>
-                    <div className='post__left-rating-kinopoisk'>KP: <span className='post__rating-color'>{item.ratingKinopoisk ? item.ratingKinopoisk : '0'}</span></div>
-                    <div className='post__left-rating-imdb'>IMDB.COM: <span className='post__rating-color'>{item.ratingImdb ? item.ratingImdb : '0'}</span></div>
+                    <div className='post__left-rating-kinopoisk'>KP: <span className='post__rating-color'>{film.ratingKinopoisk ? film.ratingKinopoisk : '0'}</span></div>
+                    <div className='post__left-rating-imdb'>IMDB.COM: <span className='post__rating-color'>{film.ratingImdb ? film.ratingImdb : '0'}</span></div>
                 </div>
                 <div className='post__left-site'>
-                    <div className='post__left-site-rating'>Рейтинг сайта: <span className='post__rating-color'>{item.ratingSite ? item.ratingSite : '0'}</span></div>
+                    <div className='post__left-site-rating'>Рейтинг сайта: <span className='post__rating-color'>{film.ratingSite ? film.ratingSite : '0'}</span></div>
                     <div className='border-menu'></div>
                     <div className='post__left-site-stars'>
                     <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,23 +75,23 @@ const View = () => {
                 </div>
             </div>
             <div className='post__right'>
-                <h2 className='post__right-text-one'>{item.nameFilms}</h2>
-                <div className='post__right-text-two'>Год: <span className='post__text'>{item.releaseDate}</span></div>
-                <div className='post__right-text-one'>Жанр: <span className='post__text'>{item.genre ? item.genre.map((g) => g + ' ') : 'Нет стран'}</span></div>
-                <div className='post__right-text-two'>Страна: <span className='post__text'>{item.country ? item.country.map((c) => c + ' ') : 'Нет стран'}</span></div>
-                <div className='post__right-text-one'>Режиссер: <span className='post__text'>{item.stageManagers ? item.stageManagers.map((m) => m) : 'Нет режиссеров'}</span></div>
-                <div className='post__right-text-two'>Возраст: <span className='post__text'>{item.ageLimit ? item.ageLimit : '0'} +</span></div>
-                <div className='post__right-text-one'>Время: <span className='post__text'>{item.time ? item.time : '0'} мин.</span></div>
+                <h2 className='post__right-text-one'>{film.nameFilms}</h2>
+                <div className='post__right-text-two'>Год: <span className='post__text'>{film.releaseDate}</span></div>
+                <div className='post__right-text-one'>Жанр: <span className='post__text'>{film.genre ? film.genre.map((g) => g + ' ') : 'Нет стран'}</span></div>
+                <div className='post__right-text-two'>Страна: <span className='post__text'>{film.country ? film.country.map((c) => c + ' ') : 'Нет стран'}</span></div>
+                <div className='post__right-text-one'>Режиссер: <span className='post__text'>{film.stageManagers ? film.stageManagers.map((m) => m) : 'Нет режиссеров'}</span></div>
+                <div className='post__right-text-two'>Возраст: <span className='post__text'>{film.ageLimit ? film.ageLimit : '0'} +</span></div>
+                <div className='post__right-text-one'>Время: <span className='post__text'>{film.time ? film.time : '0'} мин.</span></div>
                 <div className='post__right-text-two'>В главных ролях: <span className='post__text'>
-                    {item.actors ? item.actors.map((a) => a.firstName + ' ' + a.lastName + ' ') : 'Нет актеров'}</span></div>
+                    {film.actors ? film.actors.map((a) => a.firstName + ' ' + a.lastName + ' ') : 'Нет актеров'}</span></div>
                 <div className='post__right-text-one'>Качество видео: <span className='post__text'>BDRip</span></div>
                 <div className='post__right-text-two'>Перевод: <span className='post__text'>Дублированный</span></div>
-                <div className='post__right-text-one'>Описание: <span className='post__text'>{item.description ? item.description : 'Нет описания'}</span></div>
+                <div className='post__right-text-one'>Описание: <span className='post__text'>{film.description ? film.description : 'Нет описания'}</span></div>
             </div>
             </div>
             <div className='post__players'>
                 <div className='post__players-panel'>
-                    {playerItem.map((p: any, index) => 
+                    {playerfilm.map((p: any, index) => 
                         <button 
                         key={index} 
                         onClick={() => setPlayerId(index)} 
@@ -108,29 +107,29 @@ const View = () => {
             <div className='post__recommended'>
                 <div className='post__recommended-title'>Мы рекомендуем:</div>
                 <div className='post__recommended-block'>
-                    <div className='post__recommended-block-item'>
-                        <a href='/'><img className='post__recommended-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>
-                        <div className='post__recommended-block-item-text'>Название фильма(год)</div>
+                    <div className='post__recommended-block-film'>
+                        <a href='/'><img className='post__recommended-block-film-poster' src={rec} alt="Постер" title="Постер" /></a>
+                        <div className='post__recommended-block-film-text'>Название фильма(год)</div>
                     </div>
-                    <div className='post__recommended-block-item'>
-                        <a href='/'><img className='post__recommended-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>
-                        <div className='post__recommended-block-item-text'>Название фильма(год)</div>
+                    <div className='post__recommended-block-film'>
+                        <a href='/'><img className='post__recommended-block-film-poster' src={rec} alt="Постер" title="Постер" /></a>
+                        <div className='post__recommended-block-film-text'>Название фильма(год)</div>
                     </div>
-                    <div className='post__recommended-block-item'>
-                        <a href='/'><img className='post__recommended-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>
-                        <div className='post__recommended-block-item-text'>Название фильма(год)</div>
+                    <div className='post__recommended-block-film'>
+                        <a href='/'><img className='post__recommended-block-film-poster' src={rec} alt="Постер" title="Постер" /></a>
+                        <div className='post__recommended-block-film-text'>Название фильма(год)</div>
                     </div>
-                    <div className='post__recommended-block-item'>
-                        <a href='/'><img className='post__recommended-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>
-                        <div className='post__recommended-block-item-text'>Название фильма(год)</div>
+                    <div className='post__recommended-block-film'>
+                        <a href='/'><img className='post__recommended-block-film-poster' src={rec} alt="Постер" title="Постер" /></a>
+                        <div className='post__recommended-block-film-text'>Название фильма(год)</div>
                     </div>
-                    <div className='post__recommended-block-item'>
-                        <a href='/'><img className='post__recommended-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>
-                        <div className='post__recommended-block-item-text'>Название фильма(год)</div>
+                    <div className='post__recommended-block-film'>
+                        <a href='/'><img className='post__recommended-block-film-poster' src={rec} alt="Постер" title="Постер" /></a>
+                        <div className='post__recommended-block-film-text'>Название фильма(год)</div>
                     </div>
-                    <div className='post__recommended-block-item'>
-                        <a href='/'><img className='post__recommended-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>
-                        <div className='post__recommended-block-item-text'>Название фильма(год)</div>
+                    <div className='post__recommended-block-film'>
+                        <a href='/'><img className='post__recommended-block-film-poster' src={rec} alt="Постер" title="Постер" /></a>
+                        <div className='post__recommended-block-film-text'>Название фильма(год)</div>
                     </div>
                 </div>
             </div>

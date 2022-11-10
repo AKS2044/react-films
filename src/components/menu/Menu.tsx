@@ -1,26 +1,18 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import posterMenu from '../../img/posterMenu.jpg';
+import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
 import cl from './Menu.module.scss';
 
 const Menu = () => {
+    const { genreData } = useSelector(selectFilmAdminData);
     return (
         <div className={cl.menu}>
             <div className={cl.menu__block}>
                 <div className={cl.menu__block__title}>Меню</div>
                 <div className={cl.menu__border}></div>
                 <div className={cl.content}>
-                    <a href='/' className={cl.content__link}>Боевик<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Фантастика<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Триллер<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Боевик<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Боевик<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Боевик<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Документальный<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Боевик<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Боевик<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Приключения<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Фэнтези<small>(1тыс)</small></a>
-                    <a href='/' className={cl.content__link}>Боевик<small>(1тыс)</small></a>
+                    {genreData.map((g) => <Link key={g.id} to='/' className={cl.content__link}>{g.genres} <small>(1тыс)</small></Link>)}
                 </div>
             </div>
             <div className={cl.menu__block}>

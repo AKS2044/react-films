@@ -51,7 +51,7 @@ const AddFilm = () => {
     const inputFileRef = useRef<HTMLInputElement>(null);
 
     const { 
-        statusFilmAdd, 
+        filmAddStatus, 
         genreData, 
         countryData, 
         managerData,
@@ -170,15 +170,14 @@ const AddFilm = () => {
     }
 
     
-    if(statusFilmAdd === 'completed'){
-        console.log(statusFilmAdd)
+    if(filmAddStatus === 'completed'){
         return <Navigate to='/' />;
     }
 
     return (
         <div className={cl.add}>
             <div className={cl.add__title}>Добавить фильм</div>
-            {statusFilmAdd === 'error' && 
+            {filmAddStatus === 'error' && 
                 <Alert className={cl.alert} variant="filled" severity="error">
                     Что-то пошло — <strong>не так</strong>
                 </Alert>}

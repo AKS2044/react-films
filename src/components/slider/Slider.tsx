@@ -1,20 +1,10 @@
-import { useEffect } from 'react';
 import cl from './Slider.module.scss';
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../redux/store'
-import { fetchFilms } from '../../redux/film/asyncActions';
 import { selectFilmData } from '../../redux/film/selectors';
 import { Link } from 'react-router-dom';
-import { selectFilter } from '../../redux/filter/selectors';
 
 const Slider = () => {
-    const dispatch = useAppDispatch();
-    const { items, status } = useSelector(selectFilmData);
-    const { currentPage } = useSelector(selectFilter);
-
-    // useEffect(() => {
-    // dispatch(fetchFilms({currentPage}));
-    // }, [])
+    const { films } = useSelector(selectFilmData);
 
     return (
         <div className={cl.slider}>
@@ -34,7 +24,7 @@ const Slider = () => {
                     </defs>
                 </svg>
                 <div className={cl.slider__content__group}>
-                {items.map((film) =>
+                {films.map((film) =>
                     <div key={film.id} className={cl.post__block}>
                         <Link to={`/film/${film.id}`}>
                         <img className={cl.poster__slider} src={`https://localhost:44369/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />

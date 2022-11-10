@@ -16,7 +16,7 @@ const Main = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const isMounted = useRef(false);
-    const { items, status } = useSelector(selectFilmData);
+    const { films, filmsStatus } = useSelector(selectFilmData);
     const { currentPage } = useSelector(selectFilter);
 
     const getFilms = async () => {
@@ -64,14 +64,14 @@ const Main = () => {
         dispatch(setCurrentPage(page));
     };
     
-    const films = items.map((film: any) => <ItemFilm key={film.id} {...film} />);
+    const filmArray = films.map((film: any) => <ItemFilm key={film.id} {...film} />);
     const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
     return (
         <div>
             <Sort />
             <div className='content-main'>
-                {status === 'loading' ? skeletons : films}
+                {filmsStatus === 'loading' ? skeletons : filmArray}
             </div>
             <Pagination currentPage={currentPage} onChangePage={onChangePage} />
         </div>

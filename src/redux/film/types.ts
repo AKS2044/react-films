@@ -24,9 +24,10 @@ export interface Film {
 }
 
 export interface FilmSliceState {
-        item: Film;
-        items: Film[];
-        status: Status;
+        film: Film;
+        filmStatus: Status;
+        films: Film[];
+        filmsStatus: Status;
 }
 
 export interface FilmParams {

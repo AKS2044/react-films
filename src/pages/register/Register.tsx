@@ -21,8 +21,6 @@ const Register = () => {
     const dispatch = useAppDispatch();
 
     const { data, statusRegister } = useSelector(selectLoginData);
-
-    console.log(data,'dsad')
     
     const { 
         register, 

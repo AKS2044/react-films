@@ -30,6 +30,8 @@ const Login = () => {
 
     const onSubmit = async (values: LoginParams) => {
             await dispatch(fetchLogin(values));
+            
+            window.location.reload();
     }
         
     if(data.token){

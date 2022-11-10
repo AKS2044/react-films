@@ -6,7 +6,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Slider from './components/slider/Slider';
 import Menu from './components/menu/Menu';
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, Navigate} from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import AddFilm from './pages/addFilm/AddFilm';
 import Login from './pages/login/Login';
@@ -22,20 +22,20 @@ function App() {
   const dispatch = useAppDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
   const { data, statusAuth } = useSelector(selectLoginData);
-
-  console.log(isAdmin)
   
-//   if(statusAuth === 'completed'){
-//     const result = Boolean(data.roles.find((r) => r === 'Admin'));
-//     if(result){
-//     console.log(result)
-//     setIsAdmin(true);
-//     }
-// }
+  useEffect(() => {
+    dispatch(fetchAuth());
+  }, [] )
 
   useEffect(() => {
-    dispatch(fetchAuth())
-  }, [] )
+    if(statusAuth === 'completed'){
+      const result = Boolean(data.roles.find((r) => r === 'Admin'))
+      if(result){
+        setIsAdmin(true)
+      }
+    }
+  }, [statusAuth] )
+
   return (
     <div>
       <Header />
@@ -47,8 +47,8 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/film/:id" element={<View /> } />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/admin" element={<Admin /> } />
-            <Route path="/addFilm" element={<AddFilm />} />
+            {isAdmin && <Route path="/admin" element={<Admin /> } />}
+            {isAdmin && <Route path="/addFilm" element={<AddFilm />} />}
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />

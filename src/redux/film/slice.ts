@@ -1,54 +1,52 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { Status } from '../../enum/EnumStatus';
 import { fetchFilmById, fetchFilms } from '../film/asyncActions';
 import { Film, FilmSliceState} from '../film/types';
 
 const initialState: FilmSliceState = {
-            item: {} as Film,
-            items: [],
-            status: Status.LOADING
+            film: {} as Film,
+            filmStatus: Status.LOADING,
+            films: [],
+            filmsStatus: Status.LOADING
         }
 
 export const filmSlice = createSlice({
     name: 'film',
     initialState,
     reducers: {
-        setItems(state, action: PayloadAction<Film[]>) {
-            state.items = action.payload;
-        },
-        setItem(state, action: PayloadAction<Film>) {
-            state.item = action.payload;
-        },
     },
     
     extraReducers: (builder) => {
+        //fetchFilms builder
         builder.addCase(fetchFilms.pending, (state) => {
-            state.status = Status.LOADING
-            state.items = [];
+            state.filmsStatus = Status.LOADING
+            state.films = [];
         });
         builder.addCase(fetchFilms.fulfilled, (state, action) => {
-            state.status = Status.SUCCESS;
-            state.items = action.payload;
+            state.filmsStatus = Status.SUCCESS;
+            state.films = action.payload;
         });
         builder.addCase(fetchFilms.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.items = [];
+            state.filmsStatus = Status.ERROR;
+            state.films = [];
         });
+
+        //fetchFilmById builder
         builder.addCase(fetchFilmById.pending, (state) => {
-            state.status = Status.LOADING
-            state.item = {} as Film;
+            state.filmStatus = Status.LOADING
+            state.film = {} as Film;
         });
         builder.addCase(fetchFilmById.fulfilled, (state, action) => {
-            state.status = Status.SUCCESS;
-            state.item = action.payload;
+            state.filmStatus = Status.SUCCESS;
+            state.film = action.payload;
         });
         builder.addCase(fetchFilmById.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.item = {} as Film;
+            state.filmStatus = Status.ERROR;
+            state.film = {} as Film;
         });
         },
 });
 
-export const { setItems, setItem } = filmSlice.actions
+export const { } = filmSlice.actions
 
 export default filmSlice.reducer

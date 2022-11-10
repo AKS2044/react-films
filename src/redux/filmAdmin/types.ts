@@ -1,13 +1,22 @@
 import { Status } from "../../enum/EnumStatus"
 
 export interface FilmAddState {
-    statusFilmAdd: Status,
+    filmAddStatus: Status,
+    filmDeleteStatus: Status,
     statusUpload: Status,
     urlData: string,
     genreData: GenrePayloadParams[],
+    genrePostStatus: Status,
+    genreDeleteStatus: Status,
     countryData: CountryPayloadParams[],
+    countryPostStatus: Status,
+    countryDeleteStatus: Status,
     managerData: ManagerPayloadParams[],
+    managerPostStatus: Status,
+    managerDeleteStatus: Status,
     actorData: ActorPayloadParams[],
+    actorPostStatus: Status,
+    actorDeleteStatus: Status,
 }
 
 export interface FilmAddParams {
@@ -25,13 +34,6 @@ export interface FilmAddParams {
     time: number,
     pathPoster: string,
     imageName: string
-}
-
-export interface FilmAddPayloadParams {
-    email: string,
-    roles: [],
-    token: boolean,
-    userName: string
 }
 
 export interface GenrePayloadParams {
