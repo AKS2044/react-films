@@ -1,8 +1,6 @@
 @import "/src/colors";
 
 .post{
-    margin-bottom: 5px;
-    width: 207px;
     height: 348px;
     padding: 7px;
     position: relative;
@@ -11,6 +9,9 @@
     background: linear-gradient(360deg, rgba(208, 19, 19, 0.15) 0%, rgba(185, 17, 17, 0.15) 26.04%, rgba(161, 17, 17, 0.15) 48.96%, rgba(137, 14, 14, 0.15) 73.96%, rgba(114, 13, 13, 0.15) 100%);
     border: 1px solid #201212;
     border-radius: 6px;
+    @media (max-width: 720px) {
+        width: 207px;
+    }
     &__favourite{
         position: absolute;
         float: right;

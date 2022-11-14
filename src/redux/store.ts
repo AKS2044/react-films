@@ -3,6 +3,7 @@ import film from './film/slice'
 import filmAdmin from './filmAdmin/slice'
 import filter from './filter/slice'
 import login from './Auth/slice'
+import userAdmin from './userAdmin/slice'
 import { useDispatch } from 'react-redux';
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     film,
     filmAdmin,
     login,
+    userAdmin,
     filter,
   },
 });

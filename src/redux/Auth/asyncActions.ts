@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
-import { LoginParams, LoginPayloadParams, RegisterParams } from "./types";
+import { LoginParams, LoginPayloadParams, ProfilePayloadParams, RegisterParams } from "./types";
 
 export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams>(
     'login/fetchLoginStatus',
@@ -11,23 +11,36 @@ export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams>(
             password,
             rememberMe
         });
-        
         return data;
     });
 
 export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams>(
     'login/fetchRegisterStatus',
     async (params) => {
-        const { userName, password, passwordConfirm, email } = params;
+        const { userName, password, passwordConfirm, email, city } = params;
         const { data } = await axios.post<LoginPayloadParams>('/User/registration', {
             userName,
             password,
             passwordConfirm,
-            email
+            email,
+            city
         });
-        
         return data;
     });
+
+export const fetchGetProfile = createAsyncThunk(
+    'login/fetchGetProfileStatus',
+    async () => {
+        const { data } = await axios.get<ProfilePayloadParams>('/User/profile');
+        return data;
+    });
+
+export const fetchUploadPhoto = createAsyncThunk<string, FormData>(
+        'login/fetchUploadPhotoStatus',
+        async (formData) => {
+                const {data} = await axios.post('/User/uploadPhoto', formData);
+                return data;
+        });
 
 export const fetchAuth = createAsyncThunk(
     'login/fetchAuthStatus',

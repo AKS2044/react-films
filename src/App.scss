@@ -60,13 +60,33 @@ a{
     max-width: 1100px;
     background: $background__second;
     border: 1px solid $br__grey;
+    @media (max-width: 1120px) {
+        max-width: 880px;
+    }
+    @media (max-width: 900px) {
+        max-width: 700px;
+    }
+    @media (max-width: 720px) {
+        max-width: 460px;
+    }
     .main-block{
         border-left: 1px solid $br__grey;
         width: 848px;
         .content-main{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            grid-column-gap: 5px;
+            grid-row-gap: 5px;
+            @media (max-width: 1120px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            @media (max-width: 900px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            @media (max-width: 720px) {
+                grid-template-columns: repeat(1, 1fr);
+            }
         }
     }
 }
@@ -174,7 +194,7 @@ a{
         &-block{
             display: flex;
             justify-content: space-between;
-            &-item{
+            &-film{
                 width: 135px;
                 height: 249px;
                 background: $br__grey;

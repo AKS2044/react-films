@@ -5,6 +5,12 @@
     width: 100%;
     height: 35px;
     border-bottom: 1px solid $br__grey;
+    @media (max-width: 900px) {
+        height: 100%;
+    }
+    @media (max-width: 720px) {
+        flex-direction: column;
+    }
     &__item{
         position: relative;
         display: flex;

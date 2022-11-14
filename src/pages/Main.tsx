@@ -19,6 +19,29 @@ const Main = () => {
     const { films, filmsStatus } = useSelector(selectFilmData);
     const { currentPage } = useSelector(selectFilter);
 
+    const items = [
+        {id: 1, nameFilms: 'Test', pathPoster: '/'},
+        {id: 2, nameFilms: 'Test', pathPoster: '/'},
+        {id: 3, nameFilms: 'Test', pathPoster: '/'},
+        {id: 4, nameFilms: 'Test', pathPoster: '/'},
+        {id: 5, nameFilms: 'Test', pathPoster: '/'},
+        {id: 6, nameFilms: 'Test', pathPoster: '/'},
+        {id: 7, nameFilms: 'Test', pathPoster: '/'},
+        {id: 8, nameFilms: 'Test', pathPoster: '/'},
+        {id: 9, nameFilms: 'Test', pathPoster: '/'},
+        {id: 10, nameFilms: 'Test', pathPoster: '/'},
+        {id: 11, nameFilms: 'Test', pathPoster: '/'},
+        {id: 12, nameFilms: 'Test', pathPoster: '/'},
+        {id: 13, nameFilms: 'Test', pathPoster: '/'},
+        {id: 14, nameFilms: 'Test', pathPoster: '/'},
+        {id: 15, nameFilms: 'Test', pathPoster: '/'},
+        {id: 16, nameFilms: 'Test', pathPoster: '/'},
+        {id: 17, nameFilms: 'Test', pathPoster: '/'},
+        {id: 18, nameFilms: 'Test', pathPoster: '/'},
+        {id: 19, nameFilms: 'Test', pathPoster: '/'},
+        {id: 20, nameFilms: 'Test', pathPoster: '/'},
+    ]
+
     const getFilms = async () => {
         dispatch(
             fetchFilms({

@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import photoUser from '../img/Rick.png';
 import rec from '../img/recommended.jpg';
 import { selectLoginData } from '../redux/Auth/selectors';
 import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../redux/store';
+import { fetchGetProfile } from '../redux/Auth/asyncActions';
 
 const Profile = () => {
+    const dispatch = useAppDispatch();
+    const { profile, statusAuth } = useSelector(selectLoginData);
+    console.log(profile)
+    useEffect(() => {
+        if(statusAuth === 'completed'){
+            dispatch(fetchGetProfile())
+        }
+        }, [statusAuth]);
     
     return (
         <div className='profile'>
@@ -21,15 +31,16 @@ const Profile = () => {
                     <button className='profile__info-left-change-profile'>Редактировать профиль</button>
                 </div>
                 <div className='profile__info-right'>
-                    <div className='profile__info-right-one'>Логин: <span className='profile__info-right-one-span'>Toster2022</span></div>
-                    <div className='profile__info-right-two'>Дата регистрации: <span className='profile__info-right-two-span'>15 сентября 2022 13:39</span></div>
-                    <div className='profile__info-right-one'>Группа: <span className='profile__info-right-one-span'>Посетители</span></div>
-                    <div className='profile__info-right-two'>Всего комментариев: <span className='profile__info-right-two-span'>0</span></div>
-                    <div className='profile__info-right-one'>Город: <span className='profile__info-right-one-span'>Минск</span></div>
+                    <div className='profile__info-right-one'>Логин: <span className='profile__info-right-one-span'>{profile.userName}</span></div>
+                    <div className='profile__info-right-two'>E-mail: <span className='profile__info-right-one-span'>{profile.email}</span></div>
+                    <div className='profile__info-right-one'>Дата регистрации: <span className='profile__info-right-two-span'>{profile.dateReg}</span></div>
+                    {/* <div className='profile__info-right-two'>Группа: <span className='profile__info-right-one-span'>{profile.roles.map((r) => r)}</span></div> */}
+                    <div className='profile__info-right-one'>Всего комментариев: <span className='profile__info-right-two-span'>0</span></div>
+                    <div className='profile__info-right-two'>Город: <span className='profile__info-right-one-span'>{profile.city}</span></div>
                 </div>
             </div>
             <div className='profile__watch'>
-                <div className='profile__watch-title'>Избранное:</div>
+                <div className='profile__watch-title'>Избранное({profile.favourite}):</div>
                 <div className='profile__watch-block'>
                     <div className='profile__watch-block-item'>
                         <a href='/'><img className='profile__watch-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>
@@ -59,7 +70,7 @@ const Profile = () => {
                 <button className='profile__watch-button'>Смотреть позже</button>
             </div>
             <div className='profile__watch'>
-                <div className='profile__watch-title'>Смотреть позже:</div>
+                <div className='profile__watch-title'>Смотреть позже({profile.watchLater}):</div>
                 <div className='profile__watch-block'>
                     <div className='profile__watch-block-item'>
                         <a href='/'><img className='profile__watch-block-item-poster' src={rec} alt="Постер" title="Постер" /></a>

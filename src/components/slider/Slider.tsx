@@ -5,6 +5,28 @@ import { Link } from 'react-router-dom';
 
 const Slider = () => {
     const { films } = useSelector(selectFilmData);
+    const items = [
+        {id: 1, nameFilms: 'Test', pathPoster: '/'},
+        {id: 2, nameFilms: 'Test', pathPoster: '/'},
+        {id: 3, nameFilms: 'Test', pathPoster: '/'},
+        {id: 4, nameFilms: 'Test', pathPoster: '/'},
+        {id: 5, nameFilms: 'Test', pathPoster: '/'},
+        {id: 6, nameFilms: 'Test', pathPoster: '/'},
+        {id: 7, nameFilms: 'Test', pathPoster: '/'},
+        {id: 8, nameFilms: 'Test', pathPoster: '/'},
+        {id: 9, nameFilms: 'Test', pathPoster: '/'},
+        {id: 10, nameFilms: 'Test', pathPoster: '/'},
+        {id: 11, nameFilms: 'Test', pathPoster: '/'},
+        {id: 12, nameFilms: 'Test', pathPoster: '/'},
+        {id: 13, nameFilms: 'Test', pathPoster: '/'},
+        {id: 14, nameFilms: 'Test', pathPoster: '/'},
+        {id: 15, nameFilms: 'Test', pathPoster: '/'},
+        {id: 16, nameFilms: 'Test', pathPoster: '/'},
+        {id: 17, nameFilms: 'Test', pathPoster: '/'},
+        {id: 18, nameFilms: 'Test', pathPoster: '/'},
+        {id: 19, nameFilms: 'Test', pathPoster: '/'},
+        {id: 20, nameFilms: 'Test', pathPoster: '/'},
+    ]
 
     return (
         <div className={cl.slider}>
@@ -30,7 +52,7 @@ const Slider = () => {
                         <img className={cl.poster__slider} src={`https://localhost:44369/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
                         </Link>
                         <div className={cl.title__slider}>{film.nameFilms}</div>
-                    </div>).slice(0, 7)}
+                    </div>).slice(0, 6)}
                 </div>
                 <svg className={cl.slider__content__button} width="31" height="38" viewBox="0 0 31 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M31 28C31 33.5228 26.5228 38 21 38L0 38L3.32207e-06 -2.71011e-06L21 -8.74228e-07C26.5229 -3.91405e-07 31 4.47715 31 10L31 28Z" fill="url(#paint0_linear_56_6)"/>

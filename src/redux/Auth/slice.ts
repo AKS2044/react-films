@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Status } from '../../enum/EnumStatus';
-import { fetchLogin, fetchRegister, fetchAuth } from "./asyncActions";
-import { LoginState, LoginPayloadParams } from "./types";
+import { fetchLogin, fetchRegister, fetchAuth, fetchGetProfile, fetchUploadPhoto } from "./asyncActions";
+import { LoginState, LoginPayloadParams, ProfilePayloadParams } from "./types";
 
 
 const initialState: LoginState = {
     data: {} as LoginPayloadParams,
+    profile: {} as ProfilePayloadParams,
+    urlPhoto: '',
+    uploadPhotoStatus: Status.LOADING,
+    profileStatus: Status.LOADING,
     statusLogin: Status.LOADING,
     statusAuth: Status.LOADING,
     statusRegister: Status.LOADING,
@@ -20,7 +24,7 @@ export const loginSlice = createSlice({
             state.data = {} as LoginPayloadParams;
         },
     },
-    
+    // fetchLogin builder
     extraReducers: (builder) => {
         builder.addCase(fetchLogin.pending, (state) => {
             state.statusLogin = Status.LOADING;
@@ -35,6 +39,7 @@ export const loginSlice = createSlice({
             state.data = {} as LoginPayloadParams;
         });
 
+        // fetchRegister builder
         builder.addCase(fetchRegister.pending, (state) => {
             state.statusRegister = Status.LOADING;
             state.data = {} as LoginPayloadParams;
@@ -48,9 +53,9 @@ export const loginSlice = createSlice({
             state.data = {} as LoginPayloadParams;
         });
 
+        // fetchAuth builder
         builder.addCase(fetchAuth.pending, (state) => {
             state.statusAuth = Status.LOADING;
-            state.data = {} as LoginPayloadParams;
         });
         builder.addCase(fetchAuth.fulfilled, (state, action) => {
             state.statusAuth = Status.SUCCESS;
@@ -58,7 +63,30 @@ export const loginSlice = createSlice({
         });
         builder.addCase(fetchAuth.rejected, (state) => {
             state.statusAuth = Status.ERROR;
-            state.data = {} as LoginPayloadParams;
+        });
+
+        // fetchGetProfile builder
+        builder.addCase(fetchGetProfile.pending, (state) => {
+            state.profileStatus = Status.LOADING;
+        });
+        builder.addCase(fetchGetProfile.fulfilled, (state, action) => {
+            state.profileStatus = Status.SUCCESS;
+            state.profile = action.payload;
+        });
+        builder.addCase(fetchGetProfile.rejected, (state) => {
+            state.profileStatus = Status.ERROR;
+        });
+
+        // fetchUpload builder
+        builder.addCase(fetchUploadPhoto.pending, (state) => {
+            state.uploadPhotoStatus = Status.LOADING;
+        });
+        builder.addCase(fetchUploadPhoto.fulfilled, (state, action) => {
+            state.uploadPhotoStatus = Status.SUCCESS;
+            state.urlPhoto = action.payload;
+        });
+        builder.addCase(fetchUploadPhoto.rejected, (state) => {
+            state.uploadPhotoStatus = Status.ERROR;
         });
         },
 })
