@@ -2,6 +2,33 @@
 
 .register{
     text-align: center;
+    .modal{
+        display: flex;
+        flex-direction: column;
+        &__photo{
+            width: 256px;
+            height: 256px;
+            border-radius: 150px;
+
+        }
+        &__title{
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+    }
+    .button{
+        margin-top: 10px;
+        border-radius: 6px;
+        padding: 10px 15px;
+        font-size: 1rem;
+        background: $background__second;
+        border: 1px solid $br__grey;
+        &:hover{
+            background: $br__red;
+            transition: 0.1s linear;
+        }
+    }
     .input{
         background: $background__3;
         width: 300px;

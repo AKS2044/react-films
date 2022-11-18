@@ -24,7 +24,7 @@ const initialState: FilmAddState = {
     filmDeleteStatus: Status.LOADING,
     statusUpload: Status.LOADING,
     urlData: '',
-    genreData:  [],
+    genreData: [],
     genrePostStatus: Status.LOADING,
     genreDeleteStatus: Status.LOADING,
     countryData: [],

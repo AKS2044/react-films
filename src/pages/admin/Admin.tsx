@@ -132,7 +132,7 @@ const Admin = () => {
     }
 
     const onClickDeleteFilm = async (film: Film) => {
-        if(window.confirm("Вы действительно хотите удалить актера?"))
+        if(window.confirm("Вы действительно хотите удалить фильм?"))
         { 
             await dispatch(fetchDeleteFilm(film));
         }

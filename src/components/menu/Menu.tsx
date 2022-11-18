@@ -2,10 +2,12 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import posterMenu from '../../img/posterMenu.jpg';
 import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
+import { useAppDispatch } from '../../redux/store';
 import cl from './Menu.module.scss';
 
 const Menu = () => {
     const { genreData } = useSelector(selectFilmAdminData);
+
     return (
         <div className={cl.menu}>
             <div className={cl.menu__block}>

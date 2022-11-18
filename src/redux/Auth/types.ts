@@ -36,7 +36,7 @@ export interface RegisterParams {
     password: string,
     passwordConfirm: string,
     pathPhoto?: string,
-    photoName?: string
+    photoName?: string,
 }
 
 export interface LoginPayloadParams {
@@ -44,5 +44,9 @@ export interface LoginPayloadParams {
     email: string,
     roles: string[],
     token: boolean,
+    userName: string
+}
+
+export interface GetProfileParams {
     userName: string
 }

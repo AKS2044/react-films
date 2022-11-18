@@ -15,16 +15,19 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchAuth } from './redux/Auth/asyncActions';
 import { useAppDispatch } from './redux/store';
 import { useSelector } from 'react-redux';
-import { selectLoginData } from './redux/Auth/selectors';
+import { selectIsAuth, selectLoginData } from './redux/Auth/selectors';
 import Admin from './pages/admin/Admin';
+import { fetchGetGenres } from './redux/filmAdmin/asyncActions';
 
 function App() {
+  const isAuth = useSelector(selectIsAuth);
   const dispatch = useAppDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
-  const { data, statusAuth } = useSelector(selectLoginData);
+  const { data, statusAuth, statusLogin } = useSelector(selectLoginData);
   
   useEffect(() => {
     dispatch(fetchAuth());
+    dispatch(fetchGetGenres())
   }, [] )
 
   useEffect(() => {

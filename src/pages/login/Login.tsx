@@ -5,13 +5,13 @@ import {TextField, Alert} from '@mui/material';
 import cl from './Login.module.scss';
 import { useForm } from 'react-hook-form';
 import { LoginParams } from '../../redux/Auth/types';
-import { fetchLogin } from '../../redux/Auth/asyncActions';
+import { fetchAuth, fetchLogin } from '../../redux/Auth/asyncActions';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 import { Navigate } from 'react-router-dom';
 
 const defaultValues: LoginParams = {
-    userName: '',
-    password: '',
+    userName: 'thefan49@gmail.com',
+    password: '123123',
     rememberMe: false,
 }
 
@@ -30,8 +30,7 @@ const Login = () => {
 
     const onSubmit = async (values: LoginParams) => {
             await dispatch(fetchLogin(values));
-            
-            window.location.reload();
+            //window.location.reload();
     }
         
     if(data.token){

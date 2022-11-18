@@ -8,7 +8,11 @@ import { fetchRegister, fetchUploadPhoto } from '../../redux/Auth/asyncActions';
 import {TextField, Alert} from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import profile from '../../img/profile.png'
+import Modal from '../../components/modal/Modal';
+import instance from '../../axios';
 
 const defaultValues: RegisterParams = {
     email: '',
@@ -17,13 +21,13 @@ const defaultValues: RegisterParams = {
     city: '',
     passwordConfirm: '',
 }
-
 const Register = () => {
     const isAuth = useSelector(selectIsAuth);
     const inputFileRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
+    const [active, setActive] = useState(false);
     const dispatch = useAppDispatch();
-
-    const { data, statusRegister, urlPhoto } = useSelector(selectLoginData);
+    const { data, statusRegister, statusAuth, urlPhoto, uploadPhotoStatus } = useSelector(selectLoginData);
     
     const { 
         register, 
@@ -35,31 +39,36 @@ const Register = () => {
 
     const onSubmit = async (values: RegisterParams) => {
         await dispatch(fetchRegister(values));
+        setActive(true);
     }
+
+    useEffect(() => {
+        instance.defaults.headers.common['Authorization'] = window.localStorage.getItem('token');
+        }, [statusRegister]);
+
 
     const handleChangeFile = async (e: React.ChangeEvent<HTMLInputElement>) =>{
         try{
             const formData = new FormData();
             const file = e.target.files![0];
             formData.append('file', file);
-
+            
             dispatch(fetchUploadPhoto(formData));
         } catch(err) {
             console.log(err)
         }
     }
 
+    const onClickLaterUploadPhoto = () =>{
+        return navigate("/");
+    }
+
     if(data.token){
         window.localStorage.setItem('token', String(data.token));
     }
     
-
-    if(statusRegister === 'completed'){
-        window.location.reload();
-    }
-
-    if(isAuth){
-        return <Navigate to='/' />;
+    if(statusAuth === 'completed'){
+        navigate("/");
     }
 
     return (
@@ -110,7 +119,7 @@ const Register = () => {
                         error={Boolean(errors.password?.message)}
                         helperText={errors.password?.message}
                         {...register('passwordConfirm', {required: 'Повтори пароль'})} />
-                        <div>
+                        
                         <input
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeFile(e)}
                         type='file'
@@ -118,13 +127,28 @@ const Register = () => {
                         ref={inputFileRef}
                         hidden
                         />
-                        
-                        <button type="button" className={cl.btn} onClick={() => inputFileRef.current?.click()}>Добавить файл</button>
-                        {urlPhoto && <img width={200} src={`https://localhost:44369/${urlPhoto}`} alt="Фото" />}
+                        <div>
                 </div>
                     </div>
                     <Button>Регистрация</Button>
                 </form>
+                {statusRegister === 'completed' && 
+                <Modal
+                active={active}
+                setActive={setActive}>
+                    <form className={cl.modal}>
+                        <div className={cl.modal__title}>Загрузить фото профиля?</div>
+                        {urlPhoto 
+                        ? <img className={cl.modal__photo} width={200} src={`https://localhost:44369/${urlPhoto}`} alt="Изображение профиля" title="Изображение профиля"  /> 
+                        : <img className={cl.modal__photo} src={profile} alt="Изображение профиля" title="Изображение профиля" />}
+                        <button type="button" className={cl.button} onClick={() => inputFileRef.current?.click()}>Загрузить фото</button>
+                        {uploadPhotoStatus === 'loading'
+                            &&<button type="button" className={cl.button} onClick={onClickLaterUploadPhoto}>Позже</button>}
+                        {uploadPhotoStatus === 'completed'
+                        && <button type="button" className={cl.button} onClick={onClickLaterUploadPhoto}>На главную</button>}
+                    </form>
+                </Modal>
+                }
         </div>
     );
 };

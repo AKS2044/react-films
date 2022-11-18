@@ -1,26 +1,30 @@
-import { useEffect, useState } from 'react';
-import photoUser from '../img/Rick.png';
+import { useEffect} from 'react';
+import { Navigate } from 'react-router-dom';
 import rec from '../img/recommended.jpg';
-import { selectLoginData } from '../redux/Auth/selectors';
+import { selectIsAuth, selectLoginData } from '../redux/Auth/selectors';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../redux/store';
-import { fetchGetProfile } from '../redux/Auth/asyncActions';
+import { fetchAuth, fetchGetProfile } from '../redux/Auth/asyncActions';
 
 const Profile = () => {
     const dispatch = useAppDispatch();
-    const { profile, statusAuth } = useSelector(selectLoginData);
-    console.log(profile)
+    const isAuth = useSelector(selectIsAuth);
+    const { profile, profileStatus, data } = useSelector(selectLoginData);
     useEffect(() => {
-        if(statusAuth === 'completed'){
-            dispatch(fetchGetProfile())
-        }
-        }, [statusAuth]);
+            dispatch(fetchGetProfile(data))
+            
+    console.log(profile)
+    }, [isAuth]);
+
+    if(!isAuth && profileStatus === 'loading'){
+        return <Navigate to='/' />;
+    }
     
     return (
         <div className='profile'>
             <div className='profile__info'>
                 <div className='profile__info-left'>
-                    <img className='profile__info-left-photo' src={photoUser} alt="Фото" title="Фото"></img>
+                    <img className='profile__info-left-photo' src={`https://localhost:44369/${profile.pathPhoto}`}alt="Фото" title="Фото"></img>
                     <button className='profile__info-left-change-photo'>
                         Сменить
                         <svg className='profile__info-left-change-photo-avatar' width="24" height="24" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchAuth } from '../../redux/Auth/asyncActions';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 import { logout } from '../../redux/Auth/slice';
 import { useAppDispatch } from '../../redux/store';
@@ -10,7 +11,7 @@ const Header = () => {
     const [openMenu, setOpenMenu] = useState(false);
 
     const isAuth = useSelector(selectIsAuth)
-    const { statusAuth } = useSelector(selectLoginData);
+    const { statusAuth, statusLogin } = useSelector(selectLoginData);
     const dispatch = useAppDispatch();
 
     const onClickLogout = () => {
@@ -39,7 +40,7 @@ const Header = () => {
                         <a href="/" className={cl.menu__block__link}>Новинки</a>
                     </div>
                     <div className={cl.profile}>
-                        {isAuth && statusAuth === 'completed'
+                        {isAuth
                         &&   <div className={cl.profile__items}>
                                 <Link to='/profile'>
                                     <svg className='photo' width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
