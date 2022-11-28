@@ -28,6 +28,8 @@ export interface FilmSliceState {
         filmStatus: Status;
         films: Film[];
         filmsStatus: Status;
+        sliderFilms: Film[];
+        sliderFilmsStatus: Status;
 }
 
 export interface FilmParams {

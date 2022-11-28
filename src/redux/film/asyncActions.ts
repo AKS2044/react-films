@@ -15,14 +15,22 @@ export const fetchFilms = createAsyncThunk<Film[], FilmParams>(
         return data;
     });
 
-    export const fetchFilmById = createAsyncThunk<Film, FilmParams>(
-        'film/fetchFilmByIdStatus',
-        async (params) => {
-            const {id} = params;
-            const { data } = await axios.get<Film>(`/Film/`, {
-                params: pickBy({
-                    id
-                })
-            });
-            return data;
+export const fetchFilmById = createAsyncThunk<Film, FilmParams>(
+    'film/fetchFilmByIdStatus',
+    async (params) => {
+        const {id} = params;
+        const { data } = await axios.get<Film>(`/Film/`, {
+            params: pickBy({
+                id
+            })
         });
+        return data;
+    });
+
+export const fetchSliderFilms = createAsyncThunk<Film[]>(
+    'film/fetchSliderFilmsStatus',
+    async () => {
+        const { data } = await axios.get<Film[]>('/Film/slider');
+        console.log(data)
+        return data;
+    });

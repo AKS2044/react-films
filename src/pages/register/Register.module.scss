@@ -5,6 +5,11 @@
     .modal{
         display: flex;
         flex-direction: column;
+        &__cross{
+            position: absolute;
+            right: 5px;
+            top: 15px;
+        }
         &__photo{
             width: 256px;
             height: 256px;
@@ -13,7 +18,8 @@
         }
         &__title{
             font-weight: 600;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
+            text-align: left;
             margin-bottom: 10px;
         }
     }

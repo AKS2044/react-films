@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { Status } from '../../enum/EnumStatus';
-import { fetchFilmById, fetchFilms } from '../film/asyncActions';
+import { fetchFilmById, fetchFilms, fetchSliderFilms } from '../film/asyncActions';
 import { Film, FilmSliceState} from '../film/types';
 
 const initialState: FilmSliceState = {
             film: {} as Film,
             filmStatus: Status.LOADING,
             films: [],
-            filmsStatus: Status.LOADING
+            filmsStatus: Status.LOADING,
+            sliderFilms: [],
+            sliderFilmsStatus: Status.LOADING
         }
 
 export const filmSlice = createSlice({
@@ -43,6 +45,18 @@ export const filmSlice = createSlice({
         builder.addCase(fetchFilmById.rejected, (state) => {
             state.filmStatus = Status.ERROR;
             state.film = {} as Film;
+        });
+
+        //fetchSliderFilms builder
+        builder.addCase(fetchSliderFilms.pending, (state) => {
+            state.sliderFilmsStatus = Status.LOADING;
+        });
+        builder.addCase(fetchSliderFilms.fulfilled, (state, action) => {
+            state.sliderFilmsStatus = Status.SUCCESS;
+            state.sliderFilms = action.payload;
+        });
+        builder.addCase(fetchSliderFilms.rejected, (state) => {
+            state.sliderFilmsStatus = Status.ERROR;
         });
         },
 });

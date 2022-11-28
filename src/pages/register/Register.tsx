@@ -25,7 +25,7 @@ const Register = () => {
     const isAuth = useSelector(selectIsAuth);
     const inputFileRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState(true);
     const dispatch = useAppDispatch();
     const { data, statusRegister, statusAuth, urlPhoto, uploadPhotoStatus } = useSelector(selectLoginData);
     
@@ -70,7 +70,7 @@ const Register = () => {
     if(statusAuth === 'completed'){
         navigate("/");
     }
-
+    
     return (
         <div className={cl.register}>
                 <div className={cl.register__title}>Авторизация</div>
@@ -104,6 +104,7 @@ const Register = () => {
                         <TextField  
                         InputProps={{className: cl.input}} 
                         InputLabelProps={{className: cl.input__label}} 
+                        minRows={6}
                         label="Пароль"
                         type="password"
                         error={Boolean(errors.password?.message)}
@@ -113,6 +114,7 @@ const Register = () => {
                         <TextField  
                         InputProps={{className: cl.input}} 
                         InputLabelProps={{className: cl.input__label}} 
+                        minRows={6}
                         label="Повтори пароль"
                         type="password"
                         autoComplete="off"
@@ -138,6 +140,9 @@ const Register = () => {
                 setActive={setActive}>
                     <form className={cl.modal}>
                         <div className={cl.modal__title}>Загрузить фото профиля?</div>
+                        <svg className={cl.modal__cross} onClick={onClickLaterUploadPhoto} width="30" height="30" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.1967 7.19673L17.8033 17.8033M17.8033 7.19673L7.1967 17.8033" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
                         {urlPhoto 
                         ? <img className={cl.modal__photo} width={200} src={`https://localhost:44369/${urlPhoto}`} alt="Изображение профиля" title="Изображение профиля"  /> 
                         : <img className={cl.modal__photo} src={profile} alt="Изображение профиля" title="Изображение профиля" />}
