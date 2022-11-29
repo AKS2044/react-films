@@ -59,14 +59,14 @@ const Slider = () => {
             dispatch(fetchSliderFilms())
         }, []);
     
-    const slider = sliderFilms.map((film: any) => <div style={{transform: `translateX(${offset}px)`}} className={cl.slide}>
+    const slider = sliderFilms.map((film: any) => <div key={film.id} style={{transform: `translateX(${offset}px)`}} className={cl.slide}>
             <Link to={`/film/${film.id}`}>
-            <img className={cl.poster__slider} src={`https://localhost:44369/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
+            <img className={cl.slide__poster} src={`https://localhost:44369/`+ film.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
             
             {/* <img className={cl.slide__poster} src={img} alt="Название фильма(год)" title="Название фильма(год)" /> */}
             </Link>
             <div className={cl.slide__title}>{film.nameFilms}</div>
-</div>);
+            </div>);
     const skeletons = [...new Array(8)].map((_, index) => <SkeletonSlider key={index} />);
 
     return (
@@ -86,7 +86,7 @@ const Slider = () => {
             </defs>
         </svg>
             <div className={cl.slider__content} ref={ref}>
-            {sliderFilmsStatus === 'loading' || 'error'
+            {sliderFilmsStatus === 'loading'
             ? skeletons
             : slider}
             </div>

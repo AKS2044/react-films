@@ -49,7 +49,6 @@ export const fetchDeleteFilm = createAsyncThunk<string, Film>(
         'filmAdmin/fetchDeleteFilmStatus',
         async (params) => {
                 const { id } = params;
-                console.log(params)
                 const {data} = await axios.delete(`/Film/`, {
                         params: pickBy({
                                 id

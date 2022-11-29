@@ -22,6 +22,7 @@
         display: flex;
         &__block{
             width: 99.9%;
+            margin-bottom: 10px;
             display: flex;
             flex-wrap: wrap;
             flex-direction: column;
@@ -51,6 +52,12 @@
     }
     &__change{
         padding: 0 50px;
+        &__ul{
+            padding: 5px 20px;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid $br__grey;
+        }
         &__form{
             padding-top: 30px;
             margin-bottom: 10px;
@@ -61,15 +68,47 @@
         .input{
             background: $background__3;
             color: $text;
-            width: 90%;
+            width: 100%;
             border-radius: 6px;
             margin-bottom: 20px !important;
             &__label{
                 color: $text;
         }
     }
+
+    .search__user{
+        position: relative;
+        &__cross{
+            width: 20px;
+            height: 20px;
+            right: 10px;
+            top: 18px;
+            position: absolute;
+            cursor: pointer;
+            &::before{
+                transform: rotate(-45deg);
+                content: '';
+                position: absolute;
+                width: 20px;
+                background-color: $text;
+                height: 3px;
+                border-radius: 10px;
+                transition: all 0.2s;
+            }
+            &::after{
+                transform: rotate(45deg);
+                content: '';
+                position: absolute;
+                width: 20px;
+                background-color: $text;
+                height: 3px;
+                border-radius: 10px;
+                transition: all 0.2s;
+            }
+        }
+    }
+    
     &__list{
-        margin-top: 10px;
         display: flex;
         flex-direction: column;
         overflow: hidden auto;
@@ -108,5 +147,8 @@
             }
         }
     }
+    }
+    .alert{
+        margin-bottom: 10px;
     }
 }

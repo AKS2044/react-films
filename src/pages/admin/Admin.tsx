@@ -1,10 +1,10 @@
 import { Alert, TextField } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '../../components/UI/button/Button';
-import { selectIsAuth } from '../../redux/Auth/selectors';
+import { selectLoginData } from '../../redux/Auth/selectors';
 import { fetchFilms } from '../../redux/film/asyncActions';
 import { selectFilmData } from '../../redux/film/selectors';
 import { Film } from '../../redux/film/types';
@@ -13,6 +13,9 @@ import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
 import { ActorPayloadParams, CountryPayloadParams, FilmAddParams, GenrePayloadParams, ManagerPayloadParams } from '../../redux/filmAdmin/types';
 import { selectFilter } from '../../redux/filter/selectors';
 import { useAppDispatch } from '../../redux/store';
+import { fetchDeleteUser, fetchGetUsers } from '../../redux/userAdmin/asyncActions';
+import { selectUserAdmin } from '../../redux/userAdmin/selectors';
+import { Users } from '../../redux/userAdmin/types';
 import cl from './Admin.module.scss';
 
 type Props = {
@@ -53,6 +56,8 @@ const Admin = () => {
     const [filmPanelOpen, setFilmPanelOpen] = useState(false);
     const [userPanelOpen, setUserPanelOpen] = useState(false);
 
+    const [userGetOpen, setUserGetOpen] = useState(false);
+
     const [genrePanelOpen, setGenrePanelOpen] = useState(false);
     const [countryPanelOpen, setCountryPanelOpen] = useState(false);
     const [managerPanelOpen, setManagerPanelOpen] = useState(false);
@@ -84,23 +89,63 @@ const Admin = () => {
         actorPostStatus,
         actorDeleteStatus,} = useSelector(selectFilmAdminData);
 
+        const [valueUser, setValueUser] = useState('');
+        const userRef = useRef<HTMLInputElement>(null);
+
         const { films, filmsStatus } = useSelector(selectFilmData);
+        const { data } = useSelector(selectLoginData);
+        const { users, userDeleteStatus } = useSelector(selectUserAdmin);
         const { currentPage } = useSelector(selectFilter);
 
+    const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>, set: React.Dispatch<React.SetStateAction<string>>) => {
+        set(event.target.value);
+    };
+
+    const onClickClear = (inputRef: React.RefObject<HTMLInputElement>, setProps: React.Dispatch<React.SetStateAction<string>>) => {
+        setProps('');
+        inputRef.current?.focus();
+    };
+
     const onSubmitGenre = async (props: Props) => {
-        await dispatch(fetchPostGenre(props.genre));
+        const result = Boolean(genreData.find((f) => 
+        f.genres.toLowerCase
+        === props.genre.genres.toLowerCase))
+        if(!result){
+            await dispatch(fetchPostGenre(props.genre));
+        }else{
+            alert('Уже существует')
+        }
     }
 
     const onSubmitContry = async (props: Props) => {
-        await dispatch(fetchPostCountries(props.country));
+        const result = Boolean(countryData.find((f) => f.country === props.country.country));
+        
+        console.log(result)
+        if(!result){
+            await dispatch(fetchPostCountries(props.country));
+        }else{
+            alert('Уже существует')
+        }
     }
 
     const onSubmitManager = async (props: Props) => {
-        await dispatch(fetchPostManagers(props.manager));
+        const result = Boolean(managerData.find((f) => f.stageManagers === props.manager.stageManagers))
+        if(!result){
+            await dispatch(fetchPostManagers(props.manager));
+        }else{
+            alert('Уже существует')
+        }
     }
 
     const onSubmitActor = async (props: Props) => {
-        await dispatch(fetchPostActors(props.actor));
+        const result = Boolean(actorData.find((f) => 
+        f.firstName === props.actor.firstName 
+        && f.lastName === props.actor.lastName))
+        if(!result){
+            await dispatch(fetchPostActors(props.actor));
+        }else{
+            alert('Уже существует')
+        }
     }
 
     const onClickDeleteGenre = async (genre: GenrePayloadParams) => {
@@ -138,6 +183,25 @@ const Admin = () => {
         }
     }
 
+    const onClickDeleteUser = async (user: Users) => {
+        if(user.userName === data.userName)
+        { 
+            alert('Вы не можете удалить себя')
+        }else{
+            if(window.confirm("Вы действительно хотите удалить пользователя"))
+            { 
+                await dispatch(fetchDeleteUser(user));
+            }
+        }
+    }
+
+    const getUsers = users.filter(obj => {
+        if(obj.userName.toLowerCase().includes(valueUser.toLowerCase())){
+            return true;
+        }
+        return false;
+    });
+
     useEffect(() => {
         dispatch(fetchGetGenres());
     }, [genrePostStatus, genreDeleteStatus]);
@@ -153,6 +217,10 @@ const Admin = () => {
     useEffect(() => {
         dispatch(fetchGetActors());
     }, [actorPostStatus, actorDeleteStatus]);
+
+    useEffect(() => {
+        dispatch(fetchGetUsers());
+    }, [userDeleteStatus]);
 
     useEffect(() => {
         dispatch(fetchFilms({ currentPage: currentPage}));
@@ -180,13 +248,57 @@ const Admin = () => {
                 <div className={cl.admin__menu__right}>
                     {userPanelOpen && 
                     <div className={cl.admin__menu__block}>
-                        <Link className={cl.admin__menu__block__links} to='/'>Text2</Link>
+                        <button onClick={() => setUserGetOpen(!userGetOpen)} className={cl.admin__menu__block__links} >Все пользователи</button>
                         <Link className={cl.admin__menu__block__links} to='/'>Text2</Link>
                         <Link className={cl.admin__menu__block__links} to='/'>Text2</Link>
                         <Link className={cl.admin__menu__block__links} to='/'>Text2</Link>
                     </div>}
                 </div>
             </div>
+            {userGetOpen && 
+            <div className={cl.admin__change}>
+                    {userDeleteStatus === 'completed' && 
+                    <Alert className={cl.alert} variant="filled" severity="success">
+                        Пользователь успешно — <strong>удален</strong>
+                    </Alert>}
+                    {userDeleteStatus === 'error' && 
+                    <Alert className={cl.alert} variant="filled" severity="error">
+                        Что-то пошло — <strong>не так</strong>
+                    </Alert>}
+                    <div className={cl.search__user}>
+                        <TextField  
+                                InputProps={{className: cl.input}} 
+                                InputLabelProps={{className: cl.input__label}} 
+                                inputRef={userRef}
+                                value={valueUser} 
+                                label="Поиск по логину"
+                                size="small"
+                                fullWidth
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInput(e, setValueUser)}/>
+                        {valueUser && <div className={cl.search__user__cross} onClick={() => onClickClear(userRef, setValueUser) }></div>}
+                    </div>
+                    <ul className={cl.admin__change__ul}>
+                        <li>№</li>
+                        <li>Логин</li>
+                        <li>Роль</li>
+                        <li>Дата регистрации</li>
+                        <li>Страна</li>
+                        <li>Удалить</li>
+                    </ul>
+                <div className={cl.admin__change__list}>
+                    {getUsers.map((u, index) => 
+                    <ul key={u.id} className={cl.admin__change__list__film}>
+                        <li>{index + 1}</li>
+                        <li>{u.userName}</li>
+                        <li>{u.roles}</li>
+                        <li>{u.dateReg}</li>
+                        <li>{u.city}</li>
+                        <button onClick={() => onClickDeleteUser(u)}  className={cl.admin__change__list__button}>
+                                    --
+                        </button>
+                    </ul>)}
+                </div>
+            </div>}
             {genrePanelOpen && 
             <div className={cl.admin__change}>
                     <form className={cl.admin__change__form} onSubmit={handleSubmit(onSubmitGenre)}>

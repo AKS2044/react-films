@@ -31,6 +31,5 @@ export const fetchSliderFilms = createAsyncThunk<Film[]>(
     'film/fetchSliderFilmsStatus',
     async () => {
         const { data } = await axios.get<Film[]>('/Film/slider');
-        console.log(data)
         return data;
     });
