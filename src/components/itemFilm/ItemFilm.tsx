@@ -2,52 +2,51 @@ import { Link } from 'react-router-dom';
 import cl from './ItemFilm.module.scss';
 import favourite from '../../img/favourite.svg';
 import later from '../../img/seeLater.svg';
+import star from '../../img/star.svg';
+import { useAppDispatch } from '../../redux/store';
+import { fetchAddFavouriteFilm, fetchAddWatchLaterFilm } from '../../redux/film/asyncActions';
+import { FavouriteFilmParams, FilmShortProps } from '../../redux/film/types';
+import { useSelector } from 'react-redux';
+import { selectLoginData } from '../../redux/Auth/selectors';
 
-type ItemFilmProps = {
-    id: number,
-    pathPoster: string,
-    nameFilms: string
-}
+const ItemFilm = (props: FilmShortProps) => {
+    const { data, statusAuth } = useSelector(selectLoginData);
+    const dispatch = useAppDispatch();
 
-const ItemFilm = (props: ItemFilmProps) => {
+    const onClickWatchLater = async () => {
+        const film: FavouriteFilmParams = {id: data.id, filmId: props.id}
+        await dispatch(fetchAddWatchLaterFilm(film));
+    }
+
+    const onClickFavourite = async () => {
+        const film: FavouriteFilmParams = {id: data.id, filmId: props.id}
+        await dispatch(fetchAddFavouriteFilm(film));
+    }
+
     return (
         <div className={cl.post}>
-                <img className={cl.post__favourite} src={favourite} alt="Избранное" title="Избранное" />
-                <img className={cl.post__later} src={later} alt="Смотреть позже" title="Смотреть позже" />
+                {statusAuth === 'completed' && 
+                <>
+                <img onClick={() => onClickFavourite() } className={cl.post__favourite} src={favourite} alt="Избранное" title="Избранное" />
+                <img onClick={() => onClickWatchLater() } className={cl.post__later} src={later} alt="Смотреть позже" title="Смотреть позже" />
+                </>}
+                
                 <Link to={`/film/${props.id}`}>
                     <img className={cl.post__poster} src={`https://localhost:44369/`+ props.pathPoster} alt="Название фильма(год)" title="Название фильма(год)" />
                 </Link>
                 <div className={cl.post__rating}>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
+                    <div className="rating">
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                        <span><img src={star} alt='Rating'/></span>
+                    </div>
                 </div>
                 <div className={cl.post__title}>{props.nameFilms}</div>
         </div>

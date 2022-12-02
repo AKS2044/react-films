@@ -6,10 +6,9 @@ import { useForm } from 'react-hook-form';
 import { RegisterParams } from '../../redux/Auth/types';
 import { fetchRegister, fetchUploadPhoto } from '../../redux/Auth/asyncActions';
 import {TextField, Alert} from '@mui/material';
-import { Navigate } from 'react-router-dom';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import profile from '../../img/profile.png'
 import Modal from '../../components/modal/Modal';
 import instance from '../../axios';
@@ -43,7 +42,9 @@ const Register = () => {
     }
 
     useEffect(() => {
-        instance.defaults.headers.common['Authorization'] = window.localStorage.getItem('token');
+        if(statusRegister === 'completed'){
+            instance.defaults.headers.common['Authorization'] = window.localStorage.getItem('token');
+        }
         }, [statusRegister]);
 
 
@@ -67,8 +68,8 @@ const Register = () => {
         window.localStorage.setItem('token', String(data.token));
     }
     
-    if(statusAuth === 'completed'){
-        navigate("/");
+    if(isAuth){
+        return <Navigate to='/' />;
     }
     
     return (

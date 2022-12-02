@@ -43,6 +43,22 @@ button {
     cursor: pointer;
 }
 
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+}
+.rating > span {
+    opacity: 0.4;
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
+.rating > span:hover,
+.rating > span:hover ~ span {
+    opacity: 1;
+}
+
 a{
     text-decoration: none;
     color: $text;
@@ -560,17 +576,28 @@ a{
             }
         }
         &-block{
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 1fr;
+            grid-column-gap: 6px;
+            grid-row-gap: 0px;
             &-item{
-                width: 135px;
-                height: 249px;
+                position: relative;
+                max-height: 249px;
                 background: $br__grey;
                 border-radius: 6px;
                 text-align: center;
-                padding: 10px;
+                padding: 5px 0;
+                &-cross{
+                    position: absolute;
+                    right: 10px;
+                    opacity: 0.4;
+                    &:hover{
+                        opacity: 1;
+                    }
+                }
                 &-poster{
-                    width: 115px;
+                    width: 126px;
                     height: 191px;
                     border-radius: 6px;
                 }

@@ -30,9 +30,29 @@ export interface FilmSliceState {
         filmsStatus: Status;
         sliderFilms: Film[];
         sliderFilmsStatus: Status;
+        filmFavourite: FilmShortProps[],
+        addFavouriteStatus: Status;
+        getFavouriteStatus: Status;
+        deleteFavouriteStatus: Status;
+        filmWatchLater: FilmShortProps[],
+        addWatchLaterStatus: Status,
+        getWatchLaterStatus: Status,
+        deleteWatchLaterStatus: Status,
 }
 
 export interface FilmParams {
     id?: number,
     currentPage?: number
+}
+
+export interface FavouriteFilmParams {
+    id?: string,
+    filmId: number
+}
+
+export interface FilmShortProps {
+    id: number,
+    pathPoster: string,
+    nameFilms: string,
+    releaseDate: number
 }

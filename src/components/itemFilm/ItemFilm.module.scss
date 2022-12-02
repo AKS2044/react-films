@@ -39,10 +39,9 @@
         border-radius: 6px;
     }
     &__rating{
-        margin: 3px 0;
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
     }
     &__title{
         font-size: 	0.875rem;

@@ -29,14 +29,10 @@ export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams
         return data;
     });
 
-export const fetchGetProfile = createAsyncThunk<ProfilePayloadParams, LoginPayloadParams>(
+export const fetchGetProfile = createAsyncThunk<ProfilePayloadParams>(
     'login/fetchGetProfileStatus',
-    async (params) => {
-        const { userName } = params;
-        const { data } = await axios.get<ProfilePayloadParams>('/User/profile', {
-            params: pickBy({
-                userName: userName
-        })});
+    async () => {
+        const { data } = await axios.get<ProfilePayloadParams>('/User/profile');
         return data;
     });
 

@@ -8,6 +8,8 @@ import { LoginParams } from '../../redux/Auth/types';
 import { fetchAuth, fetchLogin } from '../../redux/Auth/asyncActions';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 import { Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import instance from '../../axios';
 
 const defaultValues: LoginParams = {
     userName: 'thefan49@gmail.com',
@@ -30,12 +32,17 @@ const Login = () => {
 
     const onSubmit = async (values: LoginParams) => {
             await dispatch(fetchLogin(values));
-            //window.location.reload();
     }
         
     if(data.token){
         window.localStorage.setItem('token', String(data.token))
     }
+
+    useEffect(() => {
+        if(statusLogin === 'completed'){
+            instance.defaults.headers.common['Authorization'] = window.localStorage.getItem('token');
+        }
+        }, [statusLogin]);
 
     if(isAuth){
         return <Navigate to='/' />;

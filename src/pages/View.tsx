@@ -101,7 +101,7 @@ const View = () => {
                         </button>)}
                 </div>
                 <div>
-                    {player && <img className='post__players-player' src={player.linkPlayer} alt="Постер" title="Постер" />}
+                    {player && <iframe width="560" height="315" src={film.linkFilmtrailer} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>}
                 </div>
             </div>
             <div className='post__recommended'>

@@ -23,12 +23,12 @@ function App() {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useAppDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
-  const { data, statusAuth, statusLogin } = useSelector(selectLoginData);
+  const { data, statusAuth, statusLogin, statusRegister } = useSelector(selectLoginData);
   
   useEffect(() => {
     dispatch(fetchAuth());
     dispatch(fetchGetGenres())
-  }, [] )
+  }, [statusLogin, statusRegister] )
 
   useEffect(() => {
     if(statusAuth === 'completed'){
