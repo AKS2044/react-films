@@ -26,7 +26,7 @@ export interface Film {
 export interface FilmSliceState {
         film: Film;
         filmStatus: Status;
-        films: Film[];
+        films: FilmShortProps[];
         filmsStatus: Status;
         sliderFilms: Film[];
         sliderFilmsStatus: Status;
@@ -38,6 +38,7 @@ export interface FilmSliceState {
         addWatchLaterStatus: Status,
         getWatchLaterStatus: Status,
         deleteWatchLaterStatus: Status,
+        setRatingStatus: Status,
 }
 
 export interface FilmParams {
@@ -54,5 +55,12 @@ export interface FilmShortProps {
     id: number,
     pathPoster: string,
     nameFilms: string,
-    releaseDate: number
+    releaseDate: number,
+    ratingSite: number,
+}
+
+export interface FilmRatingParams {
+    filmId: number,
+    userName: string,
+    rating: number
 }

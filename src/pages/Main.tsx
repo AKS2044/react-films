@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -89,7 +89,6 @@ const Main = () => {
     
     const filmArray = films.map((film: any) => <ItemFilm key={film.id} {...film} />);
     const skeletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
-    
     return (
         <div>
             <Sort />

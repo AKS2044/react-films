@@ -7,7 +7,7 @@ import Button from '../../components/UI/button/Button';
 import { selectLoginData } from '../../redux/Auth/selectors';
 import { fetchFilms } from '../../redux/film/asyncActions';
 import { selectFilmData } from '../../redux/film/selectors';
-import { Film } from '../../redux/film/types';
+import { Film, FilmShortProps } from '../../redux/film/types';
 import { fetchDeleteActors, fetchDeleteCountries, fetchDeleteFilm, fetchDeleteGenre, fetchDeleteManagers, fetchGetActors, fetchGetCountries, fetchGetGenres, fetchGetManagers, fetchPostActors, fetchPostCountries, fetchPostGenre, fetchPostManagers } from '../../redux/filmAdmin/asyncActions';
 import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
 import { ActorPayloadParams, CountryPayloadParams, FilmAddParams, GenrePayloadParams, ManagerPayloadParams } from '../../redux/filmAdmin/types';
@@ -176,7 +176,7 @@ const Admin = () => {
         }
     }
 
-    const onClickDeleteFilm = async (film: Film) => {
+    const onClickDeleteFilm = async (film: FilmShortProps) => {
         if(window.confirm("Вы действительно хотите удалить фильм?"))
         { 
             await dispatch(fetchDeleteFilm(film));

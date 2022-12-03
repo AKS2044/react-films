@@ -17,7 +17,6 @@ const ItemSlider = (props: ItemSliderProps) => {
             */
             <img className={cl.slide__poster} src={img} alt="Название фильма(год)" title="Название фильма(год)" />}
             </Link>
-            <div className={cl.slide__title}>{props.nameFilms}</div>
         </div>
     );
 };

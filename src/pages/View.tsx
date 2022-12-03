@@ -11,6 +11,8 @@ import { useParams } from 'react-router-dom';
 import { selectFilmData } from '../redux/film/selectors';
 import { useSelector } from 'react-redux';
 import Button from '../components/UI/button/Button';
+import { selectLoginData } from '../redux/Auth/selectors';
+import Rating from '../components/rating/Rating';
 
 const View = () => {
     const playerfilm = [
@@ -20,17 +22,16 @@ const View = () => {
         {title: 'Трейлер', linkPlayer: tr},]
 
     const [playerId, setPlayerId] = useState(0);
+    console.log(playerId)
     const params = useParams();
+    const { data } = useSelector(selectLoginData);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(fetchFilmById({id: Number(params.id)}))
         }, [params]);
-
     
-    const { film, filmStatus } = useSelector(selectFilmData);
-
-    const player = playerfilm.find((p, index) => index === playerId)
+    const { film } = useSelector(selectFilmData);
     return (
         <div className='post'>
             <div className='post__flex'>
@@ -44,33 +45,12 @@ const View = () => {
                     <div className='post__left-site-rating'>Рейтинг сайта: <span className='post__rating-color'>{film.ratingSite ? film.ratingSite : '0'}</span></div>
                     <div className='border-menu'></div>
                     <div className='post__left-site-stars'>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
-                    <svg width="22" height="22" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.5 0L10.4084 5.52786H16.584L11.5878 8.94427L13.4962 14.4721L8.5 11.0557L3.50383 14.4721L5.41219 8.94427L0.416019 5.52786H6.59163L8.5 0Z" fill="#F5C518"/>
-                    </svg>
+                        <Rating 
+                        width={25}
+                        filmId={film.id}
+                        userName={data.userName}
+                        ratingSite={film.ratingSite}
+                        />
                     </div>
                 </div>
             </div>
@@ -101,7 +81,10 @@ const View = () => {
                         </button>)}
                 </div>
                 <div>
-                    {player && <iframe width="560" height="315" src={film.linkFilmtrailer} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>}
+                    {playerId === 0 && <img src={player1} alt='Плеер 1' />}
+                    {playerId === 1 && <iframe width="560" height="315" src={film.linkFilmtrailer} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>}
+                    {playerId === 2 && <iframe width="560" height="315" src={film.linkFilmtrailer} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>}
+                    {playerId === 3 && <iframe  width="100%" height="400" src={film.linkFilmtrailer} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>}
                 </div>
             </div>
             <div className='post__recommended'>

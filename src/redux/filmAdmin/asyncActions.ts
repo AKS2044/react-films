@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { pickBy } from "lodash";
 import axios from "../../axios";
-import { Film } from "../film/types";
+import { Film, FilmShortProps } from "../film/types";
 import { 
         ActorPayloadParams, 
         CountryPayloadParams, 
@@ -45,7 +45,7 @@ export const fetchAddFilm = createAsyncThunk<FilmAddParams, FilmAddParams>(
                 return data;
         });
 
-export const fetchDeleteFilm = createAsyncThunk<string, Film>(
+export const fetchDeleteFilm = createAsyncThunk<string, FilmShortProps>(
         'filmAdmin/fetchDeleteFilmStatus',
         async (params) => {
                 const { id } = params;

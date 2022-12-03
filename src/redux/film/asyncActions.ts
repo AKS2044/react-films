@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {pickBy} from 'lodash';
 import axios from '../../axios';
-import { FavouriteFilmParams, Film, FilmParams, FilmShortProps } from './types';
+import { FavouriteFilmParams, Film, FilmParams, FilmRatingParams, FilmShortProps } from './types';
 
-export const fetchFilms = createAsyncThunk<Film[], FilmParams>(
+export const fetchFilms = createAsyncThunk<FilmShortProps[], FilmParams>(
     'film/fetchFilmsStatus',
     async (params) => {
         const { currentPage } = params;
-        const { data } = await axios.get<Film[]>('/Film/Films', {
+        const { data } = await axios.get<FilmShortProps[]>('/Film/Films', {
             params: pickBy({
                 page: currentPage
             })
@@ -83,5 +83,12 @@ export const fetchDeleteWatchLaterFilm = createAsyncThunk<string, FavouriteFilmP
                 filmId
             })
         });
+        return data;
+    });
+
+export const fetchSetRatingFilm = createAsyncThunk<string, FilmRatingParams>(
+    'film/fetchSetRatingFilmStatus',
+    async (params) => {
+        const { data } = await axios.post('/Film/rating', params);
         return data;
     });

@@ -43,22 +43,6 @@ button {
     cursor: pointer;
 }
 
-.rating {
-    unicode-bidi: bidi-override;
-    direction: rtl;
-    text-align: center;
-}
-.rating > span {
-    opacity: 0.4;
-    display: inline-block;
-    position: relative;
-    width: 1.1em;
-}
-.rating > span:hover,
-.rating > span:hover ~ span {
-    opacity: 1;
-}
-
 a{
     text-decoration: none;
     color: $text;
@@ -162,13 +146,11 @@ a{
                 color: #9B3737;
             }
             &-stars{
-                margin-top: 2px;
                 padding: 0 7px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: space-around;
             }
         }
-        
     }
     &__right{
         width: 100%;

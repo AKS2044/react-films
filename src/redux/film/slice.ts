@@ -9,7 +9,8 @@ import {
     fetchDeleteFavouriteFilm, 
     fetchAddWatchLaterFilm,
     fetchGetWatchLaterFilm,
-    fetchDeleteWatchLaterFilm} from '../film/asyncActions';
+    fetchDeleteWatchLaterFilm,
+    fetchSetRatingFilm} from '../film/asyncActions';
 import { Film, FilmSliceState} from '../film/types';
 
 const initialState: FilmSliceState = {
@@ -27,6 +28,7 @@ const initialState: FilmSliceState = {
             addWatchLaterStatus: Status.LOADING,
             getWatchLaterStatus: Status.LOADING,
             deleteWatchLaterStatus: Status.LOADING,
+            setRatingStatus: Status.LOADING,
         }
 
 export const filmSlice = createSlice({
@@ -39,7 +41,6 @@ export const filmSlice = createSlice({
         //fetchFilms builder
         builder.addCase(fetchFilms.pending, (state) => {
             state.filmsStatus = Status.LOADING
-            state.films = [];
         });
         builder.addCase(fetchFilms.fulfilled, (state, action) => {
             state.filmsStatus = Status.SUCCESS;
@@ -47,13 +48,11 @@ export const filmSlice = createSlice({
         });
         builder.addCase(fetchFilms.rejected, (state) => {
             state.filmsStatus = Status.ERROR;
-            state.films = [];
         });
 
         //fetchFilmById builder
         builder.addCase(fetchFilmById.pending, (state) => {
             state.filmStatus = Status.LOADING
-            state.film = {} as Film;
         });
         builder.addCase(fetchFilmById.fulfilled, (state, action) => {
             state.filmStatus = Status.SUCCESS;
@@ -61,7 +60,6 @@ export const filmSlice = createSlice({
         });
         builder.addCase(fetchFilmById.rejected, (state) => {
             state.filmStatus = Status.ERROR;
-            state.film = {} as Film;
         });
 
         //fetchSliderFilms builder
@@ -142,6 +140,17 @@ export const filmSlice = createSlice({
         });
         builder.addCase(fetchDeleteWatchLaterFilm.rejected, (state) => {
             state.deleteWatchLaterStatus = Status.ERROR;
+        });
+
+        //fetchSetRatingFilm builder
+        builder.addCase(fetchSetRatingFilm.pending, (state) => {
+            state.setRatingStatus = Status.LOADING;
+        });
+        builder.addCase(fetchSetRatingFilm.fulfilled, (state) => {
+            state.setRatingStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchSetRatingFilm.rejected, (state) => {
+            state.setRatingStatus = Status.ERROR;
         });
         },
 });
