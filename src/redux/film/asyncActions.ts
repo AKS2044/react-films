@@ -6,10 +6,11 @@ import { FavouriteFilmParams, Film, FilmParams, FilmRatingParams, FilmShortProps
 export const fetchFilms = createAsyncThunk<FilmShortProps[], FilmParams>(
     'film/fetchFilmsStatus',
     async (params) => {
-        const { currentPage } = params;
+        const { currentPage, genreId } = params;
         const { data } = await axios.get<FilmShortProps[]>('/Film/Films', {
             params: pickBy({
-                page: currentPage
+                page: currentPage,
+                genreId: genreId
             })
         });
         return data;

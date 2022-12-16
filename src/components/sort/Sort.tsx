@@ -1,4 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
+import { setGenre } from '../../redux/filter/slice';
+import { useAppDispatch } from '../../redux/store';
 import cl from './Sort.module.scss';
 
 const sortItem = [
@@ -13,15 +17,20 @@ const sortItem = [
     'Алфавиту',
     'Год выпуска']
 
+
     type PopupClick = MouseEvent & {
         path: Node[];
     };
 
 const Sort = () => {
+    const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
     const [sortId, setSortId] = useState(0);
+    
+    const { genreData } = useSelector(selectFilmAdminData);
+    const [openGenre, setOpenGenre] = useState(false);
     const sortRef = useRef<HTMLDivElement>(null);
-
+    
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
         const _event = event as PopupClick;
@@ -29,20 +38,28 @@ const Sort = () => {
             setOpen(false);
         }
         };
-    
         document.body.addEventListener('click', handleClickOutside);
     
         return () => document.body.removeEventListener('click', handleClickOutside);
     }, []);
 
+    const onChangeGenre = (genreId: number) => {
+        dispatch(setGenre(genreId));
+    };
+
     return (
         <div ref={sortRef} className={cl.sort}>
             <div className={cl.sort__item}>Фильтрация по:</div>
-            <button className={cl.sort__item}>
+            <button onClick={() => setOpenGenre(!openGenre)} className={cl.sort__item}>
                 Жанру
                 <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 6L0.937822 -1.88258e-07L13.0622 8.71687e-07L7 6Z" fill="white"/>
                 </svg>
+                {openGenre && 
+                    <ul>
+                        {genreData.map((g) => <li onClick={() => onChangeGenre(g.id)} key={g.id} className={sortId === g.id ? cl.active : ''}>{g.genres}</li>)}
+                    </ul>
+                }
             </button>
             <button className={cl.sort__item}>
                 Году

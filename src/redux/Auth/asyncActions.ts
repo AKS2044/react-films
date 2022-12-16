@@ -39,7 +39,6 @@ export const fetchGetProfile = createAsyncThunk<ProfilePayloadParams>(
 export const fetchUploadPhoto = createAsyncThunk<string, FormData>(
         'login/fetchUploadPhotoStatus',
         async (formData) => {
-            console.log(FormData, 'отраб')
                 const {data} = await axios.post('/User/uploadPhoto', formData);
                 return data;
         });

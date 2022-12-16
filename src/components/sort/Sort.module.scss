@@ -32,10 +32,10 @@
         z-index: 1001;
         top: 34px;
         right: 0;
-        width: 125px;
         background-color: $br__grey;
         border-radius: 0 0 6px 6px;
         li{
+            padding: 0 5px;
             line-height: 25px;
             background-color: $background__second;
             margin-bottom: 1px;

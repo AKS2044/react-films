@@ -1,20 +1,24 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import posterMenu from '../../img/posterMenu.jpg';
 import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
+import { setGenre } from '../../redux/filter/slice';
 import { useAppDispatch } from '../../redux/store';
 import cl from './Menu.module.scss';
 
 const Menu = () => {
+    const dispatch = useAppDispatch();
     const { genreData } = useSelector(selectFilmAdminData);
 
+    const onChangeGenre = (genreId: number) => {
+        dispatch(setGenre(genreId));
+    };
     return (
         <div className={cl.menu}>
             <div className={cl.menu__block}>
                 <div className={cl.menu__block__title}>Меню</div>
                 <div className={cl.menu__border}></div>
                 <div className={cl.content}>
-                    {genreData.map((g) => <Link key={g.id} to='/' className={cl.content__link}>{g.genres} <small>(1тыс)</small></Link>)}
+                    {genreData.map((g) => <button onClick={() => onChangeGenre(g.id)} key={g.id} className={cl.content__link}>{g.genres} <small>(1тыс)</small></button>)}
                 </div>
             </div>
             <div className={cl.menu__block}>

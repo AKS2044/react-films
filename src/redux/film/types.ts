@@ -43,7 +43,8 @@ export interface FilmSliceState {
 
 export interface FilmParams {
     id?: number,
-    currentPage?: number
+    currentPage?: number,
+    genreId?: number,
 }
 
 export interface FavouriteFilmParams {

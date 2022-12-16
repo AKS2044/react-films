@@ -2,7 +2,8 @@
 
 .menu{
     width: 246px;
-    border-right: 1px solid $br__grey;
+    border: 1px solid $br__grey;
+    background: $background__second;
     &__border{
         height: 1px; 
         background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.28) 30.73%, rgba(255, 255, 255, 0.28) 69.27%, rgba(255, 255, 255, 0) 100%);
@@ -25,6 +26,7 @@
                 padding: 3px;
                 font-size: 13px;
                 line-height: 15px;
+                text-align: left;
                 text-transform: uppercase;
                 &:hover{
                     background: linear-gradient(270deg, rgba(15, 15, 15, 0) 0%, #720D0D 90% 40%);

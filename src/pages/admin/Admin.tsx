@@ -120,7 +120,6 @@ const Admin = () => {
     const onSubmitContry = async (props: Props) => {
         const result = Boolean(countryData.find((f) => f.country === props.country.country));
         
-        console.log(result)
         if(!result){
             await dispatch(fetchPostCountries(props.country));
         }else{
