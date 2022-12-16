@@ -39,12 +39,34 @@ export interface FilmSliceState {
         getWatchLaterStatus: Status,
         deleteWatchLaterStatus: Status,
         setRatingStatus: Status,
+        commentsData: CommentGetParams[],
+        addCommentStatus: Status,
+        getAllCommentsStatus: Status,
+        deleteCommentStatus: Status,
 }
 
 export interface FilmParams {
     id?: number,
     currentPage?: number,
     genreId?: number,
+}
+
+export interface CommentAddParams {
+    comments: string,
+    userName: string,
+    pathPhoto: string,
+    filmId: number,
+    userId: string
+}
+
+export interface CommentGetParams {
+    id: number,
+    comments: string,
+    userName: string,
+    pathPhoto: string,
+    dateSet: string,
+    like: number,
+    dislike: number
 }
 
 export interface FavouriteFilmParams {

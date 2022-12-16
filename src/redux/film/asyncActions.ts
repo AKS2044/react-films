@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {pickBy} from 'lodash';
 import axios from '../../axios';
-import { FavouriteFilmParams, Film, FilmParams, FilmRatingParams, FilmShortProps } from './types';
+import { CommentAddParams, CommentGetParams, FavouriteFilmParams, Film, FilmParams, FilmRatingParams, FilmShortProps } from './types';
 
 export const fetchFilms = createAsyncThunk<FilmShortProps[], FilmParams>(
     'film/fetchFilmsStatus',
@@ -91,5 +91,43 @@ export const fetchSetRatingFilm = createAsyncThunk<string, FilmRatingParams>(
     'film/fetchSetRatingFilmStatus',
     async (params) => {
         const { data } = await axios.post('/Film/rating', params);
+        return data;
+    });
+
+export const fetchAddCommentFilm = createAsyncThunk<string, CommentAddParams>(
+    'film/fetchAddCommentFilmStatus',
+    async (params) => {
+        const {filmId, userId, comments, userName, pathPhoto} = params;
+        const { data } = await axios.post('/Comment/add', {
+            filmId,
+            userId,
+            comments,
+            userName,
+            pathPhoto
+        });
+        return data;
+    });
+
+export const fetchGetCommentsFilm = createAsyncThunk<CommentGetParams[], {filmId: number}>(
+    'film/fetchGetCommentsFilmStatus',
+    async (params) => {
+        const {filmId} = params;
+        const { data } = await axios.get<CommentGetParams[]>('/Comment/getAll', {
+            params: pickBy({
+                filmId
+            })
+        });
+        return data;
+    });
+
+export const fetchDeleteCommentFilm = createAsyncThunk<string, {id: number}>(
+    'film/fetchDeleteCommentFilmStatus',
+    async (params) => {
+        const {id} = params;
+        const { data } = await axios.delete('/Comment/', {
+            params: pickBy({
+                id
+            })
+        });
         return data;
     });

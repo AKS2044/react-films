@@ -10,7 +10,10 @@ import {
     fetchAddWatchLaterFilm,
     fetchGetWatchLaterFilm,
     fetchDeleteWatchLaterFilm,
-    fetchSetRatingFilm} from '../film/asyncActions';
+    fetchSetRatingFilm,
+    fetchAddCommentFilm,
+    fetchGetCommentsFilm,
+    fetchDeleteCommentFilm} from '../film/asyncActions';
 import { Film, FilmSliceState} from '../film/types';
 
 const initialState: FilmSliceState = {
@@ -29,6 +32,10 @@ const initialState: FilmSliceState = {
             getWatchLaterStatus: Status.LOADING,
             deleteWatchLaterStatus: Status.LOADING,
             setRatingStatus: Status.LOADING,
+            commentsData: [],
+            addCommentStatus: Status.LOADING,
+            getAllCommentsStatus: Status.LOADING,
+            deleteCommentStatus: Status.LOADING,
         }
 
 export const filmSlice = createSlice({
@@ -78,7 +85,7 @@ export const filmSlice = createSlice({
         builder.addCase(fetchAddFavouriteFilm.pending, (state) => {
             state.addFavouriteStatus = Status.LOADING;
         });
-        builder.addCase(fetchAddFavouriteFilm.fulfilled, (state, action) => {
+        builder.addCase(fetchAddFavouriteFilm.fulfilled, (state) => {
             state.addFavouriteStatus = Status.SUCCESS;
         });
         builder.addCase(fetchAddFavouriteFilm.rejected, (state) => {
@@ -112,7 +119,7 @@ export const filmSlice = createSlice({
         builder.addCase(fetchAddWatchLaterFilm.pending, (state) => {
             state.addWatchLaterStatus = Status.LOADING;
         });
-        builder.addCase(fetchAddWatchLaterFilm.fulfilled, (state, action) => {
+        builder.addCase(fetchAddWatchLaterFilm.fulfilled, (state) => {
             state.addWatchLaterStatus = Status.SUCCESS;
         });
         builder.addCase(fetchAddWatchLaterFilm.rejected, (state) => {
@@ -151,6 +158,40 @@ export const filmSlice = createSlice({
         });
         builder.addCase(fetchSetRatingFilm.rejected, (state) => {
             state.setRatingStatus = Status.ERROR;
+        });
+
+        //fetchAddCommentFilm builder
+        builder.addCase(fetchAddCommentFilm.pending, (state) => {
+            state.addCommentStatus = Status.LOADING;
+        });
+        builder.addCase(fetchAddCommentFilm.fulfilled, (state) => {
+            state.addCommentStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchAddCommentFilm.rejected, (state) => {
+            state.addCommentStatus = Status.ERROR;
+        });
+
+        //fetchGetCommentsFilm builder
+        builder.addCase(fetchGetCommentsFilm.pending, (state) => {
+            state.getAllCommentsStatus = Status.LOADING;
+        });
+        builder.addCase(fetchGetCommentsFilm.fulfilled, (state, action) => {
+            state.getAllCommentsStatus = Status.SUCCESS;
+            state.commentsData = action.payload;
+        });
+        builder.addCase(fetchGetCommentsFilm.rejected, (state) => {
+            state.getAllCommentsStatus = Status.ERROR;
+        });
+
+        //fetchDeleteCommentFilm builder
+        builder.addCase(fetchDeleteCommentFilm.pending, (state) => {
+            state.deleteCommentStatus = Status.LOADING;
+        });
+        builder.addCase(fetchDeleteCommentFilm.fulfilled, (state, action) => {
+            state.deleteCommentStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchDeleteCommentFilm.rejected, (state) => {
+            state.deleteCommentStatus = Status.ERROR;
         });
         },
 });

@@ -67,14 +67,17 @@ const Register = () => {
     if(data.token){
         window.localStorage.setItem('token', String(data.token));
     }
-    
-    if(isAuth){
-        return <Navigate to='/' />;
-    }
+
+    useEffect(() => {
+        if(isAuth){
+            console.log('отраб')
+            return navigate("/");
+        }
+    }, []);
     
     return (
         <div className={cl.register}>
-                <div className={cl.register__title}>Авторизация</div>
+                <div className={cl.register__title}>Регистрация</div>
                 {statusRegister === 'error' && 
                 <Alert className={cl.alert} variant="filled" severity="error">
                     Логин или E-mail — <strong>заняты!</strong>

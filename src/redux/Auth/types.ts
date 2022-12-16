@@ -44,7 +44,8 @@ export interface LoginPayloadParams {
     email: string,
     roles: string[],
     token: boolean,
-    userName: string
+    userName: string,
+    pathPhoto: string
 }
 
 export interface GetProfileParams {
