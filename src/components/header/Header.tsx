@@ -27,7 +27,6 @@ const Header = () => {
             window.location.reload();
         }
     }
-
     return (
         <>
             <header className={cl.header}>

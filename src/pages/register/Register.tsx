@@ -64,16 +64,17 @@ const Register = () => {
         return navigate("/");
     }
 
+    if(isAuth){
+        return <Navigate to="/" />;
+    }
+
     if(data.token){
         window.localStorage.setItem('token', String(data.token));
     }
 
-    useEffect(() => {
-        if(isAuth){
-            console.log('отраб')
-            return navigate("/");
-        }
-    }, []);
+    // useEffect(() => {
+    //     
+    // }, [isAuth]);
     
     return (
         <div className={cl.register}>

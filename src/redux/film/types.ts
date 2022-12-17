@@ -43,6 +43,8 @@ export interface FilmSliceState {
         addCommentStatus: Status,
         getAllCommentsStatus: Status,
         deleteCommentStatus: Status,
+        setLikeCommentStatus: Status,
+        setDislikeCommentStatus: Status,
 }
 
 export interface FilmParams {

@@ -13,29 +13,6 @@ const Slider = () => {
     const [offset, setOffset] = useState(0);
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLDivElement>(null);
-    
-    const items = [
-        {id: 1, nameFilms: 'Test1', pathPoster: '/'},
-        {id: 2, nameFilms: 'Test2', pathPoster: '/'},
-        {id: 3, nameFilms: 'Test3', pathPoster: '/'},
-        {id: 4, nameFilms: 'Test4', pathPoster: '/'},
-        {id: 5, nameFilms: 'Test5', pathPoster: '/'},
-        {id: 6, nameFilms: 'Test6', pathPoster: '/'},
-        {id: 7, nameFilms: 'Test7', pathPoster: '/'},
-        {id: 8, nameFilms: 'Test8', pathPoster: '/'},
-        {id: 9, nameFilms: 'Test9', pathPoster: '/'},
-        {id: 10, nameFilms: 'Test10', pathPoster: '/'},
-        {id: 11, nameFilms: 'Test11', pathPoster: '/'},
-        {id: 12, nameFilms: 'Test12', pathPoster: '/'},
-        {id: 13, nameFilms: 'Test13', pathPoster: '/'},
-        {id: 14, nameFilms: 'Test14', pathPoster: '/'},
-        {id: 15, nameFilms: 'Test15', pathPoster: '/'},
-        {id: 16, nameFilms: 'Test16', pathPoster: '/'},
-        {id: 17, nameFilms: 'Test17', pathPoster: '/'},
-        {id: 18, nameFilms: 'Test18', pathPoster: '/'},
-        {id: 19, nameFilms: 'Test19', pathPoster: '/'},
-        {id: 20, nameFilms: 'Test20', pathPoster: '/'},
-    ];
 
     const prevHandler = () => {
         if(offset !== 0){

@@ -5,7 +5,7 @@ import player3 from '../../img/player3.jpg';
 import tr from '../../img/tr.jpg';
 import rec from '../../img/recommended.jpg';
 import { useAppDispatch } from '../../redux/store';
-import { fetchAddCommentFilm, fetchDeleteCommentFilm, fetchFilmById, fetchGetCommentsFilm } from '../../redux/film/asyncActions';
+import { fetchAddCommentFilm, fetchDeleteCommentFilm, fetchFilmById, fetchGetCommentsFilm, fetchSetDislikeCommentFilm, fetchSetLikeCommentFilm } from '../../redux/film/asyncActions';
 import { Link, useParams } from 'react-router-dom';
 import { selectFilmData } from '../../redux/film/selectors';
 import { useSelector } from 'react-redux';
@@ -28,11 +28,19 @@ const defaultValues: CommentAddParams = {
 
 const View = () => {
     const [addCommentOpen, setAddCommentOpen] = useState(false);
+    const [comment, setComment] = useState('');
     const [playerId, setPlayerId] = useState(0);
     const params = useParams();
     const dispatch = useAppDispatch();
     const isAuth = useSelector(selectIsAuth);
-    const { film, filmStatus, commentsData, addCommentStatus, deleteCommentStatus } = useSelector(selectFilmData);
+    const { film, 
+        filmStatus, 
+        commentsData, 
+        addCommentStatus, 
+        getAllCommentsStatus,
+        deleteCommentStatus,
+        setLikeCommentStatus,
+        setDislikeCommentStatus } = useSelector(selectFilmData);
     const { data } = useSelector(selectLoginData);
 
     const playerfilm = [
@@ -44,6 +52,7 @@ const View = () => {
     const { 
         register, 
         handleSubmit, 
+        resetField,
         formState: {}} = useForm({
         defaultValues: defaultValues,
         mode: 'onChange'
@@ -55,6 +64,8 @@ const View = () => {
         values.userName = data.userName;
         values.pathPhoto = data.pathPhoto;
         await dispatch(fetchAddCommentFilm(values));
+        setComment('');
+        resetField('comments');
     }
 
     const onClickDeleteComment = async (comment: CommentGetParams) => {
@@ -66,17 +77,37 @@ const View = () => {
         }
     }
 
+    const onChangeTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setComment(event.target.value);
+    };
+
+    const onClickLikeComment = async (comment: CommentGetParams) => {
+        await dispatch(fetchSetLikeCommentFilm(comment));
+    }
+
+    const onClickDislikeComment = async (comment: CommentGetParams) => {
+        await dispatch(fetchSetDislikeCommentFilm(comment));
+    }
+
+    const getComments = async () => {
+        await dispatch(fetchGetCommentsFilm({filmId: Number(params.id)}));
+    }
+
+    const getFilm = async () => {
+        await dispatch(fetchFilmById({id: Number(params.id)}));
+    }
+
     useEffect(() => {
-        dispatch(fetchFilmById({id: Number(params.id)}))
+        getFilm();
         }, [params]);
 
     useEffect(() => {
-        dispatch(fetchGetCommentsFilm({filmId: film.id}));
-        }, [addCommentStatus, deleteCommentStatus]);
+        getComments()
+        }, [addCommentStatus, deleteCommentStatus, setDislikeCommentStatus, setLikeCommentStatus, params]);
 
     return (
         <>
-        {filmStatus === Status.LOADING 
+        {filmStatus === Status.LOADING
         ? <Loader />
         : <div className={cl.post}>
         <div className={cl.post__flex}>
@@ -163,7 +194,7 @@ const View = () => {
         </div>
         <div className={cl.post__comments}>
             <div className={cl.post__comments__panel}>
-            <button onClick={() => setAddCommentOpen(!addCommentOpen)}>Добавить комментарий</button>
+                <button className={cl.post__comments__panel__button} onClick={() => setAddCommentOpen(!addCommentOpen)}>Добавить комментарий</button>
                 <div className={cl.post__comments__panel__number}>{commentsData.length}</div>
             </div>
             {addCommentOpen && 
@@ -172,8 +203,11 @@ const View = () => {
             ? <form method="post" onSubmit={handleSubmit(onSubmit)} className={cl.post__comments__block}>
                 <div className={cl.post__comments__block__flex} >
                     <textarea
+                    {...register('comments', {required: 'Введите комментарий'})}
+                    value={comment} 
                     maxLength={500}
-                    {...register('comments', {required: 'Введите комментарий'})} />
+                    onChange= {(e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeTextArea(e)}
+                    />
                     <div className={cl.post__comments__block__flex__emodji}></div>
                 </div>
                 <Button>Добавить</Button>
@@ -183,6 +217,9 @@ const View = () => {
             </div>}
             </>}
             <div className={cl.post__comments__comment}>
+                {getAllCommentsStatus === 'loading'
+                ? <div>Загрузка...</div>
+                : <>
                 {commentsData.map((c) => 
                 <div key={c.id} className={cl.post__comments__comment__main}>
                     <img className={cl.post__comments__comment__main__photo} src={`https://localhost:44369/`+ c.pathPhoto} alt="Фото" title="Фото" />
@@ -196,9 +233,10 @@ const View = () => {
                     </div>
                     {(data.userName === c.userName || Boolean(data.roles.find((r) => r === 'Admin'))) && 
                     <div onClick={() => onClickDeleteComment(c)} className={cl.post__comments__comment__main__delete}>⛌</div>}
-                    <div className={cl.post__comments__comment__main__plus}>+ {c.like}</div>
-                    <div className={cl.post__comments__comment__main__minus}>- {c.dislike}</div>
+                    <div onClick={() => onClickLikeComment(c)} className={cl.post__comments__comment__main__plus}>+ {c.like}</div>
+                    <div onClick={() => onClickDislikeComment(c)} className={cl.post__comments__comment__main__minus}>- {c.dislike}</div>
                 </div>)}
+                </>}
             </div>
             <Button>Больше комментариев</Button>
         </div>

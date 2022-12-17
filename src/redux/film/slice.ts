@@ -13,7 +13,9 @@ import {
     fetchSetRatingFilm,
     fetchAddCommentFilm,
     fetchGetCommentsFilm,
-    fetchDeleteCommentFilm} from '../film/asyncActions';
+    fetchDeleteCommentFilm,
+    fetchSetLikeCommentFilm,
+    fetchSetDislikeCommentFilm} from '../film/asyncActions';
 import { Film, FilmSliceState} from '../film/types';
 
 const initialState: FilmSliceState = {
@@ -36,6 +38,8 @@ const initialState: FilmSliceState = {
             addCommentStatus: Status.LOADING,
             getAllCommentsStatus: Status.LOADING,
             deleteCommentStatus: Status.LOADING,
+            setLikeCommentStatus: Status.LOADING,
+            setDislikeCommentStatus: Status.LOADING,
         }
 
 export const filmSlice = createSlice({
@@ -187,11 +191,33 @@ export const filmSlice = createSlice({
         builder.addCase(fetchDeleteCommentFilm.pending, (state) => {
             state.deleteCommentStatus = Status.LOADING;
         });
-        builder.addCase(fetchDeleteCommentFilm.fulfilled, (state, action) => {
+        builder.addCase(fetchDeleteCommentFilm.fulfilled, (state) => {
             state.deleteCommentStatus = Status.SUCCESS;
         });
         builder.addCase(fetchDeleteCommentFilm.rejected, (state) => {
             state.deleteCommentStatus = Status.ERROR;
+        });
+
+        //fetchSetLikeCommentFilm builder
+        builder.addCase(fetchSetLikeCommentFilm.pending, (state) => {
+            state.setLikeCommentStatus = Status.LOADING;
+        });
+        builder.addCase(fetchSetLikeCommentFilm.fulfilled, (state) => {
+            state.setLikeCommentStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchSetLikeCommentFilm.rejected, (state) => {
+            state.setLikeCommentStatus = Status.ERROR;
+        });
+
+         //fetchSetDislikeCommentFilm builder
+        builder.addCase(fetchSetDislikeCommentFilm.pending, (state) => {
+            state.setDislikeCommentStatus = Status.LOADING;
+        });
+        builder.addCase(fetchSetDislikeCommentFilm.fulfilled, (state) => {
+            state.setDislikeCommentStatus = Status.SUCCESS;
+        });
+        builder.addCase(fetchSetDislikeCommentFilm.rejected, (state) => {
+            state.setDislikeCommentStatus = Status.ERROR;
         });
         },
 });

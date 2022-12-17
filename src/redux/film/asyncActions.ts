@@ -131,3 +131,19 @@ export const fetchDeleteCommentFilm = createAsyncThunk<string, {id: number}>(
         });
         return data;
     });
+
+export const fetchSetLikeCommentFilm = createAsyncThunk<string, CommentGetParams>(
+    'film/fetchSetLikeCommentFilmStatus',
+    async (params) => {
+        const {id} = params;
+        const { data } = await axios.post('/Comment/setLike', {id});
+        return data;
+    });
+
+export const fetchSetDislikeCommentFilm = createAsyncThunk<string, CommentGetParams>(
+    'film/fetchSetDislikeCommentFilmStatus',
+    async (params) => {
+        const {id} = params;
+        const { data } = await axios.post('/Comment/setDislike', {id});
+        return data;
+    });
