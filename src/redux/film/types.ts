@@ -51,6 +51,7 @@ export interface FilmParams {
     id?: number,
     currentPage?: number,
     genreId?: number,
+    countryId?: number
 }
 
 export interface CommentAddParams {

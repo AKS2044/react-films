@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import player1 from '../../img/player1.jpg';
 import player2 from '../../img/player2.jpg';
 import player3 from '../../img/player3.jpg';
 import tr from '../../img/tr.jpg';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import rec from '../../img/recommended.jpg';
 import { useAppDispatch } from '../../redux/store';
 import { fetchAddCommentFilm, fetchDeleteCommentFilm, fetchFilmById, fetchGetCommentsFilm, fetchSetDislikeCommentFilm, fetchSetLikeCommentFilm } from '../../redux/film/asyncActions';
@@ -219,23 +220,26 @@ const View = () => {
             <div className={cl.post__comments__comment}>
                 {getAllCommentsStatus === 'loading'
                 ? <div>Загрузка...</div>
-                : <>
-                {commentsData.map((c) => 
-                <div key={c.id} className={cl.post__comments__comment__main}>
-                    <img className={cl.post__comments__comment__main__photo} src={`https://localhost:44369/`+ c.pathPhoto} alt="Фото" title="Фото" />
-                    <div className={cl.post__comments__comment__main__block} >
-                        <div className={cl.post__comments__comment__main__block__info}>
-                            <div className={cl.post__comments__comment__main__block__info__nick}>{c.userName}</div>
-                            <div className={cl.post__comments__comment__main__block__info__date}>{c.dateSet}</div>
-                        </div>
-                        <div className={cl.post__comments__comment__main__block__text}>{c.comments}</div>
-                        
-                    </div>
-                    {(data.userName === c.userName || Boolean(data.roles.find((r) => r === 'Admin'))) && 
-                    <div onClick={() => onClickDeleteComment(c)} className={cl.post__comments__comment__main__delete}>⛌</div>}
-                    <div onClick={() => onClickLikeComment(c)} className={cl.post__comments__comment__main__plus}>+ {c.like}</div>
-                    <div onClick={() => onClickDislikeComment(c)} className={cl.post__comments__comment__main__minus}>- {c.dislike}</div>
-                </div>)}
+                : 
+                <>
+                    {commentsData.map((c) => 
+                    <div
+                    className={cl.post__comments__comment__main}
+                    key={c.id}>
+                            <img className={cl.post__comments__comment__main__photo} src={`https://localhost:44369/`+ c.pathPhoto} alt="Фото" title="Фото" />
+                            <div className={cl.post__comments__comment__main__block} >
+                                <div className={cl.post__comments__comment__main__block__info}>
+                                    <div className={cl.post__comments__comment__main__block__info__nick}>{c.userName}</div>
+                                    <div className={cl.post__comments__comment__main__block__info__date}>{c.dateSet}</div>
+                                </div>
+                                <div className={cl.post__comments__comment__main__block__text}>{c.comments}</div>
+                                
+                            </div>
+                            {(data.userName === c.userName || Boolean(data.roles.find((r) => r === 'Admin'))) && 
+                            <div onClick={() => onClickDeleteComment(c)} className={cl.post__comments__comment__main__delete}>⛌</div>}
+                            <div onClick={() => onClickLikeComment(c)} className={cl.post__comments__comment__main__plus}>+ {c.like}</div>
+                            <div onClick={() => onClickDislikeComment(c)} className={cl.post__comments__comment__main__minus}>- {c.dislike}</div>
+                    </div>)}
                 </>}
             </div>
             <Button>Больше комментариев</Button>

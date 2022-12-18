@@ -26,7 +26,39 @@
             text-decoration: underline;
         }
     }
-    ul{
+    &__country{
+        pointer-events: none;
+        padding: 2px 8px;
+        position: absolute;
+        z-index: 1001;
+        top: 35px;
+        right: -60px;
+        background-color: $br__grey;
+        border-radius: 0 0 6px 6px;
+        &__input{
+            pointer-events: visible;
+            height: 30px;
+            background-color: $background__second;
+            outline: none;
+            color: $text;
+            border: 1px solid $background__3;
+            border-radius: 6px;
+            margin-bottom: 3px;
+        }
+        &__li{
+            pointer-events: auto;
+            cursor: pointer;
+            padding: 0 5px;
+            line-height: 25px;
+            background-color: $background__second;
+            margin-bottom: 1px;
+            &:hover{
+                background-color: $br__grey;
+                color: $br__red;
+            }
+        }
+    }
+    &__ul{
         padding: 1px 1px 3px 1px;
         position: absolute;
         z-index: 1001;
@@ -34,7 +66,7 @@
         right: 0;
         background-color: $br__grey;
         border-radius: 0 0 6px 6px;
-        li{
+        &__li{
             padding: 0 5px;
             line-height: 25px;
             background-color: $background__second;

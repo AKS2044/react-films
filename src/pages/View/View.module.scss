@@ -180,6 +180,7 @@ textarea{
             }
         }
         &__block{
+            opacity: 0;
             display: flex;
             height: 320px;
             padding: 5px;
@@ -303,95 +304,19 @@ textarea{
                     }
                 }
             }
-        }
-        &__comment{
-            &__dop{
-                position: relative;
-                z-index: 1;
-                display: flex;
-                padding: 10px;
-                border-bottom: 1px solid $br__grey;
-                border-left: 1px solid $br__grey;
-                &__photo{
-                    width: 75px;
-                    height: 75px;
-                    margin: 0 10px 0 100px;
-                }
-                &__answer{
-                    position: absolute;
-                    font-size: 14px;
-                    right: -1px;
-                    bottom: -1px;
-                    border: 1px solid $br__grey;
-                    &:hover{
-                        background: $br__grey;
-                    }
-                }
-                &__plus{
-                    min-width: 40px;
-                    padding: 0 5px;
-                    height: 20px;
-                    font-weight: 600;
-                    font-size: 1;
-                    background: #017C32;
-                    border-radius: 0px 0px 6px 6px;
-                    position: absolute;
-                    right: 60px;
-                    top: 0;
-                    text-align: center;
-                    cursor: pointer;
-                }
-                &__minus{
-                    position: absolute;
-                    padding: 0 5px;
-                    right: 0;
-                    font-weight: 600;
-                    text-align: center;
-                    top: 0;
-                    min-width: 40px;
-                    height: 20px;
-                    background: #7C1F01;
-                    border-radius: 0px 0px 6px 6px;
-                    cursor: pointer;
-                }
-                &__num{
-                    position: absolute;
-                    font-size: 0.75rem;
-                    left: 370px;
-                    padding: 0 5px;
-                    min-width: 15px;
-                    border-radius: 6px;
-                    border: 1px solid white;
-                    text-align: center;
-                }
-                &__more__comments{
-                    width: 25px;
-                    position: absolute;
-                    z-index: 1000;
-                    bottom: -1px;
-                    left: 3px;
-                    cursor: pointer;
-                    border: 1px solid $br__grey;
-                }
-                &__block{
-                    &__info{
-                        display: flex;
-                        align-items: center;
-                        margin-bottom: 10px;
-                        &__nick{
-                            margin-right: 5px;
-                        }
-                        &__date{
-                            font-weight: 300;
-                            font-size: 12px;
-                            line-height: 12px;
-                            opacity: 0.7;
-                        }
-                    }
-                    &__text{
-                        line-height: 19px;
-                    }
-                }
+            &__main-enter{
+                opacity: 0;
+            }
+            &__main--enter-active {
+                opacity: 1;
+                transition: opacity 500ms ease-in;
+            }
+            &__main--exit {
+                opacity: 1;
+            }
+            &__main--exit-active {
+                opacity: 0;
+                transition: opacity 500ms ease-in;
             }
         }
     }

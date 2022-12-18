@@ -4,6 +4,7 @@ import { FilterSliceState } from './types';
 const initialState: FilterSliceState = {
     currentPage: 1,
     genreId: 0, 
+    countryId: 0, 
 };
 
 const filterSlice = createSlice({
@@ -16,18 +17,20 @@ const filterSlice = createSlice({
         setGenre(state, action: PayloadAction<number>) {
             state.genreId = action.payload; 
             },
+        setCountry(state, action: PayloadAction<number>) {
+            state.countryId = action.payload; 
+            },
         setFilters(state, action: PayloadAction<FilterSliceState>) {
             if (Object.keys(action.payload).length) {
                 state.currentPage = Number(action.payload.currentPage);
                 state.genreId = action.payload.genreId;
-            } else {
-                state.currentPage = 1;
-                };
+                state.countryId = action.payload.countryId;
+            }
         }
     },
 });
 
-export const { setCurrentPage, setGenre, setFilters } =
+export const { setCurrentPage, setGenre, setFilters, setCountry } =
     filterSlice.actions;
 
 export default filterSlice.reducer;

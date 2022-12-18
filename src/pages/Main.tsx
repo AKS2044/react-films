@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ItemFilm from '../components/itemFilm/ItemFilm';
 import { Pagination } from '../components/pagination/Pagination';
@@ -18,35 +18,15 @@ const Main = () => {
     const dispatch = useAppDispatch();
     const isMounted = useRef(false);
     const { films, filmsStatus } = useSelector(selectFilmData);
-    const { currentPage, genreId } = useSelector(selectFilter);
-    const items = [
-        {id: 1, nameFilms: 'Test', pathPoster: '/'},
-        {id: 2, nameFilms: 'Test', pathPoster: '/'},
-        {id: 3, nameFilms: 'Test', pathPoster: '/'},
-        {id: 4, nameFilms: 'Test', pathPoster: '/'},
-        {id: 5, nameFilms: 'Test', pathPoster: '/'},
-        {id: 6, nameFilms: 'Test', pathPoster: '/'},
-        {id: 7, nameFilms: 'Test', pathPoster: '/'},
-        {id: 8, nameFilms: 'Test', pathPoster: '/'},
-        {id: 9, nameFilms: 'Test', pathPoster: '/'},
-        {id: 10, nameFilms: 'Test', pathPoster: '/'},
-        {id: 11, nameFilms: 'Test', pathPoster: '/'},
-        {id: 12, nameFilms: 'Test', pathPoster: '/'},
-        {id: 13, nameFilms: 'Test', pathPoster: '/'},
-        {id: 14, nameFilms: 'Test', pathPoster: '/'},
-        {id: 15, nameFilms: 'Test', pathPoster: '/'},
-        {id: 16, nameFilms: 'Test', pathPoster: '/'},
-        {id: 17, nameFilms: 'Test', pathPoster: '/'},
-        {id: 18, nameFilms: 'Test', pathPoster: '/'},
-        {id: 19, nameFilms: 'Test', pathPoster: '/'},
-        {id: 20, nameFilms: 'Test', pathPoster: '/'},
-    ]
-
+    const { currentPage, genreId, countryId } = useSelector(selectFilter);
+    const [searchParams, setSearchParams] = useSearchParams();
+    
     const getFilms = async () => {
         dispatch(
             fetchFilms({
             currentPage: currentPage,
             genreId: genreId,
+            countryId: countryId,
         }),
         );
         window.scrollTo(0, 0);
@@ -54,30 +34,28 @@ const Main = () => {
     
     useEffect(() => {
         if(isMounted.current){
-            if(genreId !== 0){
                 const params = {
                     page: currentPage,
-                    genreId: genreId
+                    genreId: genreId,
+                    countryId: countryId
                 };
             const queryString = qs.stringify(params, {skipNulls: true});
             navigate(`?${queryString}`);
-            }else{
-                navigate('');
-            }
+
             getFilms();
         }
         if(window.location.search){
             const params = qs.parse(window.location.search.substring(1));
-            dispatch(setFilters({currentPage: Number(params.page), genreId: Number(params.genreId)}));
+            dispatch(setFilters({currentPage: Number(params.page), genreId: Number(params.genreId), countryId: Number(params.countryId)}));
         }
 
         isMounted.current = true;
-        }, [currentPage, genreId]);
+        }, [currentPage, genreId, countryId]);
     
     useEffect(() => {
         if (window.location.search) {
             const params = qs.parse(window.location.search.substring(1));
-            dispatch(setFilters({currentPage: Number(params.page), genreId: Number(params.genreId)}));
+            dispatch(setFilters({currentPage: Number(params.page), genreId: Number(params.genreId), countryId: Number(params.countryId)}));
         }
         const params = qs.parse(window.location.search.substring(1)) ;
         
