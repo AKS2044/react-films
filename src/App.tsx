@@ -2,22 +2,19 @@ import './App.scss';
 import Main from './pages/Main';
 import View from './pages/View/View';
 import Profile from './pages/Profile';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
-import Slider from './components/slider/Slider';
-import Menu from './components/menu/Menu';
 import {Routes, Route } from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import AddFilm from './pages/addFilm/AddFilm';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchAuth } from './redux/Auth/asyncActions';
 import { useAppDispatch } from './redux/store';
 import { useSelector } from 'react-redux';
 import { selectIsAuth, selectLoginData } from './redux/Auth/selectors';
 import Admin from './pages/admin/Admin';
 import { fetchGetGenres } from './redux/filmAdmin/asyncActions';
+import Layout from './components/Layout';
 
 function App() {
   const isAuth = useSelector(selectIsAuth);
@@ -40,26 +37,18 @@ function App() {
   }, [statusAuth] )
 
   return (
-    <div>
-      <Header />
-      <Slider />
-      <div className='container'>
-        <Menu />
-        <main className='main-block'>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/film/:id" element={<View /> } />
-            <Route path="/profile" element={<Profile />} />
-            {isAdmin && <Route path="/admin" element={<Admin /> } />}
-            {isAdmin && <Route path="/addFilm" element={<AddFilm />} />}
-            <Route path="/register" element={<Register />} /> 
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-      </div>
-      <Footer />
-    </div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Main />} />
+          <Route path="film/:id" element={<View /> } />
+          <Route path="profile" element={<Profile />} />
+          {isAdmin && <Route path="admin" element={<Admin /> } />}
+          {isAdmin && <Route path="addFilm" element={<AddFilm />} />}
+          <Route path="register" element={<Register />} /> 
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
     );
 }
 
