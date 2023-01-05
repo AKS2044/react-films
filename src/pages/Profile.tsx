@@ -36,11 +36,11 @@ const Profile = () => {
         await dispatch(fetchDeleteWatchLaterFilm(film));
     }
 
-    if(statusAuth !== 'loading'){
-        if(!isAuth){
-            return <Navigate to='/' />;
-        }
-    }
+    // if(statusAuth !== 'loading'){
+    //     if(!isAuth){
+    //         return <Navigate to='/' />;
+    //     }
+    // }
     
     return (
         <>

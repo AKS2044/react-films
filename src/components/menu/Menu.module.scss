@@ -24,13 +24,15 @@
             justify-content: space-between;
             &__link{
                 padding: 3px;
-                font-size: 13px;
-                line-height: 15px;
+                font-size: 0.9rem;
                 text-align: left;
                 text-transform: uppercase;
                 &:hover{
                     background: linear-gradient(270deg, rgba(15, 15, 15, 0) 0%, #720D0D 90% 40%);
                 }
+            }
+            .active{
+                background: linear-gradient(270deg, rgba(15, 15, 15, 0) 0%, #720D0D 90% 40%);
             }
             &__block{
                 width: 236px;

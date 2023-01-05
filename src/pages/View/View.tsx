@@ -3,7 +3,6 @@ import player1 from '../../img/player1.jpg';
 import player2 from '../../img/player2.jpg';
 import player3 from '../../img/player3.jpg';
 import tr from '../../img/tr.jpg';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import rec from '../../img/recommended.jpg';
 import { useAppDispatch } from '../../redux/store';
 import { fetchAddCommentFilm, fetchDeleteCommentFilm, fetchFilmById, fetchGetCommentsFilm, fetchSetDislikeCommentFilm, fetchSetLikeCommentFilm } from '../../redux/film/asyncActions';
@@ -32,6 +31,7 @@ const View = () => {
     const [comment, setComment] = useState('');
     const [playerId, setPlayerId] = useState(0);
     const params = useParams();
+    
     const dispatch = useAppDispatch();
     const isAuth = useSelector(selectIsAuth);
     const { film, 

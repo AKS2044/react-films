@@ -5,9 +5,9 @@ import {TextField, Alert} from '@mui/material';
 import cl from './Login.module.scss';
 import { useForm } from 'react-hook-form';
 import { LoginParams } from '../../redux/Auth/types';
-import { fetchAuth, fetchLogin } from '../../redux/Auth/asyncActions';
+import { fetchLogin } from '../../redux/Auth/asyncActions';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import instance from '../../axios';
 
@@ -19,6 +19,8 @@ const defaultValues: LoginParams = {
 
 const Login = () => {
     const isAuth = useSelector(selectIsAuth);
+    const location = useLocation();
+    const fromPage = location.state?.from?.pathname || '/';
     const dispatch = useAppDispatch();
 
     const { data, statusLogin } = useSelector(selectLoginData);
@@ -45,7 +47,7 @@ const Login = () => {
         }, [statusLogin]);
 
     if(isAuth){
-        return <Navigate to='/' />;
+        return <Navigate to={fromPage} />;
     }
     return (
             <div className={cl.login}>

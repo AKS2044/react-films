@@ -11,13 +11,13 @@ import { useEffect, useState } from 'react';
 import { fetchAuth } from './redux/Auth/asyncActions';
 import { useAppDispatch } from './redux/store';
 import { useSelector } from 'react-redux';
-import { selectIsAuth, selectLoginData } from './redux/Auth/selectors';
+import { selectLoginData } from './redux/Auth/selectors';
 import Admin from './pages/admin/Admin';
 import { fetchGetGenres } from './redux/filmAdmin/asyncActions';
 import Layout from './components/Layout';
+import RequireAuth from './hoc/RequireAuth';
 
 function App() {
-  const isAuth = useSelector(selectIsAuth);
   const dispatch = useAppDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
   const { data, statusAuth, statusLogin, statusRegister } = useSelector(selectLoginData);
@@ -41,7 +41,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="film/:id" element={<View /> } />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<RequireAuth><Profile /></RequireAuth>} />
           {isAdmin && <Route path="admin" element={<Admin /> } />}
           {isAdmin && <Route path="addFilm" element={<AddFilm />} />}
           <Route path="register" element={<Register />} /> 

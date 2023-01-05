@@ -21,11 +21,9 @@ const filterSlice = createSlice({
             state.countryId = action.payload; 
             },
         setFilters(state, action: PayloadAction<FilterSliceState>) {
-            if (Object.keys(action.payload).length) {
-                state.currentPage = Number(action.payload.currentPage);
-                state.genreId = action.payload.genreId;
-                state.countryId = action.payload.countryId;
-            }
+                if(action.payload.genreId || action.payload.genreId === 0) state.genreId = action.payload.genreId;
+                if(action.payload.currentPage || action.payload.currentPage === 0) state.currentPage = action.payload.currentPage;
+                if(action.payload.countryId || action.payload.countryId === 0) state.countryId = action.payload.countryId;
         }
     },
 });

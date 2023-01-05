@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchGetCountries } from '../../redux/filmAdmin/asyncActions';
 import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
+import { selectFilter } from '../../redux/filter/selectors';
 import { setCountry, setGenre } from '../../redux/filter/slice';
 import { useAppDispatch } from '../../redux/store';
+import Button from '../UI/button/Button';
 import cl from './Sort.module.scss';
 
 const sortItem = [
@@ -18,7 +20,6 @@ const sortItem = [
     'Алфавиту',
     'Год выпуска']
 
-
     type PopupClick = MouseEvent & {
         path: Node[];
     };
@@ -27,7 +28,7 @@ const Sort = () => {
     const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
     const [sortId, setSortId] = useState(0);
-    
+    const { currentPage, genreId, countryId } = useSelector(selectFilter);
     const { genreData, countryData } = useSelector(selectFilmAdminData);
     const [openGenre, setOpenGenre] = useState(false);
     const [openCountry, setOpenCountry] = useState(false);
@@ -69,7 +70,11 @@ const Sort = () => {
         return false;
     });
 
+    const getGenreActive = genreData.find((g) => g.id === genreId);
+    
     return (
+        <>
+        
         <div ref={sortRef} className={cl.sort}>
             <div className={cl.sort__item}>Фильтрация по:</div>
             <button onClick={() => setOpenGenre(!openGenre)} className={cl.sort__item}>
@@ -79,7 +84,7 @@ const Sort = () => {
                 </svg>
                 {openGenre && 
                     <ul className={cl.sort__ul}>
-                        {genreData.map((g) => <li onClick={() => onChangeGenre(g.id)} key={g.id} className={sortId === g.id ? `${cl.sort__ul__li} ${cl.active}` : `${cl.sort__ul__li}`}>{g.genres}</li>)}
+                        {genreData.map((g) => <li onClick={() => onChangeGenre(g.id)} key={g.id} className={genreId === g.id ? `${cl.sort__ul__li} ${cl.active}` : `${cl.sort__ul__li}`}>{g.genres}</li>)}
                     </ul>
                 }
             </button>
@@ -114,6 +119,11 @@ const Sort = () => {
                 }
             </button>
         </div>
+        {(genreId !== 0 || countryId !== 0) && <div className={cl.sort__active}>
+                <button className={cl.sort__button}>{getGenreActive?.genres}<span className={cl.sort__button__span}>⛌</span></button>
+        </div>}
+        
+        </>
     );
 };
 
