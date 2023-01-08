@@ -1,18 +1,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { pickBy } from "lodash";
 import axios from "../../axios";
-import { GetProfileParams, LoginParams, LoginPayloadParams, ProfilePayloadParams, RegisterParams } from "./types";
+import { LoginParams, LoginPayloadParams, ProfilePayloadParams, RegisterParams } from "./types";
 
-export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams>(
+
+
+export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams, {rejectValue: {message: string}}>(
     'login/fetchLoginStatus',
-    async (params) => {
+    async (params, { rejectWithValue }) => {
+            
         const { userName, password, rememberMe } = params;
-        const { data } = await axios.post<LoginPayloadParams>('/User/login', {
-            userName,
-            password,
-            rememberMe
-        });
-        return data;
+        try {
+            const { data } = await axios.post<LoginPayloadParams>('/User/login', {
+                userName,
+                password,
+                rememberMe,
+            });
+                return data;
+        }catch(err: any){
+            return rejectWithValue(err.response.data)
+        }
     });
 
 export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams>(

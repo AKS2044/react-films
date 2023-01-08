@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction  } from "@reduxjs/toolkit";
 import { Status } from '../../enum/EnumStatus';
 import { fetchLogin, fetchRegister, fetchAuth, fetchGetProfile, fetchUploadPhoto } from "./asyncActions";
 import { LoginState, LoginPayloadParams, ProfilePayloadParams } from "./types";
@@ -6,6 +6,7 @@ import { LoginState, LoginPayloadParams, ProfilePayloadParams } from "./types";
 
 const initialState: LoginState = {
     data: {} as LoginPayloadParams,
+    error: '',
     profile: {} as ProfilePayloadParams,
     urlPhoto: '',
     uploadPhotoStatus: Status.LOADING,
@@ -15,7 +16,9 @@ const initialState: LoginState = {
     statusRegister: Status.LOADING,
 }
 
-
+interface payds {
+    message: string
+}
 export const loginSlice = createSlice({
     name: 'login',
     initialState,
@@ -34,9 +37,10 @@ export const loginSlice = createSlice({
             state.statusLogin = Status.SUCCESS;
             state.data = action.payload;
         });
-        builder.addCase(fetchLogin.rejected, (state) => {
+        builder.addCase(fetchLogin.rejected, (state, action) => {
             state.statusLogin = Status.ERROR;
             state.data = {} as LoginPayloadParams;
+            state.error = action.payload ? action.payload?.message : '';
         });
 
         // fetchRegister builder

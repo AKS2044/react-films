@@ -22,8 +22,8 @@ const Login = () => {
     const location = useLocation();
     const fromPage = location.state?.from?.pathname || '/';
     const dispatch = useAppDispatch();
-
-    const { data, statusLogin } = useSelector(selectLoginData);
+    
+    const { data, statusLogin, error } = useSelector(selectLoginData);
     const { 
         register, 
         handleSubmit, 
@@ -31,7 +31,7 @@ const Login = () => {
         defaultValues: defaultValues,
         mode: 'onChange'
     });
-
+    
     const onSubmit = async (values: LoginParams) => {
             await dispatch(fetchLogin(values));
     }
@@ -54,7 +54,7 @@ const Login = () => {
                 <div className={cl.login__title}>Авторизация</div>
                 {statusLogin === 'error' && 
                 <Alert className={cl.alert} variant="filled" severity="error">
-                    Логин или пароль — <strong>не верны!</strong>
+                    <strong>{error}</strong>
                 </Alert>}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={cl.login__block}>

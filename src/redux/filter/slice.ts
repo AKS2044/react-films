@@ -15,6 +15,8 @@ const filterSlice = createSlice({
         state.currentPage = action.payload;
         },
         setGenre(state, action: PayloadAction<number>) {
+            
+        console.log('otrab')
             state.genreId = action.payload; 
             },
         setCountry(state, action: PayloadAction<number>) {

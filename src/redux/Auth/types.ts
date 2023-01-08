@@ -2,6 +2,7 @@ import { Status } from '../../enum/EnumStatus';
 
 export interface LoginState {
     data: LoginPayloadParams,
+    error: string,
     profile: ProfilePayloadParams,
     profileStatus: Status,
     urlPhoto: string,

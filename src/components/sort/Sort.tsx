@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { fetchFilms } from '../../redux/film/asyncActions';
 import { fetchGetCountries } from '../../redux/filmAdmin/asyncActions';
 import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
 import { selectFilter } from '../../redux/filter/selectors';
@@ -55,7 +56,6 @@ const Sort = () => {
         dispatch(setGenre(genreId));
     };
     const onChangeCountry = (countryId: number) => {
-        console.log(countryId)
         dispatch(setCountry(countryId));
     };
 
@@ -70,11 +70,19 @@ const Sort = () => {
         return false;
     });
 
+    const onClickDeleteCountry = () => {
+        dispatch(setCountry(0));
+    };
+
+    const onClickDeleteGenre = async () => {
+        dispatch(setGenre(0));
+    };
+    
     const getGenreActive = genreData.find((g) => g.id === genreId);
+    const getCountryActive = countryData.find((c) => c.id === countryId);
     
     return (
         <>
-        
         <div ref={sortRef} className={cl.sort}>
             <div className={cl.sort__item}>Фильтрация по:</div>
             <button onClick={() => setOpenGenre(!openGenre)} className={cl.sort__item}>
@@ -120,9 +128,9 @@ const Sort = () => {
             </button>
         </div>
         {(genreId !== 0 || countryId !== 0) && <div className={cl.sort__active}>
-                <button className={cl.sort__button}>{getGenreActive?.genres}<span className={cl.sort__button__span}>⛌</span></button>
+                {getGenreActive && <button className={cl.sort__button}>{getGenreActive.genres}<span onClick={() => onClickDeleteGenre()} className={cl.sort__button__span}>⛌</span></button>}
+                {getCountryActive && <button className={cl.sort__button}>{getCountryActive.country}<span onClick={() => onClickDeleteCountry()} className={cl.sort__button__span}>⛌</span></button>}
         </div>}
-        
         </>
     );
 };

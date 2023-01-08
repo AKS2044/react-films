@@ -59,7 +59,6 @@ const Main = () => {
         }, [searchParams]);
 
     useEffect(() => {
-            if(currentPage !== 1 || genreId !== 0 || countryId !== 0){
                 if(currentPage !== 1) setParams.page = String(currentPage);
                 if(genreId !== 0) setParams.genre = String(genreId);
                 if(countryId !== 0) setParams.state = String(countryId);
@@ -69,7 +68,6 @@ const Main = () => {
                     genre: setParams.genre === undefined ? '0' : setParams.genre, 
                     page: setParams.page === undefined ? '1' : setParams.page, 
                     state: setParams.state  === undefined ? '0' : setParams.state });
-            }
         }, [currentPage, genreId, countryId]);
     
     const filmArray = films.map((film: any) => <ItemFilm key={film.id} {...film} />);
