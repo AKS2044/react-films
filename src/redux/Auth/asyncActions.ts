@@ -4,10 +4,9 @@ import { LoginParams, LoginPayloadParams, ProfilePayloadParams, RegisterParams }
 
 
 
-export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams, {rejectValue: {message: string}}>(
+export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams, {rejectValue: {message: string}[]}>(
     'login/fetchLoginStatus',
     async (params, { rejectWithValue }) => {
-            
         const { userName, password, rememberMe } = params;
         try {
             const { data } = await axios.post<LoginPayloadParams>('/User/login', {
@@ -21,10 +20,11 @@ export const fetchLogin = createAsyncThunk<LoginPayloadParams, LoginParams, {rej
         }
     });
 
-export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams>(
+export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams, {rejectValue: {message: string}[]}>(
     'login/fetchRegisterStatus',
-    async (params) => {
+    async (params, { rejectWithValue }) => {
         const { userName, password, passwordConfirm, email, city } = params;
+        try {
         const { data } = await axios.post<LoginPayloadParams>('/User/registration', {
             userName,
             password,
@@ -33,6 +33,9 @@ export const fetchRegister = createAsyncThunk<LoginPayloadParams, RegisterParams
             city
         });
         return data;
+    }catch(err: any){
+        return rejectWithValue(err.response.data)
+    }
     });
 
 export const fetchGetProfile = createAsyncThunk<ProfilePayloadParams>(

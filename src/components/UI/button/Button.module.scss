@@ -10,4 +10,7 @@
         background: $br__red;
         transition: 0.1s linear;
     }
+    &:disabled{
+        background: $br__grey;
+    }
 }

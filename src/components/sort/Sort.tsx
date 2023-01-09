@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { fetchFilms } from '../../redux/film/asyncActions';
 import { fetchGetCountries } from '../../redux/filmAdmin/asyncActions';
 import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
 import { selectFilter } from '../../redux/filter/selectors';
 import { setCountry, setGenre } from '../../redux/filter/slice';
 import { useAppDispatch } from '../../redux/store';
-import Button from '../UI/button/Button';
 import cl from './Sort.module.scss';
 
 const sortItem = [
@@ -29,7 +27,7 @@ const Sort = () => {
     const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
     const [sortId, setSortId] = useState(0);
-    const { currentPage, genreId, countryId } = useSelector(selectFilter);
+    const { genreId, countryId } = useSelector(selectFilter);
     const { genreData, countryData } = useSelector(selectFilmAdminData);
     const [openGenre, setOpenGenre] = useState(false);
     const [openCountry, setOpenCountry] = useState(false);
@@ -41,6 +39,8 @@ const Sort = () => {
         const _event = event as PopupClick;
         if (sortRef.current && !_event.path.includes(sortRef.current)) {
             setOpen(false);
+            setOpenGenre(false);
+            setOpenCountry(false);
         }
         };
         document.body.addEventListener('click', handleClickOutside);
@@ -91,10 +91,9 @@ const Sort = () => {
                     <path d="M7 6L0.937822 -1.88258e-07L13.0622 8.71687e-07L7 6Z" fill="white"/>
                 </svg>
                 {openGenre && 
-                    <ul className={cl.sort__ul}>
+                    <ul  className={cl.sort__ul}>
                         {genreData.map((g) => <li onClick={() => onChangeGenre(g.id)} key={g.id} className={genreId === g.id ? `${cl.sort__ul__li} ${cl.active}` : `${cl.sort__ul__li}`}>{g.genres}</li>)}
-                    </ul>
-                }
+                    </ul>}
             </button>
                 <div className={cl.sort__item}>
                     <button onClick={() => setOpenCountry(!openCountry)} >

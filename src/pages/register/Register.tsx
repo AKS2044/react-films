@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { RegisterParams } from '../../redux/Auth/types';
 import { fetchRegister, fetchUploadPhoto } from '../../redux/Auth/asyncActions';
 import {TextField, Alert} from '@mui/material';
+import Alerts from '../../components/UI/alert/Alert';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 import { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
@@ -26,14 +27,14 @@ const Register = () => {
     const navigate = useNavigate();
     const [active, setActive] = useState(true);
     const dispatch = useAppDispatch();
-    const { data, statusRegister, statusAuth, urlPhoto, uploadPhotoStatus } = useSelector(selectLoginData);
+    const { data, statusRegister, error, urlPhoto, uploadPhotoStatus } = useSelector(selectLoginData);
     
     const { 
         register, 
         handleSubmit, 
-        formState: {errors}} = useForm({
+        formState: {errors, isValid}} = useForm({
         defaultValues: defaultValues,
-        mode: 'onChange'
+        mode: 'onBlur'
     });
 
     const onSubmit = async (values: RegisterParams) => {
@@ -75,10 +76,10 @@ const Register = () => {
     return (
         <div className={cl.register}>
                 <div className={cl.register__title}>Регистрация</div>
-                {statusRegister === 'error' && 
-                <Alert className={cl.alert} variant="filled" severity="error">
-                    Логин или E-mail — <strong>заняты!</strong>
-                </Alert>}
+                <Alerts severity='error'>dadada</Alerts>
+                {statusRegister === 'error' && <>{error.map((e, i) => <Alerts key={i} className={cl.alert} severity="error">
+                    <strong>{e.message}</strong>
+                    </Alerts>)}</>}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={cl.register__block}>
                         <TextField  
@@ -101,6 +102,7 @@ const Register = () => {
                         label="Ваш город"
                         error={Boolean(errors.city?.message)}
                         helperText={errors.city?.message}
+                        autoComplete="off"
                         {...register('city', {required: 'Укажите ваш город'})}  />
                         <TextField  
                         InputProps={{className: cl.input}} 
@@ -116,12 +118,12 @@ const Register = () => {
                         InputProps={{className: cl.input}} 
                         InputLabelProps={{className: cl.input__label}} 
                         minRows={6}
-                        label="Повтори пароль"
+                        label="Повторите пароль"
                         type="password"
                         autoComplete="off"
-                        error={Boolean(errors.password?.message)}
-                        helperText={errors.password?.message}
-                        {...register('passwordConfirm', {required: 'Повтори пароль'})} />
+                        error={Boolean(errors.passwordConfirm?.message)}
+                        helperText={errors.passwordConfirm?.message}
+                        {...register('passwordConfirm', {required: 'Повторите пароль'})} />
                         
                         <input
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChangeFile(e)}
@@ -133,7 +135,7 @@ const Register = () => {
                         <div>
                 </div>
                     </div>
-                    <Button>Регистрация</Button>
+                    <Button disabled={isValid} >Регистрация</Button>
                 </form>
                 {statusRegister === 'completed' && 
                 <Modal

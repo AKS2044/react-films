@@ -27,7 +27,7 @@ const Login = () => {
     const { 
         register, 
         handleSubmit, 
-        formState: {errors}} = useForm({
+        formState: {errors, isValid}} = useForm({
         defaultValues: defaultValues,
         mode: 'onChange'
     });
@@ -52,10 +52,9 @@ const Login = () => {
     return (
             <div className={cl.login}>
                 <div className={cl.login__title}>Авторизация</div>
-                {statusLogin === 'error' && 
-                <Alert className={cl.alert} variant="filled" severity="error">
-                    <strong>{error}</strong>
-                </Alert>}
+                {statusLogin === 'error' && <>{error.map((e, i) => <Alert key={i} className={cl.alert} variant="filled" severity="error">
+                    <strong>{e.message}</strong>
+                    </Alert>)}</>}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={cl.login__block}>
                         <TextField  
@@ -79,7 +78,7 @@ const Login = () => {
                         <a className={cl.login__block__links__link} href='/'>Регистрация</a>
                     </div>
                     </div>
-                    <Button>Войти</Button>
+                    <Button disabled={isValid}>Войти</Button>
                 </form>
             </div>
     );

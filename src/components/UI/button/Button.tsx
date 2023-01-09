@@ -1,13 +1,13 @@
-import React from 'react';
 import cl from './Button.module.scss'
 
 type ButtonProps = {
+    disabled?: boolean,
     children: string,
 };
-const Button = ({children}: ButtonProps) => {
+const Button = (props: ButtonProps) => {
     return (
-        <button type="submit" className={cl.btn}>
-            {children}
+        <button disabled={!props.disabled} type="submit" className={cl.btn}>
+            {props.children}
         </button>
     );
 };
