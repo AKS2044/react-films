@@ -43,7 +43,7 @@ const View = () => {
         setLikeCommentStatus,
         setDislikeCommentStatus } = useSelector(selectFilmData);
     const { data } = useSelector(selectLoginData);
-
+    
     const playerfilm = [
         {title: 'Плеер 1', linkPlayer: player1},
         {title: 'Плеер 2', linkPlayer: player2},
@@ -235,8 +235,10 @@ const View = () => {
                                 <div className={cl.post__comments__comment__main__block__text}>{c.comments}</div>
                                 
                             </div>
-                            {(data.userName === c.userName || Boolean(data.roles.find((r) => r === 'Admin'))) && 
+                            {isAuth && <>
+                                {(data.userName === c.userName || Boolean(data.roles.find((r) => r === 'Admin'))) && 
                             <div onClick={() => onClickDeleteComment(c)} className={cl.post__comments__comment__main__delete}>⛌</div>}
+                            </>}
                             <div onClick={() => onClickLikeComment(c)} className={cl.post__comments__comment__main__plus}>+ {c.like}</div>
                             <div onClick={() => onClickDislikeComment(c)} className={cl.post__comments__comment__main__minus}>- {c.dislike}</div>
                     </div>)}

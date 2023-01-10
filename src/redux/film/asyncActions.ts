@@ -6,12 +6,13 @@ import { CommentAddParams, CommentGetParams, FavouriteFilmParams, Film, FilmPara
 export const fetchFilms = createAsyncThunk<FilmShortProps[], FilmParams>(
     'film/fetchFilmsStatus',
     async (params) => {
-        const { currentPage, genreId, countryId } = params;
+        const { currentPage, genreId, countryId, search } = params;
         const { data } = await axios.get<FilmShortProps[]>('/Film/Films', {
             params: pickBy({
                 page: currentPage,
                 genreId: genreId,
-                countryId: countryId
+                countryId: countryId,
+                search: search
             })
         });
         return data;

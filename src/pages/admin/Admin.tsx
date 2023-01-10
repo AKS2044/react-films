@@ -69,7 +69,7 @@ const Admin = () => {
     const { 
         register,
         handleSubmit, 
-        formState: {errors}} = useForm({
+        formState: {errors, isValid}} = useForm({
         defaultValues: defaultValues,
         mode: 'onChange'
     });
@@ -107,14 +107,7 @@ const Admin = () => {
     };
 
     const onSubmitGenre = async (props: Props) => {
-        const result = Boolean(genreData.find((f) => 
-        f.genres.toLowerCase
-        === props.genre.genres.toLowerCase))
-        if(!result){
-            await dispatch(fetchPostGenre(props.genre));
-        }else{
-            alert('Уже существует')
-        }
+        await dispatch(fetchPostGenre(props.genre));
     }
 
     const onSubmitContry = async (props: Props) => {
@@ -310,7 +303,7 @@ const Admin = () => {
                             error={Boolean(errors.genre?.genres?.message)}
                             helperText={errors.genre?.genres?.message}
                             {...register('genre.genres', {required: 'Введите жанр'})}  />
-                        <Button>Добавить</Button>
+                        <Button disabled={isValid}>Добавить</Button>
                     </form>
                     
                     {genrePostStatus === 'completed' && 
@@ -380,7 +373,7 @@ const Admin = () => {
                                 error={Boolean(errors.manager?.stageManagers?.message)}
                                 helperText={errors.manager?.stageManagers?.message}
                                 {...register('manager.stageManagers', {required: 'Введите режиссера'})}  />
-                            <Button>Добавить</Button>
+                            <Button disabled={isValid}>Добавить</Button>
                         </form>
                         
                         {managerPostStatus === 'completed' && 
@@ -424,7 +417,7 @@ const Admin = () => {
                             error={Boolean(errors.actor?.lastName?.message)}
                             helperText={errors.actor?.lastName?.message}
                             {...register('actor.lastName', {required: 'Введите фамилию актера'})}  />
-                        <Button>Добавить</Button>
+                        <Button disabled={isValid}>Добавить</Button>
                     </form>
                     
                     {actorPostStatus === 'completed' && 

@@ -61,7 +61,7 @@ const AddFilm = () => {
     const { 
         register, 
         handleSubmit, 
-        formState: {errors}} = useForm({
+        formState: {errors, isValid}} = useForm({
         defaultValues: defaultValues,
         mode: 'onChange'
     });
@@ -443,7 +443,7 @@ const AddFilm = () => {
                         <button type="button" className={cl.btn} onClick={() => inputFileRef.current?.click()}>Добавить файл</button>
                         {urlData && <img width={200} src={`https://localhost:44369/Files/${urlData}`} alt="Постер" />}
                 </div>
-                    <Button>Добавить</Button>
+                    <Button disabled={isValid}>Добавить</Button>
             </form>
         </div>
     );

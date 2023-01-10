@@ -1,16 +1,11 @@
 @import "/src/colors";
 
 .alert{
-    width: 100%;
     padding: 15px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     &__icon{
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
         margin-right: 10px;
-        background-color: aliceblue;
     }
 }

@@ -49,6 +49,7 @@ export interface FilmSliceState {
 
 export interface FilmParams {
     id?: number,
+    search?: string,
     currentPage?: number,
     genreId?: number,
     countryId?: number

@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { RegisterParams } from '../../redux/Auth/types';
 import { fetchRegister, fetchUploadPhoto } from '../../redux/Auth/asyncActions';
-import {TextField, Alert} from '@mui/material';
-import Alerts from '../../components/UI/alert/Alert';
+import {TextField} from '@mui/material';
+import Alert from '../../components/UI/alert/Alert';
 import { selectIsAuth, selectLoginData } from '../../redux/Auth/selectors';
 import { useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
@@ -76,10 +76,9 @@ const Register = () => {
     return (
         <div className={cl.register}>
                 <div className={cl.register__title}>Регистрация</div>
-                <Alerts severity='error'>dadada</Alerts>
-                {statusRegister === 'error' && <>{error.map((e, i) => <Alerts key={i} className={cl.alert} severity="error">
+                {statusRegister === 'error' && <>{error.map((e, i) => <Alert key={i} severity="error">
                     <strong>{e.message}</strong>
-                    </Alerts>)}</>}
+                    </Alert>)}</>}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={cl.register__block}>
                         <TextField  
