@@ -162,13 +162,12 @@ const AddFilm = () => {
             const formData = new FormData();
             const file = e.target.files![0];
             formData.append('file', file);
-
+            console.log(file)
             dispatch(fetchUpload(formData));
         } catch(err) {
             console.log(err)
         }
     }
-
     
     if(filmAddStatus === 'completed'){
         return <Navigate to='/' />;
@@ -436,8 +435,6 @@ const AddFilm = () => {
                         accept='image/*, .png, .jpg, .web'
                         ref={inputFileRef}
                         hidden
-                        //helperText={errors.imageName?.message} 
-                        //error={Boolean(errors.imageName?.message)}
                         />
                         
                         <button type="button" className={cl.btn} onClick={() => inputFileRef.current?.click()}>Добавить файл</button>

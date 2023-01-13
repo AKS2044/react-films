@@ -20,7 +20,7 @@ const sortItem = [
     'Год выпуска']
 
     type PopupClick = MouseEvent & {
-        path: Node[];
+        target: Node;
     };
 
 const Sort = () => {
@@ -37,7 +37,8 @@ const Sort = () => {
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
         const _event = event as PopupClick;
-        if (sortRef.current && !_event.path.includes(sortRef.current)) {
+        
+        if (sortRef.current && !sortRef.current?.contains(_event.target)) {
             setOpen(false);
             setOpenGenre(false);
             setOpenCountry(false);
