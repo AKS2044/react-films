@@ -134,13 +134,13 @@ const View = () => {
         <div className={cl.post__right}>
             <h2 className={cl.post__right__text__one}>{film.nameFilms}</h2>
             <div className={cl.post__right__text__two}>Год: <span className='post__text'>{film.releaseDate}</span></div>
-            <div className={cl.post__right__text__one}>Жанр: <span className='post__text'>{film.genre ? film.genre.map((g) => g + ' ') : 'Нет стран'}</span></div>
-            <div className={cl.post__right__text__two}>Страна: <span className='post__text'>{film.country ? film.country.map((c) => c + ' ') : 'Нет стран'}</span></div>
-            <div className={cl.post__right__text__one}>Режиссер: <span className='post__text'>{film.stageManagers ? film.stageManagers.map((m) => m) : 'Нет режиссеров'}</span></div>
+            <div className={cl.post__right__text__one}>Жанр: <span className='post__text'>{film.genre.length ? film.genre.map((g) => g.genres + ' ') : 'Нет стран'}</span></div>
+            <div className={cl.post__right__text__two}>Страна: <span className='post__text'>{film.country.length ? film.country.map((c) => c.country + ' ') : 'Нет стран'}</span></div>
+            <div className={cl.post__right__text__one}>Режиссер: <span className='post__text'>{film.stageManagers.length ? film.stageManagers.map((m) => m.stageManagers) : 'Нет режиссеров'}</span></div>
             <div className={cl.post__right__text__two}>Возраст: <span className='post__text'>{film.ageLimit ? film.ageLimit : '0'} +</span></div>
             <div className={cl.post__right__text__one}>Время: <span className='post__text'>{film.time ? film.time : '0'} мин.</span></div>
             <div className={cl.post__right__text__two}>В главных ролях: <span className='post__text'>
-                {film.actors ? film.actors.map((a) => a.firstName + ' ' + a.lastName + ' ') : 'Нет актеров'}</span></div>
+                {film.actors.length ? film.actors.map((a) => a.firstName + ' ' + a.lastName + ' ') : 'Нет актеров'}</span></div>
             <div className={cl.post__right__text__one}>Качество видео: <span className='post__text'>BDRip</span></div>
             <div className={cl.post__right__text__two}>Перевод: <span className='post__text'>Дублированный</span></div>
             <div className={cl.post__right__text__one}>Описание: <span className='post__text'>{film.description ? film.description : 'Нет описания'}</span></div>

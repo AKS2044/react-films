@@ -16,6 +16,7 @@ import Admin from './pages/admin/Admin';
 import { fetchGetGenres } from './redux/filmAdmin/asyncActions';
 import Layout from './components/Layout';
 import RequireAuth from './hoc/RequireAuth';
+import UpgradeFilm from './pages/upgradeFilm/UpgradeFilm';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -44,6 +45,7 @@ function App() {
           <Route path="profile" element={<RequireAuth><Profile /></RequireAuth>} />
           {isAdmin && <Route path="admin" element={<Admin /> } />}
           {isAdmin && <Route path="addFilm" element={<AddFilm />} />}
+          <Route path="upgrade/:id" element={<UpgradeFilm />} />
           <Route path="register" element={<Register />} /> 
           <Route path="login" element={<Login />} />
           <Route path="*" element={<NotFound />} />

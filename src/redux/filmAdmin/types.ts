@@ -36,6 +36,23 @@ export interface FilmAddParams {
     imageName: string
 }
 
+export interface FilmUpgradeParams {
+    nameFilms: string,
+    ageLimit: number,
+    idRating: number,
+    releaseDate: number,
+    linkFilmPlayer: string,
+    linkFilmtrailer: string,
+    countries: CountryPayloadParams[],
+    actors: ActorPayloadParams[],
+    genres: GenrePayloadParams[],
+    stageManagers: ManagerPayloadParams[],
+    description: string,
+    time: number,
+    pathPoster: string,
+    imageName: string
+}
+
 export interface GenrePayloadParams {
     id: number,
     genres: string

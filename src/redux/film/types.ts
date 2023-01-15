@@ -1,4 +1,5 @@
 import { Status } from '../../enum/EnumStatus';
+import { ActorPayloadParams, CountryPayloadParams, GenrePayloadParams, ManagerPayloadParams } from '../filmAdmin/types';
 export interface Film {
     id : number,
     nameFilms :  string ,
@@ -9,14 +10,10 @@ export interface Film {
     releaseDate : number,
     linkFilmPlayer : string,
     linkFilmtrailer : string,
-    country: [''],
-    genre: [''],
-    stageManagers: [''],
-    actors: {id: number,
-    filmActors: string | null,
-    firstName: string,
-    lastName: string,
-    secondName: string | null}[],
+    country: CountryPayloadParams[],
+    genre: GenrePayloadParams[],
+    stageManagers: ManagerPayloadParams[],
+    actors: ActorPayloadParams[],
     description : string,
     time : number,
     pathPoster : string ,

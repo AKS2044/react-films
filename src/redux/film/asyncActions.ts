@@ -18,7 +18,7 @@ export const fetchFilms = createAsyncThunk<FilmShortProps[], FilmParams>(
         return data;
     });
 
-export const fetchFilmById = createAsyncThunk<Film, FilmParams>(
+export const fetchFilmById = createAsyncThunk<Film, {id: number}>(
     'film/fetchFilmByIdStatus',
     async (params) => {
         const {id} = params;

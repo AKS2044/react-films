@@ -1,0 +1,63 @@
+@import "/src/colors";
+
+.upgrade{
+    &__block{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid $br__grey;
+        &__title{
+            font-size: 1.5rem;
+        }
+        &__subtitle{
+            margin-left: 10px;
+            font-size: 1.4rem;
+            font-weight: 300;
+        }
+    }
+    &__inputs{
+        padding: 10px 30px;
+        &__item{
+
+        }
+    }
+    .cross{
+        margin: 8px;
+        position: absolute;
+        right: 0;
+    }
+    .popup__block{
+        position: relative;
+        ul{
+            top: 40px;
+            width: 100%;
+            position: absolute;
+            z-index: 1001;
+            background: $br__grey;
+            border-radius: 0 0 6px 6px;
+            padding: 5px 1px;
+            overflow: auto;
+            li{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 5px;
+                line-height: 25px;
+                background: $background__second;
+                border-bottom: 1px solid $br__grey
+            }
+        }
+    }
+
+    .input{
+        background: $background__3;
+        width: 350px;
+        color: $text;
+        border-radius: 6px;
+        margin-bottom: 20px !important;
+        &__label{
+            color: $text;
+        }
+    }
+}

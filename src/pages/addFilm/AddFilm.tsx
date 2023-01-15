@@ -146,7 +146,7 @@ const AddFilm = () => {
         if(obj.firstName.toLowerCase().includes(valueActor.toLowerCase())){
             return true;
         }
-        if(obj.lastName.toLowerCase().includes(valueActor.toLowerCase())){
+        if(obj?.lastName.toLowerCase().includes(valueActor.toLowerCase())){
             return true;
         }
         return false;
