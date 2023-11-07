@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { selectFilmData } from '../../redux/film/selectors';
 import { useSelector } from 'react-redux';
 import { selectLoginData } from '../../redux/Auth/selectors';
-import { Link } from 'react-router-dom';
 
 type RatingProps = {
     filmId: number,

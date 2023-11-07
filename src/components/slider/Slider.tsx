@@ -4,7 +4,6 @@ import { selectFilmData } from '../../redux/film/selectors';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import SkeletonSlider from '../skeleton/SkeletonSlider';
-import img from '../../img/posterSlider.jpg'
 import { useAppDispatch } from '../../redux/store';
 import { fetchSliderFilms } from '../../redux/film/asyncActions';
 

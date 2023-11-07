@@ -10,7 +10,7 @@ import { selectFilmData } from '../../redux/film/selectors';
 import { Film, FilmShortProps } from '../../redux/film/types';
 import { fetchDeleteActors, fetchDeleteCountries, fetchDeleteFilm, fetchDeleteGenre, fetchDeleteManagers, fetchGetActors, fetchGetCountries, fetchGetGenres, fetchGetManagers, fetchPostActors, fetchPostCountries, fetchPostGenre, fetchPostManagers } from '../../redux/filmAdmin/asyncActions';
 import { selectFilmAdminData } from '../../redux/filmAdmin/selectors';
-import { ActorPayloadParams, CountryPayloadParams, FilmAddParams, GenrePayloadParams, ManagerPayloadParams } from '../../redux/filmAdmin/types';
+import { ActorPayloadParams, CountryPayloadParams, GenrePayloadParams, ManagerPayloadParams } from '../../redux/filmAdmin/types';
 import { selectFilter } from '../../redux/filter/selectors';
 import { useAppDispatch } from '../../redux/store';
 import { fetchDeleteUser, fetchGetUsers } from '../../redux/userAdmin/asyncActions';

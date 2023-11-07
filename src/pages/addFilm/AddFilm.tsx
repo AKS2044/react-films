@@ -251,7 +251,6 @@ const AddFilm = () => {
                                 <path d="M7.1967 7.19673L17.8033 17.8033M17.8033 7.19673L7.1967 17.8033" stroke="white" strokeWidth="2" strokeLinecap="round"/>
                             </svg>}
                         </div>
-
                         {valueСountry && 
                         <ul>
                         {getCountries.map((country) => <li key={country.id}>
@@ -288,7 +287,7 @@ const AddFilm = () => {
                             //{...register('stageManagerIds', {required: 'Введите режиссеров'})}  
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeInput(e, setValueManager)}/>
                             {valueManager &&
-                            <svg className={cl.cross} onClick={() => onClickClear(managerRef, setValueManager) } width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg className={cl.cross} onClick={() => onClickClear(managerRef, setValueManager)} width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M7.1967 7.19673L17.8033 17.8033M17.8033 7.19673L7.1967 17.8033" stroke="white" strokeWidth="2" strokeLinecap="round"/>
                             </svg>}
                         </div>
